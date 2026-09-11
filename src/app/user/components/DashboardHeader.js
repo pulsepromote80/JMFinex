@@ -306,7 +306,7 @@ export default function DashboardHeader({
       {/* Logo Area */}
       <div className={`flex items-center gap-3 px-4 py-0.5 border-b border-gray-200 dark:border-gray-800 dark:bg-[#10222e]  bg-white/95 `}>
         <Image
-          src="/LOG02.png"
+          src="/Logo.png"
           alt="Logo"
           width={200}
           height={60}

@@ -110,15 +110,15 @@ export default function IncomeStatement() {
 
         {/* Tabs Navigation */}
         <div className="overflow-x-auto scrollbar-thin mb-4">
-          <div className="flex gap-2 flex-nowrap min-w-max">
+          <div className="flex gap-1 bg-gray-100 dark:bg-[#142936] border border-gray-200 dark:border-[rgba(140,200,205,0.16)] rounded-xl p-1">
             {TABS.map(tab => (
               <button
                 key={tab}
                 onClick={() => handleTabChange(tab)}
-                className={`px-4 sm:px-6 py-2.5 sm:py-3 rounded-sm text-sm sm:text-base font-medium transition-all duration-200 whitespace-nowrap ${
+                className={`flex-1 px-4 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 whitespace-nowrap ${
                   activeTab === tab
-                    ? 'bg-teal-500 dark:bg-[#2fd9d3] text-gray-50 shadow-lg shadow-teal-500/25'
-                    : 'bg-transparent text-gray-500 dark:text-[#9db4be] hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-[rgba(47,217,211,0.1)]'
+                    ? "bg-gradient-to-r from-teal-400 to-teal-400 text-white shadow-md shadow-purple-500/25"
+                    : "text-gray-600 dark:text-[#9db4be] hover:bg-gray-200 dark:hover:bg-gray-700/50 hover:text-gray-900 dark:hover:text-white"
                 }`}
               >
                 {tab}

@@ -161,20 +161,22 @@ const WalletStatement = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
       {/* Tabs + Dropdown Row */}
       <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4 mb-6">
-        <div className="flex flex-wrap gap-2.5">
-          {tabs.map((tab) => (
-            <button
-              key={tab}
-              onClick={() => handleTabChange(tab)}
-              className={`px-4 sm:px-5 py-2.5 rounded-sm text-sm font-medium border transition-all duration-200 ${
-                activeTab === tab
-                  ? "bg-teal-500 dark:bg-[#2fd9d3] text-gray-50 border-teal-500 dark:border-[#2fd9d3] shadow-[0_2px_6px_rgba(113,51,219,0.3)] dark:shadow-[0_2px_6px_rgba(139,92,246,0.3)]"
-                  : "bg-white dark:bg-[#10222e] border-gray-200 dark:border-[rgba(255,255,255,0.07)] text-gray-600 dark:text-[#9ca3af] hover:bg-gray-50 dark:hover:bg-[rgba(255,255,255,0.04)] hover:border-teal-500 dark:hover:border-[#2fd9d3] hover:text-teal-500 dark:hover:text-[#2fd9d3]"
-              }`}
-            >
-              {tab}
-            </button>
-          ))}
+        <div className="flex-1 overflow-x-auto">
+          <div className="flex gap-1 bg-gray-100 dark:bg-[#142936] border border-gray-200 dark:border-[rgba(140,200,205,0.16)] rounded-xl p-1">
+            {tabs.map((tab) => (
+              <button
+                key={tab}
+                onClick={() => handleTabChange(tab)}
+                className={`flex-1 px-4 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 whitespace-nowrap ${
+                  activeTab === tab
+                    ? "bg-gradient-to-r from-teal-400 to-teal-400 text-white shadow-md shadow-purple-500/25"
+                    : "text-gray-600 dark:text-[#9db4be] hover:bg-gray-200 dark:hover:bg-gray-700/50 hover:text-gray-900 dark:hover:text-white"
+                }`}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
         </div>
 
         <div className="relative min-w-[140px] sm:min-w-[160px]">
