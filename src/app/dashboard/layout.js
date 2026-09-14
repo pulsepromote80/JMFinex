@@ -6,13 +6,13 @@ import '../globals.css';
 import DashboardSidebar from "../user/components/DashboardHeader";
 import DashboardTopbar from "../user/components/DashboardSidebar";
 import Head from "next/head";
-import { useTheme } from "@/components/ThemeProvider";
+import { useTheme } from "next-themes";
 
 export default function DashboardLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
-  const { setTheme, isDark } = useTheme();
+  const { setTheme, theme } = useTheme();
 
   // Check if mobile view
   useEffect(() => {
@@ -37,11 +37,6 @@ export default function DashboardLayout({ children }) {
     }, 500);
     return () => clearTimeout(timer);
   }, []);
-
-  // Set theme
-  useEffect(() => {
-    setTheme(false);
-  }, [setTheme]);
 
   // Check token
   useEffect(() => {
@@ -181,23 +176,23 @@ export default function DashboardLayout({ children }) {
         <link rel="apple-touch-icon" href="/favicon.png" />
       </Head>
 
-      <div data-theme={isDark ? 'dark' : 'light'}>
+      <div data-theme={theme === 'dark' ? 'dark' : 'light'}>
 
         {/* Background Elements */}
         <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
           <div className={`absolute w-[580px] h-[580px] rounded-full blur-[100px] animate-[blobD_20s_ease-in-out_infinite_alternate] ${
-            isDark ? 'opacity-32' : 'opacity-12'
+            theme === 'dark' ? 'opacity-32' : 'opacity-12'
           } bg-gradient-to-r from-teal-500/45 to-transparent top-[-180px] left-[-80px]`}></div>
           <div className={`absolute w-[480px] h-[480px] rounded-full blur-[100px] animate-[blobD_24s_ease-in-out_infinite_alternate] ${
-            isDark ? 'opacity-32' : 'opacity-12'
+            theme === 'dark' ? 'opacity-32' : 'opacity-12'
           } bg-gradient-to-r from-amber-500/38 to-transparent bottom-[-140px] right-[-80px] [animation-delay:-9s]`}></div>
           <div className={`absolute w-[340px] h-[340px] rounded-full blur-[100px] animate-[blobD_16s_ease-in-out_infinite_alternate] ${
-            isDark ? 'opacity-32' : 'opacity-12'
+            theme === 'dark' ? 'opacity-32' : 'opacity-12'
           } bg-gradient-to-r from-teal-500/22 to-transparent top-[45%] left-[42%] [animation-delay:-5s]`}></div>
         </div>
 
         <div className={`fixed inset-0 z-0 pointer-events-none bg-[linear-gradient(rgba(0,212,255,0.022)_1px,transparent_1px),linear-gradient(90deg,rgba(0,212,255,0.022)_1px,transparent_1px)] bg-[58px_58px] transition-opacity duration-300 ${
-          isDark ? 'opacity-100' : 'opacity-35'
+          theme === 'dark' ? 'opacity-100' : 'opacity-35'
         }`}></div>
         <div id="pts" className="fixed inset-0 z-0 pointer-events-none overflow-hidden"></div>
 

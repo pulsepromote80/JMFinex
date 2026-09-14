@@ -1,7 +1,7 @@
 
 'use client'
 
-import React, { useState, useEffect, useRef, useCallback } from "react"
+import React, { useState, useEffect, useRef, useCallback, Suspense } from "react"
 import { useRouter } from "next/navigation"
 import Select from "react-select"
 import { userRegistration, getAllCountry, getReferralDataByLoginId } from "@/app/redux/slices/authSlice"
@@ -353,8 +353,7 @@ function ImagePuzzleCaptcha({ verified, onVerify, onReset }) {
   )
 }
 
-
-export default function SignupPage() {
+function SignupContent() {
   const router = useRouter()
   const dispatch = useDispatch()
   const searchParams = useSearchParams()
@@ -1108,5 +1107,13 @@ export default function SignupPage() {
         </div>
       </div>
     </>
+  )
+}
+
+export default function SignupPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SignupContent />
+    </Suspense>
   )
 }
