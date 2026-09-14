@@ -791,6 +791,8 @@ export default function DashboardHeader({ sidebarOpen, setSidebarOpen }) {
 
     const breadcrumbMap = {
       'dashboard': { parent: 'Dashboard', child: 'Overview' },
+      'analytics': { parent: 'Analytics', child: 'Overview' },
+      'AI-Trading-Bots': { parent: 'AI Trading Bots', child: 'Overview' },
       'Team': { parent: 'Genealogy', child: 'All Teams' },
       'deposit-request': { parent: 'Finance', child: 'Deposit Request' },
       'deposit-history': { parent: 'Finance', child: 'Deposit History' },
@@ -807,7 +809,7 @@ export default function DashboardHeader({ sidebarOpen, setSidebarOpen }) {
     let parent = 'Dashboard';
     let child = 'Overview';
 
-    for (const part of pathParts) {
+    for (const part of [...pathParts].reverse()) {
       if (breadcrumbMap[part]) {
         parent = breadcrumbMap[part].parent;
         child = breadcrumbMap[part].child;
@@ -815,7 +817,8 @@ export default function DashboardHeader({ sidebarOpen, setSidebarOpen }) {
       }
     }
 
-    setBreadcrumb({ parent, child });
+    setBreadcrumb({ parent, child }); 
+
   }, [pathname]);
 
  
@@ -834,6 +837,7 @@ export default function DashboardHeader({ sidebarOpen, setSidebarOpen }) {
   };
 
   const userID = getAuthLogin();
+  console.log("YTYTY",userID);
   const userURID = getUserId();
 
   // Fetch Dashboard Details

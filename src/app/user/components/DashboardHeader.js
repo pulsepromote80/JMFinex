@@ -4,6 +4,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useState, useEffect } from "react";
 import { useRouter, usePathname } from 'next/navigation';
 import {
   FiGrid,
@@ -30,6 +31,11 @@ export default function DashboardHeader({
   const router = useRouter();
   const pathname = usePathname();
   const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const closeSidebar = () => {
     setSidebarOpen(false);
@@ -54,7 +60,7 @@ export default function DashboardHeader({
       {/* Logo Area */}
       <div className={`flex items-center gap-3 px-4 py-0.5 border-b border-gray-200 dark:border-gray-800 dark:bg-[#10222e]  bg-white/95 `}>
         <Image
-          src="/Logo.png"
+          src={mounted && theme === "dark" ? "/Logo.png" : "/LogoBlack.png"}
           alt="Logo"
           width={200}
           height={60}

@@ -149,6 +149,56 @@ button:focus {
   }
 }
 
+/* Dashboard theme overrides stay scoped so existing app screens keep their palette. */
+.dashboard-shell.dark {
+  --dashboard-ink: #eef3fb;
+  --dashboard-muted: #9eafd0;
+  --dashboard-card: linear-gradient(135deg, rgba(20, 35, 65, 0.96), rgba(12, 25, 50, 0.94));
+  --dashboard-surface: rgba(255, 255, 255, 0.055);
+  --dashboard-line: rgba(151, 178, 226, 0.2);
+  background: linear-gradient(180deg, #071224 0%, #0b1830 45%, #071224 100%) !important;
+  color: var(--dashboard-ink) !important;
+}
+
+.dashboard-shell.dark .dashboard-card {
+  background: var(--dashboard-card) !important;
+  border-color: var(--dashboard-line) !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2), 0 20px 40px -28px rgba(0, 0, 0, 0.75) !important;
+}
+
+.dashboard-shell.dark .dashboard-tag {
+  background: rgba(224, 172, 46, 0.12) !important;
+  border-color: rgba(224, 172, 46, 0.3) !important;
+}
+
+.dashboard-shell.dark [class*="text-[#0c1c3d]"],
+.dashboard-shell.dark [class*="text-[#0e2a5c]"],
+.dashboard-shell.dark [class*="text-[#3a4a6b]"],
+.dashboard-shell.dark [class*="text-[#4c5b7c]"] {
+  color: var(--dashboard-muted) !important;
+}
+
+.dashboard-shell.dark [class*="bg-[rgba(15,45,100,.035)]"],
+.dashboard-shell.dark [class*="bg-[rgba(15,45,100,.08)]"] {
+  background: var(--dashboard-surface) !important;
+}
+
+.dashboard-shell.dark [class*="border-[rgba(15,45,100,.13)]"] {
+  border-color: var(--dashboard-line) !important;
+}
+
+.dashboard-theme-toggle {
+  color: #0c1c3d;
+  background: rgba(255, 255, 255, 0.86);
+  border-color: rgba(15, 45, 100, 0.16);
+}
+
+.dashboard-shell.dark .dashboard-theme-toggle {
+  color: #f7d878;
+  background: rgba(20, 35, 65, 0.94);
+  border-color: rgba(151, 178, 226, 0.28);
+}
+
 
 .css-1sbrxjn-control{
       background-color: rgb(255 255 255 / 5%);

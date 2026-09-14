@@ -223,7 +223,7 @@ export default function DashboardLayout({ children }) {
           {/* Main Content Area */}
           <div className="flex-1 flex flex-col h-screen overflow-hidden min-w-0">
             {/* Topbar */}
-            <div className="flex-shrink-0">
+            <div className="relative z-[100] flex-shrink-0">
               <DashboardTopbar
                 sidebarOpen={sidebarOpen}
                 setSidebarOpen={setSidebarOpen}
@@ -231,7 +231,7 @@ export default function DashboardLayout({ children }) {
             </div>
 
             {/* Scrollable Content */}
-            <main className="flex-1 overflow-y-auto overflow-x-hidden p-3 sm:p-4 md:p-5 lg:p-6 min-h-0">
+            <main className="relative z-0 flex-1 overflow-y-auto overflow-x-hidden p-3 sm:p-4 md:p-5 lg:p-6 min-h-0">
               {children}
             </main>
           </div>
