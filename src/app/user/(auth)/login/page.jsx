@@ -7,7 +7,6 @@ import { appLogin } from "@/app/redux/slices/authSlice"
 import { RotateCcw, User, Lock, Shield, Check, ArrowRight } from "lucide-react"
 import toast, { Toaster } from "react-hot-toast"
 import Link from "next/link"
-import { useSearchParams } from "next/navigation"
 import { decryptData } from "@/app/constants/encryption"
 
 
@@ -33,7 +32,6 @@ const preloadImage = (url, onLoaded) => {
 
 export default function LoginPage() {
   const [username, setUsername] = useState("")
-  const searchParams = useSearchParams()
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const [showPassword, setShowPassword] = useState(false)

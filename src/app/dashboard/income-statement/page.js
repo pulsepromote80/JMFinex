@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, Suspense } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTransactionHistory } from '@/app/redux/slices/walletSlice';
 import { useSearchParams } from 'next/navigation';
@@ -21,7 +21,7 @@ const KEY_TO_LABEL = {
   DirectIncome: 'Direct Income'
 };
 
-export default function IncomeStatement() {
+function IncomeStatementContent() {
   const userId = getUserId();
   const dispatch = useDispatch();
   const searchParams = useSearchParams();
@@ -262,5 +262,15 @@ export default function IncomeStatement() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function IncomeStatement() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gray-50 dark:bg-[#060918] flex items-center justify-center">
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+    </div>}>
+      <IncomeStatementContent />
+    </Suspense>
   );
 }

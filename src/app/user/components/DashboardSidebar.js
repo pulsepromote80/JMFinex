@@ -12,7 +12,7 @@
 // import { getUserId, doUserLogout } from "@/app/api/auth";
 // import Link from 'next/link';
 // import { FiLogOut } from "react-icons/fi";
-// import { useTheme } from '@/components/ThemeProvider';
+// import { useTheme } from 'next-themes';
 // import { RiMoonLine, RiSunLine } from 'react-icons/ri';
 
 // export default function DashboardHeader({ sidebarOpen, setSidebarOpen }) {
@@ -749,14 +749,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserId, doUserLogout } from "@/app/api/auth";
 import Link from 'next/link';
 import { FiLogOut } from "react-icons/fi";
-import { useTheme } from '@/components/ThemeProvider';
+import { useTheme } from 'next-themes';
 import { RiMoonLine, RiSunLine } from 'react-icons/ri';
 
 export default function DashboardHeader({ sidebarOpen, setSidebarOpen }) {
 
   const pathname = usePathname();
   const dispatch = useDispatch();
-  const { isDark, toggleTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
   const [showBotPopup, setShowBotPopup] = useState(false);
   const [showRefPopup, setShowRefPopup] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
@@ -1088,12 +1088,12 @@ export default function DashboardHeader({ sidebarOpen, setSidebarOpen }) {
           <button
             type="button"
             className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-xs font-semibold hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-            onClick={toggleTheme}
-            aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-            title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
           >
-            {isDark ? <RiSunLine className="w-4 h-4" /> : <RiMoonLine className="w-4 h-4" />}
-            <span className="hidden sm:inline">{isDark ? 'Dark' : 'Light'}</span>
+            {theme === 'dark' ? <RiSunLine className="w-4 h-4" /> : <RiMoonLine className="w-4 h-4" />}
+            <span className="hidden sm:inline">{theme === 'dark' ? 'Dark' : 'Light'}</span>
           </button>
 
           {/* Notifications */}

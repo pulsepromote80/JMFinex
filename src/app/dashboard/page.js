@@ -15,12 +15,12 @@ import { botActivate } from "@/app/redux/slices/fundManagerSlice"
 import { useRouter } from 'next/navigation';
 import XoxoFxChatbot from '../user/components/Xoxofxchatbot';
 import RankProgress from '../user/components/RankProgress';
-import { useTheme } from '@/components/ThemeProvider';
+import { useTheme } from 'next-themes';
 
 export default function DashboardPage() {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { isDark } = useTheme();
+  const { theme } = useTheme();
   const chartEarnRef = useRef(null);
   const chartPieRef = useRef(null);
   const chartPortRef = useRef(null);
@@ -50,7 +50,7 @@ export default function DashboardPage() {
   const [analyticsMetric, setAnalyticsMetric] = useState('Income');
   const [botActiveTime, setBotActiveTime] = useState(null);
 
-  const theme = isDark ? 'dark' : 'light';
+  const currentTheme = theme === 'dark' ? 'dark' : 'light';
 
   const BOT_SESSION_KEY = 'RoventarBotActive';
   const BOT_START_KEY = 'RoventarBotStartTime';

@@ -6,7 +6,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { RiMoonLine, RiSunLine, RiEyeLine, RiEyeOffLine, RiAdminLine, RiLockLine, RiUserLine, RiShieldKeyholeLine, RiArrowRightLine } from "react-icons/ri";
-import { useTheme } from '@/components/ThemeProvider';
+import { useTheme } from 'next-themes';
 import { useEffect } from 'react';
 import { adminLogin } from '@/app/redux/slices/authSlice';
 import { getAdminToken, getAdminEncryptedLocalData } from '@/app/api/auth';
@@ -22,7 +22,7 @@ const adminLoginSchema = Yup.object().shape({
 export default function AdminLogin() {
     const router = useRouter();
     const dispatch = useDispatch();
-    const { isDark, toggleTheme } = useTheme();
+    const { theme, setTheme } = useTheme();
     const [showPassword, setShowPassword] = useState(false);
 
     useEffect(() => {
@@ -75,10 +75,10 @@ export default function AdminLogin() {
                 {/* Header with Theme Toggle */}
                 <div className="flex items-center justify-end mb-6">
                     <button
-                        onClick={toggleTheme}
+                        onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
                         className="group w-10 h-10 flex items-center justify-center rounded-xl bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-700 hover:shadow-lg transition-all duration-300 cursor-pointer border border-gray-200 dark:border-gray-700"
                     >
-                        {isDark ? <RiSunLine className="text-lg transition-transform group-hover:rotate-90" /> : <RiMoonLine className="text-lg transition-transform group-hover:rotate-12" />}
+                        {theme === 'dark' ? <RiSunLine className="text-lg transition-transform group-hover:rotate-90" /> : <RiMoonLine className="text-lg transition-transform group-hover:rotate-12" />}
                     </button>
                 </div>
 

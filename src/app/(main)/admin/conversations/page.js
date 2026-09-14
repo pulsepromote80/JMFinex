@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserAllChatsAdmin, chatMsgByIdAdmin } from '@/app/redux/slices/authSlice';
@@ -19,7 +19,7 @@ import {
   RiRobot2Line
 } from 'react-icons/ri';
 
-export default function ConversationsPage() {
+function ConversationsContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const userId = searchParams.get('userId');
@@ -485,5 +485,15 @@ export default function ConversationsPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function ConversationsPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+    </div>}>
+      <ConversationsContent />
+    </Suspense>
   );
 }

@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { useTheme } from '@/components/ThemeProvider';
+import { useTheme } from 'next-themes';
 
 const KB = {
   // ---------- PLATFORM OVERVIEW ----------
@@ -246,8 +246,8 @@ const LIGHT_C = {
 };
 
 export default function XoxoFxChatbot() {
-  const { isDark } = useTheme();
-  const colors = isDark ? C : LIGHT_C;
+  const { theme } = useTheme();
+  const colors = theme === 'dark' ? C : LIGHT_C;
   const [messages, setMessages] = useState([
     { role: "bot", text: "Namaste! Ask me anything about XOXO FX — bots, packages, income plans, ranks, or rewards!" },
   ]);
