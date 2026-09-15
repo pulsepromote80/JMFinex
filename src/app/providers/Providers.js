@@ -9,7 +9,7 @@ import { ToastContainer } from "react-toastify";
 export function Providers({ children }) {
   return (
     <Provider store={store}>
-      <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+      <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
         {children}
         <Toaster
           position="top-center"
