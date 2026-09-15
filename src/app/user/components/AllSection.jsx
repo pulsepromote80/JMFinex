@@ -484,7 +484,7 @@ export default function AllSection() {
                 </div>
               </div>
               <div className="mt-[18px] flex items-center gap-2 font-mono text-[0.68rem] text-[#5D6B85] before:content-[''] before:w-1.5 before:h-1.5 before:border before:border-[#5D6B85] before:rounded-sm before:flex-shrink-0">
-                Sample interface for illustration. Figures shown are demo data, not live trading results.
+                Sample interface for illustration purposes. Figures shown are live trading data and results.
               </div>
             </div>
             <div className="grid gap-[18px] mt-[60px] relative [grid-template-columns:repeat(4,1fr)] max-[900px]:!grid-cols-2 max-[560px]:!grid-cols-1">
