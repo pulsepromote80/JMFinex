@@ -22,9 +22,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata = {
-  title: "Roventar — AI-Powered Digital Trading Technology",
+  title: "JMFINEX — AI-Powered Digital Trading Technology",
   description:
-    "Roventar is a futuristic trading technology ecosystem combining AI-driven analytics, automated infrastructure and global market data.",
+    "JMFINEX is a futuristic trading technology ecosystem combining AI-driven analytics, automated infrastructure and global market data.",
 };
 
 export default function RootLayout({ children }) {
