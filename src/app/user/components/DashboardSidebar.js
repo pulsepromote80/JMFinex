@@ -337,21 +337,14 @@ export default function DashboardHeader({ sidebarOpen, setSidebarOpen }) {
 
         {/* Right Section */}
         <div className="flex items-center gap-2 flex-wrap">
-          {/* Bot Status */}
-          <div 
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 text-xs font-bold text-gray-700 dark:text-gray-300 cursor-pointer"
-            onClick={() => setShowBotPopup(true)}
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-teal-500 dark:bg-teal-400 shadow-[0_0_7px_rgba(20,184,166,0.5)] dark:shadow-[0_0_7px_rgba(45,212,191,0.5)] animate-pulse"></span>
-            {dashboardData?.[0]?.BotStatus || "BOT ACTIVE"}
-          </div>
+          
 
           {/* Invite & Earn */}
           <div 
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 text-xs font-bold text-gray-700 dark:text-gray-300 cursor-pointer"
             onClick={() => setShowRefPopup(true)}
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-teal-500 dark:bg-teal-400"></span>
+            <span className="w-1.5 h-1.5 rounded-full bg-[#38BDF8] dark:bg-[#38BDF8]"></span>
             INVITE & EARN
           </div>
 
@@ -441,7 +434,7 @@ export default function DashboardHeader({ sidebarOpen, setSidebarOpen }) {
           </Link>
 
           {/* Today Income */}
-          <div className="px-3 py-1.5 rounded-full bg-teal-50 dark:bg-teal-950/30 border border-teal-200 dark:border-teal-800 text-xs font-bold text-teal-600 dark:text-teal-400">
+          <div className="px-3 py-1.5 rounded-full bg-[#EAF3FF] dark:bg-[#0B2347]/60 border border-[#B8D5FF] dark:border-[#1D4F91] text-xs font-bold text-[#0057D9] dark:text-[#38BDF8]">
             ▲ +${dashboardData?.[0]?.TodayIncome || "0"} today
           </div>
 
@@ -449,7 +442,7 @@ export default function DashboardHeader({ sidebarOpen, setSidebarOpen }) {
           <div className="relative" ref={userMenuRef}>
             <button
               type="button"
-              className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-teal-50 dark:bg-teal-950/30 border border-teal-200 dark:border-teal-800 text-teal-700 dark:text-teal-300 text-sm font-semibold hover:bg-teal-100 dark:hover:bg-teal-900/50 transition-colors"
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#EAF3FF] dark:bg-[#0B2347]/60 border border-[#B8D5FF] dark:border-[#1D4F91] text-[#0057D9] dark:text-[#38BDF8] text-sm font-semibold hover:bg-[#D9EBFF] dark:hover:bg-[#123663] transition-colors"
               onClick={() => setShowUserMenu((prev) => !prev)}
             >
               <FiUser className="w-4 h-4" />
@@ -512,17 +505,17 @@ export default function DashboardHeader({ sidebarOpen, setSidebarOpen }) {
       {showBotPopup && (
         <div className="fixed inset-0 bg-gray-900/70 backdrop-blur-sm z-[900] flex items-center justify-center p-4" id="botOv" onClick={(e) => e.target === e.currentTarget && closeBot()}>
           <div className="bg-white dark:bg-gray-900 rounded-2xl max-w-md w-full shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300">
-            <div className="h-1 bg-gradient-to-r from-teal-400 to-blue-400"></div>
+            <div className="h-1 bg-gradient-to-r from-[#0057D9] to-[#38BDF8]"></div>
             <button className="absolute top-3 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors" onClick={closeBot}>✕</button>
             <div className="p-6 text-center">
               <div className="text-xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-1">
-                Bot <span className="text-teal-500 dark:text-teal-400">Status</span>
+                Bot <span className="text-[#0057D9] dark:text-[#38BDF8]">Status</span>
               </div>
               <div className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
-                Your trading bot is currently <strong className="text-teal-500 dark:text-teal-400">ACTIVE</strong>
+                Your trading bot is currently <strong className="text-[#0057D9] dark:text-[#38BDF8]">ACTIVE</strong>
               </div>
               <button 
-                className="mt-4 w-full bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 rounded-xl transition-colors"
+                className="mt-4 w-full bg-[#0057D9] hover:bg-[#0046AE] text-white font-bold py-3 rounded-xl transition-colors"
                 onClick={activateBot}
               >
                 ✓ Bot Active
@@ -536,7 +529,7 @@ export default function DashboardHeader({ sidebarOpen, setSidebarOpen }) {
       {showRefPopup && (
         <div className="fixed inset-0 bg-gray-900/70 backdrop-blur-sm z-[900] flex items-center justify-center p-4" id="refOv" onClick={(e) => e.target === e.currentTarget && closeRef()}>
           <div className="bg-white dark:bg-gray-900 rounded-2xl max-w-md w-full shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300 max-h-[94vh] overflow-y-auto">
-            <div className="h-1 bg-gradient-to-r from-teal-400 to-amber-400"></div>
+            <div className="h-1 bg-gradient-to-r from-[#0057D9] to-[#38BDF8]"></div>
             <button className="absolute top-3 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors" onClick={closeRef}>✕</button>
             <div className="p-6">
               <div className="text-center mb-4">
@@ -580,7 +573,7 @@ export default function DashboardHeader({ sidebarOpen, setSidebarOpen }) {
                 {refrelLoading ? "Loading..." : (referralLink || `https://roventar.com/user/register?ref=${userID || "XO5599007"}`)}
               </div>
               <button 
-                className="w-full bg-gradient-to-r from-teal-600 to-blue-500 hover:from-teal-700 hover:to-blue-600 text-white font-bold py-3 rounded-xl transition-all mb-4 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-gradient-to-r from-[#0057D9] to-[#38BDF8] hover:from-[#0046AE] hover:to-[#0EA5E9] text-white font-bold py-3 rounded-xl transition-all mb-4 disabled:opacity-50 disabled:cursor-not-allowed"
                 onClick={copyRef} 
                 disabled={refrelLoading}
               >

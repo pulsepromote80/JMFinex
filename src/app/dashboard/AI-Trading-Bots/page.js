@@ -225,7 +225,7 @@ const mapApiDataToBots = (activeProducts) => {
       confidence: config.confidence,
       timeframe: config.timeframe,
       market: config.market,
-      myfxbookLink: config.myfxbookLink,
+      myfxbookLink: product.url,
       risk: config.risk || "Medium",
       apr: `${product.roi}%`,
       winRate: `${product.winrate}%`,
@@ -432,7 +432,7 @@ function BotCard({ bot, marketPrices, lastUpdate, chartData, livePrice, wsConnec
                 onClick={() => onInvest(bot)}
                 className="flex items-center justify-center gap-1 px-2.5 py-2 max-sm:py-2.5 max-sm:px-3 border border-blue-600 rounded-lg bg-blue-50 dark:bg-[#1e3a5f] text-[10px] max-sm:text-[11px] font-semibold text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white hover:-translate-y-px transition-all whitespace-nowrap"
               >
-                Invest Now
+                Use Strategy
                 <ArrowUpRight size={14} />
               </button>
             </div>
@@ -903,8 +903,8 @@ export default function SonicScalper() {
     return (
       <div className="flex min-h-screen items-center justify-center bg-slate-50 dark:bg-slate-900">
         <div className="text-center">
-          <div className="text-5xl mb-4 animate-sb-bounce">🤖</div>
-          <div className="text-lg font-semibold text-slate-900 dark:text-slate-100">Loading AI Bots...</div>
+          <div className="text-5xl mb-4 animate-sb-bounce">📊</div>
+          <div className="text-lg font-semibold text-slate-900 dark:text-slate-100">Loading Bot Strategy...</div>
         </div>
       </div>
     );

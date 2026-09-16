@@ -36,7 +36,7 @@ export default function FundDirector() {
               onClick={() => setActiveTab(tab.id)}
               className={`flex-1 px-4 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 whitespace-nowrap ${
                 activeTab === tab.id
-                  ? "bg-gradient-to-r from-teal-400 to-teal-400 text-white shadow-md shadow-purple-500/25"
+                  ? "bg-gradient-to-r from-[#38BDF8] to-blue-600 text-white shadow-md shadow-purple-500/25"
                   : "text-gray-600 dark:text-[#9db4be] hover:bg-gray-200 dark:hover:bg-gray-700/50 hover:text-gray-900 dark:hover:text-white"
               }`}
               role="tab"
