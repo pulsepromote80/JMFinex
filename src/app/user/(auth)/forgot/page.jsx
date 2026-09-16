@@ -1,14 +1,15 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useDispatch } from 'react-redux';
 import toast, { Toaster } from 'react-hot-toast';
 import { forgotPassword } from "@/app/redux/slices/authSlice";
 import { Mail, ArrowLeft, User } from "lucide-react";
-import Home from '@/app/(main)/page';
 
 export default function ForgotPassword() {
+  const router = useRouter();
   const dispatch = useDispatch();
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -47,6 +48,13 @@ export default function ForgotPassword() {
     }
 
     setErrors(newErrors);
+    if (!isValid) {
+      // Show error message
+      const errorMessages = Object.values(newErrors).filter(msg => msg !== "");
+      if (errorMessages.length > 0) {
+        toast.error(errorMessages[0]);
+      }
+    }
     return isValid;
   };
 
@@ -73,251 +81,257 @@ export default function ForgotPassword() {
     }
   };
 
-  const handleFocus = (e) => {
-    e.target.style.borderColor = "rgb(255 255 255 / 70%)";
-    e.target.style.background = "rgba(34,232,212,0.08)";
-    e.target.style.boxShadow = "none";
-  };
 
-  const handleBlurStyle = (e, hasError = false) => {
-    e.target.style.borderColor = hasError ? "rgba(239,68,68,0.45)" : "rgba(140,180,200,0.24)";
-    e.target.style.background = "rgba(255,255,255,0.04)";
-    e.target.style.boxShadow = "none";
-  };
 
   if (pageLoading) {
     return (
-      <>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="/assets/css/login.css" />
-        <style jsx>{`
-          .loader-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #060918 0%, #0a0f2a 100%);
-            z-index: 9999;
-          }
-          .loader-spinner {
-            width: 60px;
-            height: 60px;
-            border: 3px solid rgba(34, 232, 212, 0.2);
-            border-top: 3px solid #22e8d4;
-            border-right: 3px solid #cba463;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-          }
-          @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-          }
-          .loader-text {
-            margin-top: 20px;
-            color: #22e8d4;
-            font-family: monospace;
-            font-size: 14px;
-            letter-spacing: 2px;
-            animation: pulse 1.5s ease-in-out infinite;
-          }
-          @keyframes pulse {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
-          }
-        `}</style>
-        <div className="loader-container">
-          <div style={{ textAlign: "center" }}>
-            <div className="loader-spinner"></div>
-            <div className="loader-text">LOADING</div>
-          </div>
+      <div className="d-flex align-items-center justify-content-center min-vh-100" style={{ background: '#0B1120' }}>
+        <div className="text-center">
+          <div className="spinner-border" style={{ color: '#F59E0B', width: '3rem', height: '3rem' }} role="status" />
         </div>
-      </>
+      </div>
     );
   }
 
   return (
     <>
+      <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
-      <link rel="stylesheet" href="/assets/css/login.css" /> 
+      
+      <style jsx global>{`
+        body, html {
+          background: #0B1120 !important;
+          overflow: hidden !important;
+        }
+        .forgot-input::placeholder {
+          color: #F59E0B !important;
+        }
+      `}</style>
       
       <Toaster
         position="top-right"
         toastOptions={{
           duration: 4000,
           style: {
-            background: "#060918",
-            color: "#e8e0fa",
-            border: "1px solid rgba(34,232,212,0.25)",
+            background: "#111827",
+            color: "#f3f4f6",
+            border: "1px solid rgba(245,158,11,0.3)",
             borderRadius: "12px",
             fontSize: "13px",
           },
-          success: { iconTheme: { primary: "#22e8d4", secondary: "#04060b" } },
-          error: { iconTheme: { primary: "#ef4444", secondary: "#e8e0fa" } },
+          success: { iconTheme: { primary: "#F59E0B", secondary: "#0B1120" } },
+          error: { iconTheme: { primary: "#ef4444", secondary: "#f3f4f6" } },
         }}
       />
 
-      <div className="login-theme min-vh-100 d-flex align-items-center justify-content-center px-3 py-5 position-relative overflow-hidden">
-        {/* Orb - purple top-left */}
-        <div className="position-absolute rounded-circle pe-none orb-purple" />
+      <div className="min-vh-100 d-flex align-items-center justify-content-center px-3 py-5 position-relative" style={{   background: `url('/bg.jpg') center/cover no-repeat`, 
+        fontFamily: 'Geist, sans-serif',
+        minHeight: '100vh',
+        width: '100vw',
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        overflow: 'hidden' }}>
         
-        {/* Orb - cyan bottom-right */}
-        <div className="position-absolute rounded-circle pe-none orb-cyan" />
-        
-        {/* Orb - center */}
-        <div className="position-absolute top-50 start-50 translate-middle rounded-circle pe-none orb-center" />
+        {/* Decorative Orbs */}
+        <div className="position-absolute rounded-circle" style={{ width: '400px', height: '400px', background: 'radial-gradient(circle, rgba(245,158,11,0.08) 0%, transparent 70%)', top: '-10%', left: '-10%' }} />
+        <div className="position-absolute rounded-circle" style={{ width: '500px', height: '500px', background: 'radial-gradient(circle, rgba(56,189,248,0.05) 0%, transparent 70%)', bottom: '-20%', right: '-10%' }} />
 
         {/* Card */}
-        <div className="position-relative z-1 w-100 px-4 px-md-5 py-5 rounded-4 login-card">
-          {/* Top shimmer line */}
-          <div className="position-absolute top-0 start-50 translate-middle-x shimmer-line" />
+        <div className="position-relative z-1 w-100" style={{ maxWidth: '440px' }}>
+          <div className="p-4 p-md-5 rounded-4" style={{ 
+            background: 'rgba(17, 24, 39, 0.0)', 
+            backdropFilter: 'blur(20px)', 
+            border: '1px solid rgba(255,255,255,0.08)',
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)'
+          }}>
 
           {/* Logo */}
-          <div className="d-flex justify-content-center mb-2">
-      <a href='/'>
-              <img src="/logo.png" alt="Logo" className="login-logo" />
-      </a>
+          <div className="d-flex justify-content-center mb-4">
+            <Link href='/'>
+              <img src="/logo.png" alt="JMFinex" style={{ height: '50px', objectFit: 'contain' }} />
+            </Link>
           </div>
+
+          <h2 className="text-center text-white fw-bold mb-1" style={{ fontSize: '24px' }}>Forgot Password</h2>
+          <p className="text-center mb-4" style={{ color: '#94a3b8', fontSize: '14px' }}>Enter your username and email to reset your password</p>
 
           {!submitted ? (
             <>
-              {/* Forgot Password divider */}
-              <div className="d-flex align-items-center gap-3 mt-4 mb-4">
-                <div className="flex-grow-1 divider-line" />
-                <span className="signin-text">
-                  Forgot Password
-                </span>
-                <div className="flex-grow-1 divider-line" />
-              </div>
+              <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
+                {errors.username || errors.email ? (
+                  <div className="alert alert-danger py-2 text-center" style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', color: '#fca5a5', fontSize: '13px' }}>
+                    {errors.username || errors.email}
+                  </div>
+                ) : null}
 
-              <p className="text-center mb-4">
-                Enter your username and registered email address to reset your password
-              </p>
-
-              {/* Username Field */}
-              <div className="mb-4">
-                <label className="login-label">Username</label>
-                <div className="position-relative">
-                  <span className="position-absolute start-0 top-50 translate-middle-y ms-2 input-icon !text-[#22e8d4]">
-                    <User size={15} />
-                  </span>
-                  <input
-                    type="text"
-                    className={`form-control login-input ${errors.username ? 'login-input-error' : ''}`}
-                    placeholder="Enter your username"
-                    value={username}
-                    onChange={e => {
-                      setUsername(e.target.value);
-                      if (errors.username) setErrors({ ...errors, username: "" });
-                    }}
-                    style={{ paddingLeft: "2.25rem" }}
-                    onFocus={handleFocus}
-                    onBlur={(e) => handleBlurStyle(e, errors.username)}
-                  />
+                {/* Username Field */}
+                <div className="mb-3">
+                  <label className="form-label text-white-50 small fw-bold text-uppercase" style={{ letterSpacing: '1px' }}>Username</label>
+                  <div className="position-relative">
+                    <div className="position-absolute top-50 start-0 translate-middle-y ms-3" style={{ color: '#F59E0B' }}>
+                      <User size={18} />
+                    </div>
+                    <input
+                      type="text"
+                      value={username}
+                      onChange={(e) => {
+                        setUsername(e.target.value);
+                        if (errors.username) setErrors({ ...errors, username: "" });
+                      }}
+                      placeholder="Enter Username"
+                      className={`form-control bg-transparent text-white border border-white ps-5 py-3 forgot-input ${errors.username ? 'is-invalid' : ''}`}
+                      style={{ 
+                        background: 'rgba(255,255,255,0.03)', 
+                        borderRadius: '10px',
+                        border: errors.username ? '1px solid #ef4444' : '1px solid rgba(255,255,255,0.1)',
+                        boxShadow: 'none',
+                        color: '#fff'
+                      }}
+                      onFocus={(e) => e.target.style.border = '1px solid #F59E0B'}
+                    />
+                  </div>
+                  {errors.username && <div className="text-danger mt-1" style={{ fontSize: '12px' }}>⚠ {errors.username}</div>}
                 </div>
-                {errors.username && <div className="error-message">{errors.username}</div>}
-              </div>
 
-              {/* Email Field */}
-              <div className="mb-4">
-                <label className="login-label">Email Address</label>
-                <div className="position-relative">
-                  <span className="position-absolute start-0 top-50 translate-middle-y ms-2 input-icon !text-[#22e8d4]">
-                    <Mail size={15} />
-                  </span>
-                  <input
-                    type="email"
-                    className={`form-control login-input ${errors.email ? 'login-input-error' : ''}`}
-                    placeholder="Enter your email"
-                    value={email}
-                    onChange={e => {
-                      setEmail(e.target.value);
-                      if (errors.email) setErrors({ ...errors, email: "" });
-                    }}
-                    style={{ paddingLeft: "2.25rem" }}
-                    onFocus={handleFocus}
-                    onBlur={(e) => handleBlurStyle(e, errors.email)}
-                  />
+                {/* Email Field */}
+                <div className="mb-3">
+                  <label className="form-label text-white-50 small fw-bold text-uppercase" style={{ letterSpacing: '1px' }}>Email Address</label>
+                  <div className="position-relative">
+                    <div className="position-absolute top-50 start-0 translate-middle-y ms-3" style={{ color: '#F59E0B' }}>
+                      <Mail size={18} />
+                    </div>
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                        if (errors.email) setErrors({ ...errors, email: "" });
+                      }}
+                      placeholder="Enter Email"
+                      className={`form-control bg-transparent text-white border border-white ps-5 py-3 forgot-input ${errors.email ? 'is-invalid' : ''}`}
+                      style={{ 
+                        background: 'rgba(255,255,255,0.03)', 
+                        borderRadius: '10px',
+                        border: errors.email ? '1px solid #ef4444' : '1px solid rgba(255,255,255,0.1)',
+                        boxShadow: 'none',
+                        color: '#fff'
+                      }}
+                      onFocus={(e) => e.target.style.border = '1px solid #F59E0B'}
+                    />
+                  </div>
+                  {errors.email && <div className="text-danger mt-1" style={{ fontSize: '12px' }}>⚠ {errors.email}</div>}
                 </div>
-                {errors.email && <div className="error-message">{errors.email}</div>}
-              </div>
 
-              {/* Submit Button */}
-              <button
-                className={`btn w-100 d-flex align-items-center justify-content-center gap-2 fw-bold text-uppercase mt-2 login-submit ${(loading || !username || !email) ? 'login-submit-loading' : ''}`}
-                onClick={handleSubmit}
-                disabled={!username || !email || loading}
-              >
-                {loading && (
-                  <span className="spinner-border spinner-border-sm spinner-white" />
-                )}
-                {loading ? "Sending..." : "Send Reset Link"}
-              </button>
-
-              {/* OR separator */}
-              <div className="d-flex align-items-center gap-2 my-4">
-                <div className="flex-grow-1 or-divider" />
-                <span className="or-text !text-[#8ea0b5]">or</span>
-                <div className="flex-grow-1 or-divider" />
-              </div>
-
-              {/* Back to Login */}
-              <Link href="/user/login" style={{ textDecoration: "none" }}>
-                <button className="btn w-100 signup-button" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px" }}>
-                  <ArrowLeft size={15} />
-                  Back to Login
+                {/* Submit Button */}
+                <button
+                  type="submit"
+                  className="btn w-100 py-3 fw-bold text-uppercase mt-4"
+                  style={{
+                    background: 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)',
+                    border: 'none',
+                    borderRadius: '10px',
+                    color: '#0B1120',
+                    boxShadow: '0 10px 28px rgba(245,158,11,0.18)',
+                    transition: 'all 0.3s ease'
+                  }}
+                  disabled={loading || !username || !email}
+                  onMouseEnter={(e) => {
+                    if (!loading && username && email) {
+                      e.currentTarget.style.filter = 'brightness(1.08)';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.filter = 'brightness(1)';
+                  }}
+                >
+                  {loading ? (
+                    <>
+                      <span className="spinner-border spinner-border-sm me-2" style={{ color: '#0B1120' }} />
+                      Sending...
+                    </>
+                  ) : (
+                    'Send Reset Link'
+                  )}
                 </button>
-              </Link>
+
+                {/* OR separator */}
+                <div className="d-flex align-items-center gap-2 my-4">
+                  <div className="flex-grow-1" style={{ height: '1px', background: 'rgba(255,255,255,0.1)' }} />
+                  <span style={{ color: '#94a3b8', fontSize: '12px' }}>or</span>
+                  <div className="flex-grow-1" style={{ height: '1px', background: 'rgba(255,255,255,0.1)' }} />
+                </div>
+
+                {/* Back to Login */}
+                <Link href="/user/login" style={{ textDecoration: "none" }}>
+                  <button 
+                    className="btn w-100 py-3 fw-bold"
+                    style={{
+                      background: 'transparent',
+                      border: '1px solid rgba(255,255,255,0.2)',
+                      borderRadius: '10px',
+                      color: '#eef3f8',
+                      display: "flex", 
+                      alignItems: "center", 
+                      justifyContent: "center", 
+                      gap: "8px",
+                      transition: 'all 0.3s ease'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = 'rgba(245,158,11,0.08)';
+                      e.currentTarget.style.borderColor = '#F59E0B';
+                      e.currentTarget.style.color = '#F59E0B';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = 'transparent';
+                      e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)';
+                      e.currentTarget.style.color = '#eef3f8';
+                    }}
+                  >
+                    <ArrowLeft size={15} />
+                    Back to Login
+                  </button>
+                </Link>
+              </form>
             </>
           ) : (
             <>
-              {/* Success divider */}
-              <div className="d-flex align-items-center gap-3 mt-4 mb-4">
-                <div className="flex-grow-1 divider-line" />
-                <span className="signin-text !text-[#22e8d4]" style={{ fontSize: "10px" }}>
-                  Email Sent
-                </span>
-                <div className="flex-grow-1 divider-line" />
-              </div>
-
               <div style={{ textAlign: "center" }}>
                 <div style={{ marginBottom: "24px" }}>
-                  <svg width="64" height="64" fill="none" viewBox="0 0 24 24" stroke="var(--cyan)" strokeWidth="1.5">
+                  <svg width="64" height="64" fill="none" viewBox="0 0 24 24" stroke="#F59E0B" strokeWidth="1.5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <p style={{ color: "#fff", fontSize: "18px", fontFamily: "monospace", marginBottom: "12px" }}>
-                  Check Your <span style={{ color: "var(--cyan)" }}>Email</span>
-                </p>
-                <p style={{ color: "rgb(255 255 255 / 70%)", fontSize: "12px", fontFamily: "monospace", marginBottom: "24px" }}>
-                  We've sent a password reset link to <strong style={{ color: "var(--cyan)" }}>{email}</strong>
+                <h3 style={{ color: "#fff", fontSize: "24px", fontWeight: "bold", marginBottom: "12px" }}>
+                  Check Your Email
+                </h3>
+                <p style={{ color: "#94a3b8", fontSize: "14px", marginBottom: "24px" }}>
+                  We've sent a password reset link to <strong style={{ color: "#F59E0B" }}>{email}</strong>
                 </p>
                 
                 <button
-                  className="btn w-100"
+                  className="btn w-100 py-3 fw-bold"
                   onClick={() => {
                     setSubmitted(false);
                     setUsername('');
                     setEmail('');
                   }}
                   style={{
-                    padding: "12px",
-                    borderRadius: "12px",
-                    background: "transparent",
-                    border: "1px solid var(--cyan)",
-                    color: "var(--cyan)",
-                    fontSize: "14px",
-                    transition: "all 0.2s",
+                    background: 'transparent',
+                    border: '1px solid #F59E0B',
+                    borderRadius: '10px',
+                    color: '#F59E0B',
+                    fontSize: '14px',
+                    transition: 'all 0.3s ease'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.background = "rgba(34,211,238,0.1)";
+                    e.currentTarget.style.background = 'rgba(245,158,11,0.08)';
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.background = "transparent";
+                    e.currentTarget.style.background = 'transparent';
                   }}
                 >
                   Send to another email
@@ -326,20 +340,44 @@ export default function ForgotPassword() {
 
               {/* OR separator */}
               <div className="d-flex align-items-center gap-2 my-4">
-                <div className="flex-grow-1 or-divider" />
-                <span className="or-text !text-[#8ea0b5]">or</span>
-                <div className="flex-grow-1 or-divider" />
+                <div className="flex-grow-1" style={{ height: '1px', background: 'rgba(255,255,255,0.1)' }} />
+                <span style={{ color: '#94a3b8', fontSize: '12px' }}>or</span>
+                <div className="flex-grow-1" style={{ height: '1px', background: 'rgba(255,255,255,0.1)' }} />
               </div>
 
               {/* Back to Login */}
               <Link href="/user/login" style={{ textDecoration: "none" }}>
-                <button className="btn w-100 signup-button" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px" }}>
+                <button 
+                  className="btn w-100 py-3 fw-bold"
+                  style={{
+                    background: 'transparent',
+                    border: '1px solid rgba(255,255,255,0.2)',
+                    borderRadius: '10px',
+                    color: '#eef3f8',
+                    display: "flex", 
+                    alignItems: "center", 
+                    justifyContent: "center", 
+                    gap: "8px",
+                    transition: 'all 0.3s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(245,158,11,0.08)';
+                    e.currentTarget.style.borderColor = '#F59E0B';
+                    e.currentTarget.style.color = '#F59E0B';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'transparent';
+                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)';
+                    e.currentTarget.style.color = '#eef3f8';
+                  }}
+                >
                   <ArrowLeft size={15} />
                   Back to Login
                 </button>
               </Link>
             </>
           )}
+          </div>
         </div>
       </div>
     </>
