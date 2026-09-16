@@ -51,6 +51,10 @@
   @apply !text-[#8ea0b5];
 }
 
+.login-theme .password-input::placeholder {
+  color: #F59E0B !important;
+}
+
 .login-theme .forgot-password {
   @apply !text-[#8ea0b5];
 }
