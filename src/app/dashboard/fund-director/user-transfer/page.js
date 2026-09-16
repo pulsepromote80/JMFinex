@@ -101,7 +101,7 @@ const UserTransfer = () => {
         header: "Credit",
         accessorKey: "credit",
         cell: (info) => (
-          <span className="inline-block px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 font-semibold text-xs">
+          <span className="inline-block px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 font-semibold text-xs">
             ${info.getValue()}
           </span>
         ),
@@ -257,7 +257,7 @@ const UserTransfer = () => {
             <h2 className="text-xl font-bold text-gray-900 dark:text-[#eaf5f7] relative z-10">
               Deposit Wallet Transfer
             </h2>
-            <h2 className="text-sm font-semibold text-teal-600 dark:text-teal-400">
+            <h2 className="text-sm font-semibold text-blue-600 dark:text-blue-400">
               Balance: ${(depositWallet || 0).toFixed(2)}
             </h2>
           </div>
@@ -394,7 +394,7 @@ const UserTransfer = () => {
                         className={`w-full px-5 py-2.5 rounded-xl text-white font-semibold text-sm transition-all ${
                           isOtpSent 
                             ? 'bg-gray-400 dark:bg-gray-600 cursor-not-allowed opacity-60' 
-                            : 'bg-gradient-to-r from-teal-400 to-teal-400 hover:from-teal-700 hover:to-teal-700'
+                            : 'bg-gradient-to-r from-blue-400 to-blue-400 hover:from-blue-500 hover:to-blue-500'
                         }`}
                         disabled={isOtpSent}
                       >

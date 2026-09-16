@@ -85,7 +85,7 @@ export default function DashboardHeader({
           href="/dashboard" 
           className={`flex items-center gap-2.5 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 border-l-[3px] border-transparent ${
             pathname === '/dashboard' 
-              ? 'text-teal-600 dark:text-teal-400 bg-teal-50 dark:bg-teal-950/40 border-l-teal-500 dark:border-l-teal-400' 
+              ? 'text-[#0057D9] dark:text-[#38BDF8] bg-[#EAF3FF] dark:bg-[#0B2347]/60 border-l-[#0057D9] dark:border-l-[#38BDF8]'
               : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800/50'
           }`}
         >
@@ -99,7 +99,7 @@ export default function DashboardHeader({
           href="/dashboard/AI-Trading-Bots" 
           className={`flex items-center gap-2.5 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 border-l-[3px] border-transparent ${
             pathname === '/dashboard/AI-Trading-Bots' 
-              ? 'text-teal-600 dark:text-teal-400 bg-teal-50 dark:bg-teal-950/40 border-l-teal-500 dark:border-l-teal-400' 
+              ? 'text-[#0057D9] dark:text-[#38BDF8] bg-[#EAF3FF] dark:bg-[#0B2347]/60 border-l-[#0057D9] dark:border-l-[#38BDF8]'
               : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800/50'
           }`}
         >
@@ -114,14 +114,14 @@ export default function DashboardHeader({
           href="/dashboard/engine" 
           className={`flex items-center gap-2.5 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 border-l-[3px] border-transparent ${
             pathname === '/dashboard/engine' 
-              ? 'text-teal-600 dark:text-teal-400 bg-teal-50 dark:bg-teal-950/40 border-l-teal-500 dark:border-l-teal-400' 
+              ? 'text-[#0057D9] dark:text-[#38BDF8] bg-[#EAF3FF] dark:bg-[#0B2347]/60 border-l-[#0057D9] dark:border-l-[#38BDF8]'
               : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800/50'
           }`}
         >
           <span className="w-4 text-center text-sm opacity-55 flex-shrink-0">
             <FiZap />
           </span>
-          <span>Roventar Engine</span>
+          <span>JMFINEX Engine</span>
           <span className="ml-auto w-1.5 h-1.5 rounded-full bg-teal-500 dark:bg-teal-400 shadow-[0_0_7px_rgba(20,184,166,0.5)] dark:shadow-[0_0_7px_rgba(45,212,191,0.5)] animate-pulse"></span>
         </Link>
 
@@ -129,7 +129,7 @@ export default function DashboardHeader({
           href="/dashboard/analytics" 
           className={`flex items-center gap-2.5 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 border-l-[3px] border-transparent ${
             pathname === '/dashboard/analytics' 
-              ? 'text-teal-600 dark:text-teal-400 bg-teal-50 dark:bg-teal-950/40 border-l-teal-500 dark:border-l-teal-400' 
+              ? 'text-[#0057D9] dark:text-[#38BDF8] bg-[#EAF3FF] dark:bg-[#0B2347]/60 border-l-[#0057D9] dark:border-l-[#38BDF8]'
               : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800/50'
           }`}
         >
@@ -143,7 +143,7 @@ export default function DashboardHeader({
           href="/dashboard/fund-director" 
           className={`flex items-center gap-2.5 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 border-l-[3px] border-transparent ${
             pathname === '/dashboard/fund-director' 
-              ? 'text-teal-600 dark:text-teal-400 bg-teal-50 dark:bg-teal-950/40 border-l-teal-500 dark:border-l-teal-400' 
+              ? 'text-[#0057D9] dark:text-[#38BDF8] bg-[#EAF3FF] dark:bg-[#0B2347]/60 border-l-[#0057D9] dark:border-l-[#38BDF8]'
               : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800/50'
           }`}
         >
@@ -157,7 +157,7 @@ export default function DashboardHeader({
           href="/dashboard/Team" 
           className={`flex items-center gap-2.5 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 border-l-[3px] border-transparent ${
             pathname === '/dashboard/Team' 
-              ? 'text-teal-600 dark:text-teal-400 bg-teal-50 dark:bg-teal-950/40 border-l-teal-500 dark:border-l-teal-400' 
+              ? 'text-[#0057D9] dark:text-[#38BDF8] bg-[#EAF3FF] dark:bg-[#0B2347]/60 border-l-[#0057D9] dark:border-l-[#38BDF8]'
               : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800/50'
           }`}
         >
@@ -171,7 +171,7 @@ export default function DashboardHeader({
           href="/dashboard/crypto-terminal" 
           className={`flex items-center gap-2.5 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 border-l-[3px] border-transparent ${
             pathname === '/dashboard/crypto-terminal' 
-              ? 'text-teal-600 dark:text-teal-400 bg-teal-50 dark:bg-teal-950/40 border-l-teal-500 dark:border-l-teal-400' 
+              ? 'text-[#0057D9] dark:text-[#38BDF8] bg-[#EAF3FF] dark:bg-[#0B2347]/60 border-l-[#0057D9] dark:border-l-[#38BDF8]'
               : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800/50'
           }`}
         >
@@ -192,7 +192,7 @@ export default function DashboardHeader({
           href="/dashboard/income-statement" 
           className={`flex items-center gap-2.5 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 border-l-[3px] border-transparent ${
             pathname === '/dashboard/income-statement' 
-              ? 'text-teal-600 dark:text-teal-400 bg-teal-50 dark:bg-teal-950/40 border-l-teal-500 dark:border-l-teal-400' 
+              ? 'text-[#0057D9] dark:text-[#38BDF8] bg-[#EAF3FF] dark:bg-[#0B2347]/60 border-l-[#0057D9] dark:border-l-[#38BDF8]'
               : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800/50'
           }`}
         >
@@ -206,7 +206,7 @@ export default function DashboardHeader({
           href="/dashboard/wallet-statement" 
           className={`flex items-center gap-2.5 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 border-l-[3px] border-transparent ${
             pathname === '/dashboard/wallet-statement' 
-              ? 'text-teal-600 dark:text-teal-400 bg-teal-50 dark:bg-teal-950/40 border-l-teal-500 dark:border-l-teal-400' 
+              ? 'text-[#0057D9] dark:text-[#38BDF8] bg-[#EAF3FF] dark:bg-[#0B2347]/60 border-l-[#0057D9] dark:border-l-[#38BDF8]'
               : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800/50'
           }`}
         >
@@ -220,7 +220,7 @@ export default function DashboardHeader({
           href="/dashboard/my-rewards" 
           className={`flex items-center gap-2.5 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 border-l-[3px] border-transparent ${
             pathname === '/dashboard/my-rewards' 
-              ? 'text-teal-600 dark:text-teal-400 bg-teal-50 dark:bg-teal-950/40 border-l-teal-500 dark:border-l-teal-400' 
+              ? 'text-[#0057D9] dark:text-[#38BDF8] bg-[#EAF3FF] dark:bg-[#0B2347]/60 border-l-[#0057D9] dark:border-l-[#38BDF8]'
               : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800/50'
           }`}
         >
@@ -234,7 +234,7 @@ export default function DashboardHeader({
           href="/dashboard/ai-assistant" 
           className={`flex items-center gap-2.5 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 border-l-[3px] border-transparent ${
             pathname === '/dashboard/ai-assistant' 
-              ? 'text-teal-600 dark:text-teal-400 bg-teal-50 dark:bg-teal-950/40 border-l-teal-500 dark:border-l-teal-400' 
+              ? 'text-[#0057D9] dark:text-[#38BDF8] bg-[#EAF3FF] dark:bg-[#0B2347]/60 border-l-[#0057D9] dark:border-l-[#38BDF8]'
               : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800/50'
           }`}
         >
@@ -255,7 +255,7 @@ export default function DashboardHeader({
           href="/dashboard/profile" 
           className={`flex items-center gap-2.5 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 border-l-[3px] border-transparent ${
             pathname === '/dashboard/profile' 
-              ? 'text-teal-600 dark:text-teal-400 bg-teal-50 dark:bg-teal-950/40 border-l-teal-500 dark:border-l-teal-400' 
+              ? 'text-[#0057D9] dark:text-[#38BDF8] bg-[#EAF3FF] dark:bg-[#0B2347]/60 border-l-[#0057D9] dark:border-l-[#38BDF8]'
               : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800/50'
           }`}
         >

@@ -118,7 +118,7 @@ const TeamReferral = () => {
                             key={tab}
                             className={`flex-1 px-4 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 whitespace-nowrap ${
                                 activeTab === tab
-                                    ? "bg-gradient-to-r from-teal-400 to-teal-400 text-white shadow-md shadow-teal-500/25"
+                                    ? "bg-gradient-to-r from-blue-400 to-blue-400 text-white shadow-md shadow-blue-500/25"
                                     : "text-gray-600 dark:text-[#9db4be] hover:bg-gray-200 dark:hover:bg-gray-700/50 hover:text-gray-900 dark:hover:text-white"
                             }`}
                             onClick={() => setActiveTab(tab)}
@@ -257,7 +257,7 @@ const TeamReferral = () => {
                     {/* Filter Card */}
                     <div className="bg-white dark:bg-[#10222e] border border-gray-200 dark:border-[rgba(140,200,205,0.16)] rounded-2xl shadow-sm p-5 mb-4">
                         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                            <div className="text-sm font-semibold text-teal-600 dark:text-teal-400">
+                            <div className="text-sm font-semibold text-blue-600 dark:text-blue-400">
                                 Direct Referral Team
                             </div>
                             <div className="flex items-center border border-gray-300 dark:border-gray-600 rounded-xl overflow-hidden">
@@ -286,12 +286,12 @@ const TeamReferral = () => {
                                 setSearchTerm(e.target.value);
                                 setCurrentPage(1);
                             }}
-                            className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#142936] text-gray-900 dark:text-[#eaf5f7] text-sm outline-none focus:border-teal-500 dark:focus:border-teal-400 transition-all placeholder-gray-400 dark:placeholder-gray-500"
+                            className="w-full px-4 py-3 rounded-xl border border-[#D6E5F5] dark:border-[#1D4F91] bg-[#F7FBFF] dark:bg-[#10223F] text-gray-900 dark:text-[#eaf5f7] text-sm outline-none focus:border-[#0057D9] dark:focus:border-[#38BDF8] transition-all placeholder-gray-400 dark:placeholder-gray-500"
                         />
                     </div>
 
                     {/* Team Members Table */}
-                    <div className="bg-white dark:bg-[#10222e] border border-gray-200 dark:border-[rgba(140,200,205,0.16)] rounded-2xl shadow-sm overflow-hidden">
+                        <div className="bg-white dark:bg-[#10222e] border border-gray-200 dark:border-[rgba(56,189,248,0.18)] rounded-2xl shadow-sm overflow-hidden">
                         {loading && (
                             <div className="p-4 text-gray-500 dark:text-[#9db4be]">
                                 Loading team data...
@@ -305,14 +305,14 @@ const TeamReferral = () => {
                         <div className="p-4 sm:p-5">
                             {loading ? (
                                 <div className="text-center py-8">
-                                    <div className="inline-block w-8 h-8 border-2 border-teal-500 rounded-full border-t-transparent animate-spin"></div>
+                                    <div className="inline-block w-8 h-8 border-2 border-blue-500 rounded-full border-t-transparent animate-spin"></div>
                                 </div>
                             ) : (
-                                <>
+                                          <>
                                     <div className="overflow-x-auto">
                                         <div className="inline-block min-w-full align-middle">
                                             <table className="w-full text-sm border-collapse">
-                                                <thead className="bg-gray-50 dark:bg-[#142936] border-b border-gray-200 dark:border-[rgba(140,200,205,0.1)]">
+                                                <thead className="bg-[#F1F7FD] dark:bg-[#10223F] border-b border-[#D6E5F5] dark:border-[rgba(56,189,248,0.16)]">
                                                     <tr>
                                                         <th className="px-4 py-3 text-center text-xs font-semibold text-gray-500 dark:text-[#9db4be] uppercase tracking-wider whitespace-nowrap">Sr No</th>
                                                         <th className="px-4 py-3 text-center text-xs font-semibold text-gray-500 dark:text-[#9db4be] uppercase tracking-wider whitespace-nowrap">Name</th>
@@ -331,15 +331,15 @@ const TeamReferral = () => {
                                                         currentMembers.map((member, index) => (
                                                             <tr
                                                                 key={member.id}
-                                                                className="border-b border-gray-100 dark:border-[rgba(140,200,205,0.06)] hover:bg-gray-50 dark:hover:bg-[rgba(47,217,211,0.04)] transition-colors"
+                                                                className="border-b border-gray-100 dark:border-[rgba(56,189,248,0.08)] hover:bg-[#F7FBFF] dark:hover:bg-[rgba(56,189,248,0.06)] transition-colors"
                                                             >
                                                                 <td className="px-4 py-3 text-center text-gray-700 dark:text-[#eaf5f7] whitespace-nowrap">
-                                                                    <span className="font-bold text-teal-600 dark:text-teal-400">
+                                                                    <span className="font-bold text-[#0057D9] dark:text-[#38BDF8]">
                                                                         {startIndex + index + 1}
                                                                     </span>
                                                                 </td>
                                                                 <td className="px-4 py-3 text-center text-gray-700 dark:text-[#eaf5f7] whitespace-nowrap">
-                                                                    <span className="font-bold text-teal-600 dark:text-teal-400">
+                                                                    <span className="font-bold text-[#0057D9] dark:text-[#38BDF8]">
                                                                         {member.name}
                                                                     </span>
                                                                 </td>

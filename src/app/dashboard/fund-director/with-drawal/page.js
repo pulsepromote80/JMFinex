@@ -295,12 +295,12 @@ const WithdrawalRequest = () => {
               Withdrawal
             </h2>
             {walletType === "income" && (
-              <h2 className="text-sm font-semibold text-teal-600 dark:text-teal-400">
+              <h2 className="text-sm font-semibold text-blue-600 dark:text-blue-400">
                 Balance: ${(performanceWalletBalance || 0).toFixed(2)}
               </h2>
             )}
             {walletType === "trade" && (
-              <h2 className="text-sm font-semibold text-teal-600 dark:text-teal-400">
+              <h2 className="text-sm font-semibold text-blue-600 dark:text-blue-400">
                 Balance: ${(yieldWalletBalance || 0).toFixed(2)}
               </h2>
             )}
@@ -386,7 +386,7 @@ const WithdrawalRequest = () => {
                         {formik.errors.walletAddress}
                       </div>
                     )}
-                  <label className="text-xs text-teal-600 dark:text-teal-400 block mt-1" id="lblWalletStatus">
+                  <label className="text-xs text-blue-600 dark:text-blue-400 block mt-1" id="lblWalletStatus">
                     {walletStatus}
                   </label>
                   {(!formik.values.walletAddress) && (
@@ -411,7 +411,7 @@ const WithdrawalRequest = () => {
                   className={`w-full px-5 py-2.5 rounded-xl text-white font-semibold text-sm transition-all ${
                     isOtpSent || walletType === "Select Wallet" || !formik.values.amount || !formik.values.walletAddress
                       ? 'bg-gray-400 dark:bg-gray-600 cursor-not-allowed opacity-60'
-                      : 'bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700'
+                      : 'bg-gradient-to-r from-blue-600 to-blue-600 hover:from-blue-500 hover:to-blue-700'
                   }`}
                   disabled={
                     isOtpLoading ||
@@ -442,7 +442,7 @@ const WithdrawalRequest = () => {
                       maxLength={6}
                       inputMode="numeric"
                       pattern="[0-9]{6}"
-                      className="w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#142936] text-gray-900 dark:text-[#eaf5f7] text-sm outline-none focus:border-teal-500 dark:focus:border-teal-400 transition-all font-mono tracking-wider"
+                      className="w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#142936] text-gray-900 dark:text-[#eaf5f7] text-sm outline-none focus:border-blue-500 dark:focus:border-blue-400 transition-all font-mono tracking-wider"
                       value={formik.values.otp}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}

@@ -152,7 +152,7 @@ export default function SelfDeposit() {
 
               <div className="text-center mt-6">
                 <button
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-teal-400 to-teal-400 hover:from-teal-700 hover:to-teal-700 text-white font-semibold text-base transition-all disabled:opacity-60 disabled:cursor-not-allowed w-full sm:w-auto min-w-[150px]"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-700 hover:to-blue-500 text-white font-semibold text-base transition-all disabled:opacity-60 disabled:cursor-not-allowed w-full sm:w-auto min-w-[150px]"
                   onClick={handleClick}
                   disabled={isLoading}
                 >
@@ -175,7 +175,7 @@ export default function SelfDeposit() {
               <p className="text-[11px] font-semibold text-gray-500 dark:text-[#9db4be] uppercase tracking-[0.05em] pb-2">
                 Network
               </p>
-              <span className="inline-block px-3 py-1.5 rounded-full bg-teal-100 dark:bg-teal-900/30 border border-teal-200 dark:border-teal-800 text-sm font-semibold text-teal-700 dark:text-teal-400">
+              <span className="inline-block px-3 py-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 text-sm font-semibold text-blue-700 dark:text-blue-400">
                 Binance Smart Chain
               </span>
             </div>

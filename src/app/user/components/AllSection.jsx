@@ -94,7 +94,11 @@ export default function AllSection() {
 
           <nav className="hidden max-[900px]:!hidden [@media(min-width:901px)]:flex items-center gap-[38px]">
             {navItems.map((id) => (
-              <a key={id} href={`#${id}`}
+              <a
+                key={id}
+                href={id === "academics" ? "/user/academic" : `#${id}`}
+                target={id === "academics" ? "_blank" : undefined}
+                rel={id === "academics" ? "noopener noreferrer" : undefined}
                 className="relative text-[0.88rem] font-medium text-[#8B98B0] transition-colors duration-250 hover:text-[#EEF2F8] after:content-[''] after:absolute after:left-0 after:-bottom-1.5 after:w-0 after:h-px after:[background:linear-gradient(90deg,#3B9EFF,#F0B429)] after:transition-[width] after:duration-350 hover:after:w-full capitalize"
               >
                 {id === "faq" ? "FAQ" : id}
@@ -150,7 +154,7 @@ export default function AllSection() {
           </svg>
         </button>
 
-        {navItems.map((id) => (
+        {/* {navItems.map((id) => (
           <a
             key={id}
             href={`#${id}`}
@@ -160,8 +164,20 @@ export default function AllSection() {
           >
             {id === "faq" ? "FAQ" : id}
           </a>
+        ))} */}
+        {navItems.map((id) => (
+          <a
+            key={id}
+            href={id === "academics" ? "/user/academic" : `#${id}`}
+            target={id === "academics" ? "_blank" : undefined}
+            rel={id === "academics" ? "noopener noreferrer" : undefined}
+            onClick={() => setMobileMenuOpen(false)}
+            className={`mobile-menu-link font-display text-[1.6rem] transition-[opacity,transform] duration-500 capitalize ${mobileMenuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+            style={{ color: "#ffffff" }}
+          >
+            {id === "faq" ? "FAQ" : id}
+          </a>
         ))}
-
         <a
           href="#"
           onClick={() => setMobileMenuOpen(false)}
