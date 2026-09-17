@@ -117,7 +117,7 @@ function IncomeStatementContent() {
                 onClick={() => handleTabChange(tab)}
                 className={`flex-1 px-4 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 whitespace-nowrap ${
                   activeTab === tab
-                    ? "bg-gradient-to-r from-teal-400 to-teal-400 text-white shadow-md shadow-purple-500/25"
+                    ? "bg-gradient-to-r from-blue-400 to-blue-400 text-white shadow-md shadow-purple-500/25"
                     : "text-gray-600 dark:text-[#9db4be] hover:bg-gray-200 dark:hover:bg-gray-700/50 hover:text-gray-900 dark:hover:text-white"
                 }`}
               >

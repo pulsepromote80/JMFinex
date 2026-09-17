@@ -97,7 +97,7 @@ const DownlineMember = ({ isDownline = false }) => {
             {/* Header */}
             <div className="bg-white dark:bg-[#10222e] border border-gray-200 dark:border-[rgba(140,200,205,0.16)] rounded-2xl shadow-sm p-5 mb-4">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                    <div className="text-sm font-semibold text-teal-600 dark:text-teal-400">
+                    <div className="text-sm font-semibold text-blue-600 dark:text-blue-400">
                         {isDownline ? "Downline Team" : "Direct Referral Team"}
                     </div>
                     <div className="relative">
