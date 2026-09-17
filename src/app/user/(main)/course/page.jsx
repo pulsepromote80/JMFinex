@@ -1,10 +1,10 @@
 import AcademicsSection from "../../components/acdemic";
 
 export const metadata = {
-  title: "Academics | JMFINEX",
+  title: "Course | JMFINEX",
   description: "Learn trading, AI analytics, and market structure with JMFINEX Academics.",
 };
 
-export default function AcademicsPage() {
+export default function CoursePage() {
   return <AcademicsSection />;
 }

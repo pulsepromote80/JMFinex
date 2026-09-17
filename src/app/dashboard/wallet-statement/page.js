@@ -132,7 +132,7 @@ const WalletStatement = () => {
     currentPage * itemsPerPage
   );
 
-  const tabs = ["Deposit", "Income", "Trading", "Withdrawal"];
+  const tabs = ["USDT", "Working", "Trading", "Withdrawal"];
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -159,8 +159,8 @@ const WalletStatement = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
-      {/* Tabs + Dropdown Row */}
-      <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4 mb-6">
+      {/* Tabs + Dropdown */}
+      <div className="flex flex-col gap-3 mb-6">
         <div className="flex-1 overflow-x-auto">
           <div className="flex gap-1 bg-gray-100 dark:bg-[#142936] border border-gray-200 dark:border-[rgba(140,200,205,0.16)] rounded-xl p-1">
             {tabs.map((tab) => (
@@ -179,7 +179,7 @@ const WalletStatement = () => {
           </div>
         </div>
 
-        <div className="relative min-w-[140px] sm:min-w-[160px]">
+        <div className="relative w-full sm:w-[200px] self-start">
           <select
             className="w-full px-4 py-2.5 pr-10 rounded-full border border-gray-200 dark:border-[rgba(255,255,255,0.07)] bg-white dark:bg-[#10222e] text-gray-900 dark:text-[#eef2ff] text-sm font-medium appearance-none cursor-pointer transition-all hover:border-blue-500 dark:hover:border-blue-300 focus:border-blue-500 dark:focus:border-blue-400 focus:outline-none focus:shadow-[0_0_0_2px_rgba(139,92,246,0.2)]"
             value={selectedTransType}

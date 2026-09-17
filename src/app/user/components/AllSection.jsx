@@ -12,7 +12,7 @@ export default function AllSection() {
   const [selectedSymbol, setSelectedSymbol] = useState("TVC:GOLD");
   const [selectedSymbolName, setSelectedSymbolName] = useState("GOLD / USD");
 
-  const navItems = ["about", "services", "platform", "technology", "heatmap", "vision", "faq"];
+  const navItems = ["about", "services", "platform", "technology", "heatmap", "vision", "faq", "Course"];
 
   const symbols = [
     { name: "GOLD / USD", symbol: "TVC:GOLD" },
@@ -96,9 +96,9 @@ export default function AllSection() {
             {navItems.map((id) => (
               <a
                 key={id}
-                href={id === "academics" ? "/user/academic" : `#${id}`}
-                target={id === "academics" ? "_blank" : undefined}
-                rel={id === "academics" ? "noopener noreferrer" : undefined}
+                href={id.toLowerCase() === "course" ? "/user/course" : `#${id}`}
+                target={id.toLowerCase() === "course" ? "_blank" : undefined}
+                rel={id.toLowerCase() === "course" ? "noopener noreferrer" : undefined}
                 className="relative text-[0.88rem] font-medium text-[#8B98B0] transition-colors duration-250 hover:text-[#EEF2F8] after:content-[''] after:absolute after:left-0 after:-bottom-1.5 after:w-0 after:h-px after:[background:linear-gradient(90deg,#3B9EFF,#F0B429)] after:transition-[width] after:duration-350 hover:after:w-full capitalize"
               >
                 {id === "faq" ? "FAQ" : id}
@@ -168,9 +168,9 @@ export default function AllSection() {
         {navItems.map((id) => (
           <a
             key={id}
-            href={id === "academics" ? "/user/academic" : `#${id}`}
-            target={id === "academics" ? "_blank" : undefined}
-            rel={id === "academics" ? "noopener noreferrer" : undefined}
+            href={id.toLowerCase() === "academics" ? "/user/academic" : `#${id}`}
+            target={id.toLowerCase() === "academics" ? "_blank" : undefined}
+            rel={id.toLowerCase() === "academics" ? "noopener noreferrer" : undefined}
             onClick={() => setMobileMenuOpen(false)}
             className={`mobile-menu-link font-display text-[1.6rem] transition-[opacity,transform] duration-500 capitalize ${mobileMenuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
             style={{ color: "#ffffff" }}
