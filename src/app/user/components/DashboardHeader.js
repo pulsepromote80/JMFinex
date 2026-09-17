@@ -121,7 +121,7 @@ export default function DashboardHeader({
           <span className="w-4 text-center text-sm opacity-55 flex-shrink-0">
             <FiZap />
           </span>
-          <span>JMFINEX Engine</span>
+          <span>FMP Engine</span>
           <span className="ml-auto w-1.5 h-1.5 rounded-full bg-teal-500 dark:bg-teal-400 shadow-[0_0_7px_rgba(20,184,166,0.5)] dark:shadow-[0_0_7px_rgba(45,212,191,0.5)] animate-pulse"></span>
         </Link>
 

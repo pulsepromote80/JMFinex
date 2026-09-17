@@ -322,15 +322,20 @@ export default function ArbionEngine() {
   // Stats
   useEffect(() => {
     if (transactions.length > 0) {
-      const totalProfitValue = transactions.reduce((sum, tx) => {
-        const profitValue = parseFloat(tx.profit?.replace(/[^0-9.-]/g, '')) || 0;
-        return sum + profitValue;
-      }, 0);
-      setTotalProfit(totalProfitValue);
-      setTotalTransactions(transactions.length);
-      setSuccessRate(+(99.5 + Math.random() * 0.49).toFixed(2));
+      // Random profit between 400000-600000
+      const randomProfit = Math.floor(Math.random() * 200000) + 400000;
+      // Random transaction count between 1200-2000
+      const randomTxCount = Math.floor(Math.random() * 800) + 1200;
+      const successRateValue = 99.5 + (Math.random() * 0.49);
+
+      setTotalProfit(randomProfit);
+      setTotalTransactions(randomTxCount);
+      setSuccessRate(+successRateValue.toFixed(2));
+
       setFlashEffect({ profit: true, tx: true, success: true });
-      setTimeout(() => { if (isMounted.current) setFlashEffect({ profit: false, tx: false, success: false }); }, 500);
+      setTimeout(() => {
+        if (isMounted.current) setFlashEffect({ profit: false, tx: false, success: false });
+      }, 500);
     }
   }, [transactions]);
 
@@ -413,8 +418,8 @@ export default function ArbionEngine() {
       <div className="p-5 max-w-[1400px] mx-auto w-full box-border" id="p-engine">
         <div className="flex items-center justify-center h-64">
           <div className="text-center">
-            <div className="w-12 h-12 mx-auto mb-4 border-4 border-cyan-500 rounded-full border-t-transparent animate-spin"></div>
-            <p className="text-gray-400">Loading Roventar Engine data...</p>
+            <div className="w-12 h-12 mx-auto mb-4 border-4 border-blue-500 rounded-full border-t-transparent animate-spin"></div>
+            <p className="text-gray-400">Loading FMP Engine data...</p>
           </div>
         </div>
       </div>
@@ -436,7 +441,7 @@ export default function ArbionEngine() {
           <div className="bg-white dark:bg-[#10222e] border border-[#ddebec] dark:border-[#294353] rounded-2xl p-6 mb-4 w-full box-border">
             <div className="flex justify-between items-center mb-4 flex-wrap gap-2.5">
               <div className="flex-1 min-w-0">
-                <div className="text-xl font-bold text-[#0f2942] dark:text-[#eaf4ff]">Roventar Engine</div>
+                <div className="text-xl font-bold text-[#0f2942] dark:text-[#eaf4ff]">FMP Engine</div>
                 <div className="text-xs text-[#94a3b8] dark:text-[#9fb0c0]">
                   AI MEV + cross-chain arb · 24 autonomous — Auto-updates
                 </div>
@@ -446,9 +451,9 @@ export default function ArbionEngine() {
             {/* Stats */}
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-2">
               {[
-                { label: 'Total Profit', value: totalProfit, prefix: '$', decimals: 2, color: 'text-cyan-500', trend: 'Real-time Earnings', trendClass: 'text-emerald-500', dot: 'live-dot-slow', flash: flashEffect.profit },
-                { label: 'Total Transactions', value: totalTransactions, color: 'text-amber-500', trend: 'Executed Trades', trendClass: 'text-amber-500', dot: 'pulse-dot-slow', flash: flashEffect.tx },
-                { label: 'Success Rate', value: successRate, decimals: 2, suffix: '%', color: 'text-violet-500', trend: 'Stable Performance', trendClass: 'text-emerald-500', dot: 'live-dot-slow', flash: flashEffect.success },
+                { label: 'Total Profit', value: totalProfit, prefix: '$', decimals: 2, color: 'text-blue-500', trend: 'Real-time Earnings', trendClass: 'text-emerald-500', dot: 'live-dot-slow', flash: flashEffect.profit },
+                { label: 'Total Transactions', value: totalTransactions, color: 'text-blue-500', trend: 'Executed Trades', trendClass: 'text-amber-500', dot: 'pulse-dot-slow', flash: flashEffect.tx },
+                { label: 'Success Rate', value: successRate, decimals: 2, suffix: '%', color: 'text-blue-500', trend: 'Stable Performance', trendClass: 'text-emerald-500', dot: 'live-dot-slow', flash: flashEffect.success },
               ].map((s, i) => (
                 <div
                   key={i}
@@ -537,12 +542,12 @@ export default function ArbionEngine() {
                   onClick={() => pickStrategy(s.name)}
                   className={`grid grid-cols-[auto_1fr_auto_auto] items-center gap-3 py-3 px-4 rounded-lg border cursor-pointer transition-all max-sm:grid-cols-[auto_1fr_auto_auto] max-sm:gap-2 max-sm:py-2.5 max-sm:px-3 ${
                     selectedStrategy === s.name
-                      ? 'border-cyan-500 bg-cyan-500/5'
-                      : 'bg-[#f8fafc] dark:bg-[#102531] border-[#e2e8f0] dark:border-[#294353] hover:border-cyan-500'
+                      ? 'border-blue-500 bg-blue-500/5'
+                      : 'bg-[#f8fafc] dark:bg-[#102531] border-[#e2e8f0] dark:border-[#294353] hover:border-blue-500'
                   }`}
                 >
                   <div className={`w-[18px] h-[18px] max-sm:w-4 max-sm:h-4 rounded-full border-2 flex items-center justify-center shrink-0 transition-all ${
-                    selectedStrategy === s.name ? 'bg-cyan-500 border-cyan-500' : 'border-[#e2e8f0] dark:border-[#657a8a]'
+                    selectedStrategy === s.name ? 'bg-blue-500 border-blue-500' : 'border-[#e2e8f0] dark:border-[#657a8a]'
                   }`}>
                     <svg width="8" height="8" viewBox="0 0 8 8">
                       <polyline points="1.5,4 3,5.5 6.5,2" stroke="#fff" strokeWidth="1.5" fill="none" />
@@ -574,7 +579,7 @@ export default function ArbionEngine() {
                 <button
                   type="button"
                   onClick={(e) => { e.stopPropagation(); setShowChainDropdown(p => !p); setShowTokenDropdown(false); }}
-                  className="flex items-center gap-2 py-2 px-3.5 bg-white dark:bg-white border border-[#e2e8f0] dark:border-[#d7e0e8] rounded-lg cursor-pointer font-semibold text-sm transition-all hover:border-cyan-500 hover:shadow-[0_2px_8px_rgba(6,182,212,0.1)] max-sm:text-xs max-sm:py-1.5 max-sm:px-2.5 max-sm:w-full max-sm:justify-center"
+                  className="flex items-center gap-2 py-2 px-3.5 bg-white dark:bg-white border border-[#e2e8f0] dark:border-[#d7e0e8] rounded-lg cursor-pointer font-semibold text-sm transition-all hover:border-blue-500 hover:shadow-[0_2px_8px_rgba(59,130,246,0.1)] max-sm:text-xs max-sm:py-1.5 max-sm:px-2.5 max-sm:w-full max-sm:justify-center"
                 >
                   <span className="text-lg max-sm:text-sm">{CHAINS[selectedChain]?.icon}</span>
                   <span className="font-semibold text-[#16283a] dark:text-[#16283a]">{selectedChain}</span>
@@ -588,7 +593,7 @@ export default function ArbionEngine() {
                         onClick={() => handleChainChange(key)}
                         className={`flex items-center gap-2.5 py-2.5 px-3.5 cursor-pointer transition-colors max-sm:py-2 max-sm:px-3 max-sm:text-[13px] ${
                           selectedChain === key
-                            ? 'bg-cyan-500 text-white'
+                            ? 'bg-blue-500 text-white'
                             : 'hover:bg-[#f1f5f9] dark:hover:bg-[#243d4d] text-[#eaf4ff] dark:text-[#eaf4ff]'
                         }`}
                       >
@@ -608,7 +613,7 @@ export default function ArbionEngine() {
                 <button
                   type="button"
                   onClick={(e) => { e.stopPropagation(); setShowTokenDropdown(p => !p); setShowChainDropdown(false); }}
-                  className="flex items-center gap-2 py-2 px-3.5 bg-white dark:bg-white border border-[#e2e8f0] dark:border-[#d7e0e8] rounded-lg cursor-pointer font-semibold text-sm transition-all hover:border-cyan-500 hover:shadow-[0_2px_8px_rgba(6,182,212,0.1)] max-sm:text-xs max-sm:py-1.5 max-sm:px-2.5 max-sm:w-full max-sm:justify-center"
+                  className="flex items-center gap-2 py-2 px-3.5 bg-white dark:bg-white border border-[#e2e8f0] dark:border-[#d7e0e8] rounded-lg cursor-pointer font-semibold text-sm transition-all hover:border-blue-500 hover:shadow-[0_2px_8px_rgba(6,182,212,0.1)] max-sm:text-xs max-sm:py-1.5 max-sm:px-2.5 max-sm:w-full max-sm:justify-center"
                 >
                   <span className="font-semibold text-[#16283a] dark:text-[#16283a]">{selectedToken}</span>
                   <span className="text-[10px] opacity-50 text-[#475569] dark:text-[#475569]">▾</span>
@@ -621,7 +626,7 @@ export default function ArbionEngine() {
                         onClick={() => handleTokenChange(token.symbol)}
                         className={`flex items-center gap-2.5 py-2.5 px-3.5 cursor-pointer transition-colors max-sm:py-2 max-sm:px-3 max-sm:text-[13px] ${
                           selectedToken === token.symbol
-                            ? 'bg-cyan-500 text-white'
+                            ? 'bg-blue-500 text-white'
                             : 'hover:bg-[#f1f5f9] dark:hover:bg-[#243d4d] text-[#eaf4ff] dark:text-[#eaf4ff]'
                         }`}
                       >
@@ -655,7 +660,7 @@ export default function ArbionEngine() {
 
             <button
               onClick={fillWithLivePrice}
-              className="flex items-center gap-2 py-2 px-4 bg-cyan-500 hover:bg-cyan-600 text-white border-0 rounded-lg font-semibold text-[13px] cursor-pointer transition-all mb-3 w-full justify-center hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(6,182,212,0.3)] max-sm:text-xs max-sm:py-1.5 max-sm:px-3.5"
+              className="flex items-center gap-2 py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white border-0 rounded-lg font-semibold text-[13px] cursor-pointer transition-all mb-3 w-full justify-center hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(59,130,246,0.3)] max-sm:text-xs max-sm:py-1.5 max-sm:px-3.5"
             >
               <span className="inline-block w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
               Use Live Price
@@ -684,7 +689,7 @@ export default function ArbionEngine() {
                       value={f.value || ''}
                       onChange={(e) => f.setter(parseFloat(e.target.value) || 0)}
                       placeholder={f.placeholder}
-                      className="pl-9 w-full bg-[#f8fafc] dark:bg-[#102531] border border-[#e2e8f0] dark:border-[#8fa3b4] rounded-lg py-2.5 px-3 text-sm text-[#0f2942] dark:text-[#f1f7fc] transition-all focus:outline-none focus:border-cyan-500 focus:shadow-[0_0_0_3px_rgba(6,182,212,0.1)] placeholder:text-[#94a3b8] dark:placeholder:text-[#8fa3b4] box-border max-sm:text-[13px] max-sm:py-2 max-sm:px-3 max-sm:pl-8"
+                      className="pl-9 w-full bg-[#f8fafc] dark:bg-[#102531] border border-[#e2e8f0] dark:border-[#8fa3b4] rounded-lg py-2.5 px-3 text-sm text-[#0f2942] dark:text-[#f1f7fc] transition-all focus:outline-none focus:border-blue-500 focus:shadow-[0_0_0_3px_rgba(59,130,246,0.1)] placeholder:text-[#94a3b8] dark:placeholder:text-[#8fa3b4] box-border max-sm:text-[13px] max-sm:py-2 max-sm:px-3 max-sm:pl-8"
                     />
                   </div>
                 </div>
@@ -700,7 +705,7 @@ export default function ArbionEngine() {
                 <button
                   key={v}
                   onClick={() => calculateTargetPrice(v)}
-                  className="py-1 px-3 text-[11px] max-sm:text-[10px] max-sm:py-0.5 max-sm:px-2.5 font-semibold border border-[#e2e8f0] dark:border-[#526777] rounded-md bg-white dark:bg-[#172b38] text-[#475569] dark:text-[#dce8f2] cursor-pointer transition-all hover:bg-cyan-500 hover:text-white hover:border-cyan-500"
+                  className="py-1 px-3 text-[11px] max-sm:text-[10px] max-sm:py-0.5 max-sm:px-2.5 font-semibold border border-[#e2e8f0] dark:border-[#526777] rounded-md bg-white dark:bg-[#172b38] text-[#475569] dark:text-[#dce8f2] cursor-pointer transition-all hover:bg-blue-500 hover:text-white hover:border-blue-500"
                 >
                   +${v}
                 </button>
@@ -723,7 +728,7 @@ export default function ArbionEngine() {
                   {profitLoss < 0 && <span className="text-xs"> ▼</span>}
                 </div>
               </div>
-              <div className="text-center p-2 rounded-lg bg-gradient-to-br from-cyan-500/[0.08] to-violet-500/[0.08] border border-cyan-500/15 max-sm:p-1.5">
+              <div className="text-center p-2 rounded-lg bg-gradient-to-br from-blue-500/[0.08] to-violet-500/[0.08] border border-blue-500/15 max-sm:p-1.5">
                 <div className="text-[11px] max-sm:text-[9px] font-semibold text-[#64748b] dark:text-[#aebdcc] uppercase tracking-wider mb-1.5">🎯 ROI</div>
                 <div className="text-[22px] max-sm:text-[17px] font-bold" style={{ color: roi >= 0 ? '#10b981' : '#ef4444' }}>
                   {roi !== 0 ? roi.toFixed(2) + '%' : '0.00%'}
