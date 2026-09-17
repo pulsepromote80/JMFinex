@@ -9,7 +9,7 @@ import Cookies from "js-cookie";
 const G = (text) => `<span class="text-cyan-500">${text}</span>`;
 const B = (text) => `<span class="text-blue-500">${text}</span>`;
 const Y = (text) => `<span class="text-yellow-500">${text}</span>`;
-const CY = (text) => `<span class="text-teal-500">${text}</span>`;
+const CY = (text) => `<span class="text-blue-500">${text}</span>`;
 const R = (text) => `<span class="text-red-500">${text}</span>`;
 const W = (text) => `<span class="text-gray-900">${text}</span>`;
 const GR = (text) => `<span class="text-gray-500">${text}</span>`;
@@ -385,7 +385,7 @@ export default function CryptoTerminal() {
           {/* Header */}
           <div className="bg-white border-2 border-gray-200 rounded-xl px-3 py-1.5 sm:px-5 flex flex-wrap items-center justify-between mb-2 gap-2 shrink-0 shadow-sm">
             <div className="flex items-center gap-0.5">
-              <span className="font-bold text-xl sm:text-2xl text-cyan-400 tracking-tight">
+              <span className="font-bold text-xl sm:text-2xl text-blue-400 tracking-tight">
                 Bot
               </span>
               <span className="font-bold text-xl sm:text-2xl text-gray-900 tracking-tight">
@@ -398,7 +398,7 @@ export default function CryptoTerminal() {
               </span>
             </div>
             <div className="flex items-center gap-3">
-              <div className="bg-cyan-400 text-black font-bold text-[9px] sm:text-[10px] px-2 py-0.5 rounded-full shadow-[0_0_12px_rgba(47,217,211,0.3)] flex items-center gap-1">
+              <div className="bg-blue-400 text-black font-bold text-[9px] sm:text-[10px] px-2 py-0.5 rounded-full shadow-[0_0_12px_rgba(47,217,211,0.3)] flex items-center gap-1">
                 <span className="inline-block w-1.5 h-1.5 bg-black rounded-full animate-pulse-dot"></span>
                 LIVE
               </div>
@@ -414,7 +414,7 @@ export default function CryptoTerminal() {
               <span className="text-[10px] text-gray-500 tracking-wide font-semibold">
                 TOTAL VOLUME
               </span>
-              <span className="text-base font-bold text-cyan-400">
+              <span className="text-base font-bold text-blue-400">
                 {formatMoney(stats.totalVolume)}
               </span>
             </div>
@@ -423,14 +423,14 @@ export default function CryptoTerminal() {
               <span className="text-[10px] text-gray-500 tracking-wide font-semibold">
                 ACTIVE NETWORKS
               </span>
-              <span className="text-base font-bold text-cyan-400">4</span>
+              <span className="text-base font-bold text-blue-400">4</span>
             </div>
             <div className="hidden sm:block w-px h-5 bg-gray-200"></div>
             <div className="flex items-center gap-2">
               <span className="text-[10px] text-gray-500 tracking-wide font-semibold">
                 UPTIME
               </span>
-              <span className="text-base font-bold text-cyan-400">
+              <span className="text-base font-bold text-blue-400">
                 {formatUptime(stats.uptime)}
               </span>
             </div>
@@ -459,7 +459,7 @@ export default function CryptoTerminal() {
             <div className="flex flex-col gap-2.5 h-auto lg:h-full min-h-0">
               {/* Networks */}
               <div className="bg-white border-2 border-gray-200 rounded-xl px-3 py-3 sm:px-4 shadow-sm shrink-0">
-                <div className="text-gray-500 text-xs font-bold tracking-wide border-l-[3px] border-cyan-400 pl-2 mb-2">
+                <div className="text-gray-500 text-xs font-bold tracking-wide border-l-[3px] border-blue-400 pl-2 mb-2">
                   Network
                 </div>
                 {[
@@ -482,8 +482,8 @@ export default function CryptoTerminal() {
                         {net.name}
                       </span>
                     </div>
-                    <div className="flex items-center gap-1.5 text-cyan-400 text-[10px] font-semibold">
-                      <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full shadow-[0_0_8px_rgba(47,217,211,0.5)]"></span>
+                    <div className="flex items-center gap-1.5 text-blue-400 text-[10px] font-semibold">
+                      <span className="w-1.5 h-1.5 bg-blue-400 rounded-full shadow-[0_0_8px_rgba(47,217,211,0.5)]"></span>
                       LIVE
                     </div>
                   </div>
@@ -491,8 +491,8 @@ export default function CryptoTerminal() {
               </div>
 
               {/* Recent Profits */}
-              <div className="bg-white border-2 border-gray-200 rounded-xl px-3 py-3 sm:px-4 shadow-sm flex-1 overflow-y-auto min-h-0 max-h-[150px] lg:max-h-none scrollbar-thin scrollbar-thumb-cyan-400 scrollbar-track-gray-100">
-                <div className="text-gray-500 text-xs font-bold tracking-wide border-l-[3px] border-cyan-400 pl-2 mb-2">
+              <div className="bg-white border-2 border-gray-200 rounded-xl px-3 py-3 sm:px-4 shadow-sm flex-1 overflow-y-auto min-h-0 max-h-[150px] lg:max-h-none scrollbar-thin scrollbar-thumb-blue-400 scrollbar-track-gray-100">
+                <div className="text-gray-500 text-xs font-bold tracking-wide border-l-[3px] border-blue-400 pl-2 mb-2">
                   Recent Profits
                 </div>
                 {profits.length === 0 ? (
@@ -509,7 +509,7 @@ export default function CryptoTerminal() {
                       <span className="text-blue-500 font-medium">
                         {p.network} Arbitrage
                       </span>
-                      <span className="text-cyan-400 font-semibold">
+                      <span className="text-blue-400 font-semibold">
                         +${p.profit.toFixed(2)} USDT
                       </span>
                     </div>
@@ -519,7 +519,7 @@ export default function CryptoTerminal() {
 
               {/* System Alerts */}
               <div className="bg-white border-2 border-gray-200 rounded-xl px-3 py-3 sm:px-4 shadow-sm shrink-0">
-                <div className="text-gray-500 text-xs font-bold tracking-wide border-l-[3px] border-cyan-400 pl-2 mb-2">
+                <div className="text-gray-500 text-xs font-bold tracking-wide border-l-[3px] border-blue-400 pl-2 mb-2">
                   System Alerts
                 </div>
                 <div className="flex items-start gap-2 py-1">
@@ -539,7 +539,7 @@ export default function CryptoTerminal() {
                     ⚠️ {apiMessage}
                   </div>
                 ) : (
-                  <div className="mt-1.5 px-2 py-1.5 rounded-lg text-[10px] bg-emerald-500/10 border border-cyan-400 text-cyan-400">
+                  <div className="mt-1.5 px-2 py-1.5 rounded-lg text-[10px] bg-emerald-500/10 border border-blue-400 text-blue-400">
                     ✅ Connected to API | {transactions.length} transactions loaded
                   </div>
                 )}

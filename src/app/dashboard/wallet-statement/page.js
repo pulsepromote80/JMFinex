@@ -169,7 +169,7 @@ const WalletStatement = () => {
                 onClick={() => handleTabChange(tab)}
                 className={`flex-1 px-4 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 whitespace-nowrap ${
                   activeTab === tab
-                    ? "bg-gradient-to-r from-teal-400 to-teal-400 text-white shadow-md shadow-purple-500/25"
+                    ? "bg-gradient-to-r from-blue-400 to-blue-400 text-white shadow-md shadow-purple-500/25"
                     : "text-gray-600 dark:text-[#9db4be] hover:bg-gray-200 dark:hover:bg-gray-700/50 hover:text-gray-900 dark:hover:text-white"
                 }`}
               >
@@ -181,7 +181,7 @@ const WalletStatement = () => {
 
         <div className="relative min-w-[140px] sm:min-w-[160px]">
           <select
-            className="w-full px-4 py-2.5 pr-10 rounded-full border border-gray-200 dark:border-[rgba(255,255,255,0.07)] bg-white dark:bg-[#10222e] text-gray-900 dark:text-[#eef2ff] text-sm font-medium appearance-none cursor-pointer transition-all hover:border-teal-500 dark:hover:border-[#2fd9d3] focus:border-teal-500 dark:focus:border-[#2fd9d3] focus:outline-none focus:shadow-[0_0_0_2px_rgba(139,92,246,0.2)]"
+            className="w-full px-4 py-2.5 pr-10 rounded-full border border-gray-200 dark:border-[rgba(255,255,255,0.07)] bg-white dark:bg-[#10222e] text-gray-900 dark:text-[#eef2ff] text-sm font-medium appearance-none cursor-pointer transition-all hover:border-blue-500 dark:hover:border-blue-300 focus:border-blue-500 dark:focus:border-blue-400 focus:outline-none focus:shadow-[0_0_0_2px_rgba(139,92,246,0.2)]"
             value={selectedTransType}
             onChange={handleTransTypeChange}
           >
@@ -216,7 +216,7 @@ const WalletStatement = () => {
               placeholder="Search..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full sm:w-[260px] px-4 py-2.5 pl-4 pr-10 rounded-full border border-gray-200 dark:border-[rgba(255,255,255,0.07)] bg-white dark:bg-[#10222e] text-gray-900 dark:text-[#eef2ff] text-sm outline-none focus:border-teal-500 dark:focus:border-[#2fd9d3] focus:shadow-[0_0_0_2px_rgba(139,92,246,0.2)] transition-all"
+              className="w-full sm:w-[260px] px-4 py-2.5 pl-4 pr-10 rounded-full border border-gray-200 dark:border-[rgba(255,255,255,0.07)] bg-white dark:bg-[#10222e] text-gray-900 dark:text-[#eef2ff] text-sm outline-none focus:border-blue-500 dark:focus:border-[#2fd9d3] focus:shadow-[0_0_0_2px_rgba(139,92,246,0.2)] transition-all"
             />
             <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-[#6b7280] text-sm pointer-events-none">
               🔍
@@ -232,23 +232,23 @@ const WalletStatement = () => {
                 <tr className="border-b border-gray-200 dark:border-[rgba(255,255,255,0.06)]">
                   {activeTab === "Withdrawal" ? (
                     <>
-                      <th className="text-left px-3 sm:px-4 py-3 text-xs font-semibold text-teal-600 dark:text-[#00d4ff] uppercase tracking-wider whitespace-nowrap">#</th>
-                      <th className="text-left px-3 sm:px-4 py-3 text-xs font-semibold text-teal-600 dark:text-[#00d4ff] uppercase tracking-wider whitespace-nowrap">Date</th>
-                      <th className="text-left px-3 sm:px-4 py-3 text-xs font-semibold text-teal-600 dark:text-[#00d4ff] uppercase tracking-wider whitespace-nowrap">Request</th>
-                      <th className="text-left px-3 sm:px-4 py-3 text-xs font-semibold text-teal-600 dark:text-[#00d4ff] uppercase tracking-wider whitespace-nowrap">Charges</th>
-                      <th className="text-left px-3 sm:px-4 py-3 text-xs font-semibold text-teal-600 dark:text-[#00d4ff] uppercase tracking-wider whitespace-nowrap">Release</th>
-                      <th className="text-left px-3 sm:px-4 py-3 text-xs font-semibold text-teal-600 dark:text-[#00d4ff] uppercase tracking-wider whitespace-nowrap">TransactionHash</th>
-                      <th className="text-left px-3 sm:px-4 py-3 text-xs font-semibold text-teal-600 dark:text-[#00d4ff] uppercase tracking-wider whitespace-nowrap">Status</th>
+                      <th className="text-left px-3 sm:px-4 py-3 text-xs font-semibold text-blue-600 dark:text-[#00d4ff] uppercase tracking-wider whitespace-nowrap">#</th>
+                      <th className="text-left px-3 sm:px-4 py-3 text-xs font-semibold text-blue-600 dark:text-[#00d4ff] uppercase tracking-wider whitespace-nowrap">Date</th>
+                      <th className="text-left px-3 sm:px-4 py-3 text-xs font-semibold text-blue-600 dark:text-[#00d4ff] uppercase tracking-wider whitespace-nowrap">Request</th>
+                      <th className="text-left px-3 sm:px-4 py-3 text-xs font-semibold text-blue-600 dark:text-[#00d4ff] uppercase tracking-wider whitespace-nowrap">Charges</th>
+                      <th className="text-left px-3 sm:px-4 py-3 text-xs font-semibold text-blue-600 dark:text-[#00d4ff] uppercase tracking-wider whitespace-nowrap">Release</th>
+                      <th className="text-left px-3 sm:px-4 py-3 text-xs font-semibold text-blue-600 dark:text-[#00d4ff] uppercase tracking-wider whitespace-nowrap">TransactionHash</th>
+                      <th className="text-left px-3 sm:px-4 py-3 text-xs font-semibold text-blue-600 dark:text-[#00d4ff] uppercase tracking-wider whitespace-nowrap">Status</th>
                     </>
                   ) : (
                     <>
-                      <th className="text-left px-3 sm:px-4 py-3 text-xs font-semibold text-teal-600 dark:text-[#00d4ff] uppercase tracking-wider whitespace-nowrap">#</th>
-                      <th className="text-left px-3 sm:px-4 py-3 text-xs font-semibold text-teal-600 dark:text-[#00d4ff] uppercase tracking-wider whitespace-nowrap">Date</th>
-                      <th className="text-left px-3 sm:px-4 py-3 text-xs font-semibold text-teal-600 dark:text-[#00d4ff] uppercase tracking-wider whitespace-nowrap">Credit</th>
-                      <th className="text-left px-3 sm:px-4 py-3 text-xs font-semibold text-teal-600 dark:text-[#00d4ff] uppercase tracking-wider whitespace-nowrap">Debit</th>
-                      <th className="text-left px-3 sm:px-4 py-3 text-xs font-semibold text-teal-600 dark:text-[#00d4ff] uppercase tracking-wider whitespace-nowrap">Type</th>
-                      <th className="text-left px-3 sm:px-4 py-3 text-xs font-semibold text-teal-600 dark:text-[#00d4ff] uppercase tracking-wider whitespace-nowrap">Remark</th>
-                      <th className="text-left px-3 sm:px-4 py-3 text-xs font-semibold text-teal-600 dark:text-[#00d4ff] uppercase tracking-wider whitespace-nowrap">Status</th>
+                      <th className="text-left px-3 sm:px-4 py-3 text-xs font-semibold text-blue-600 dark:text-[#00d4ff] uppercase tracking-wider whitespace-nowrap">#</th>
+                      <th className="text-left px-3 sm:px-4 py-3 text-xs font-semibold text-blue-600 dark:text-[#00d4ff] uppercase tracking-wider whitespace-nowrap">Date</th>
+                      <th className="text-left px-3 sm:px-4 py-3 text-xs font-semibold text-blue-600 dark:text-[#00d4ff] uppercase tracking-wider whitespace-nowrap">Credit</th>
+                      <th className="text-left px-3 sm:px-4 py-3 text-xs font-semibold text-blue-600 dark:text-[#00d4ff] uppercase tracking-wider whitespace-nowrap">Debit</th>
+                      <th className="text-left px-3 sm:px-4 py-3 text-xs font-semibold text-blue-600 dark:text-[#00d4ff] uppercase tracking-wider whitespace-nowrap">Type</th>
+                      <th className="text-left px-3 sm:px-4 py-3 text-xs font-semibold text-blue-600 dark:text-[#00d4ff] uppercase tracking-wider whitespace-nowrap">Remark</th>
+                      <th className="text-left px-3 sm:px-4 py-3 text-xs font-semibold text-blue-600 dark:text-[#00d4ff] uppercase tracking-wider whitespace-nowrap">Status</th>
                     </>
                   )}
                 </tr>
@@ -274,7 +274,7 @@ const WalletStatement = () => {
                           <td className="px-3 sm:px-4 py-3 text-gray-700 dark:text-[#eef2ff] whitespace-nowrap">
                             {(currentPage - 1) * itemsPerPage + idx + 1}
                           </td>
-                          <td className="px-3 sm:px-4 py-3 font-semibold text-teal-600 dark:text-[#10d98a] whitespace-nowrap">
+                          <td className="px-3 sm:px-4 py-3 font-semibold text-blue-600 dark:text-[#10d98a] whitespace-nowrap">
                             {formatDateOnly(item.CreatedDate || item.createdDate)}
                           </td>
                           <td className="px-3 sm:px-4 py-3 text-gray-700 dark:text-[#eef2ff] whitespace-nowrap">
@@ -344,7 +344,7 @@ const WalletStatement = () => {
                           <td className="px-3 sm:px-4 py-3 text-gray-700 dark:text-[#eef2ff] whitespace-nowrap">
                             {item.CreatedDate || item.createdDate || "-"}
                           </td>
-                          <td className="px-3 sm:px-4 py-3 font-semibold text-teal-600 dark:text-[#10d98a] whitespace-nowrap">
+                          <td className="px-3 sm:px-4 py-3 font-semibold text-blue-600 dark:text-[#10d98a] whitespace-nowrap">
                             {item.credit ?? 0}
                           </td>
                           <td className="px-3 sm:px-4 py-3 font-semibold text-red-500 dark:text-[#ff4d6d] whitespace-nowrap">
@@ -404,7 +404,7 @@ const WalletStatement = () => {
               <button
                 onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
-                className="px-4 sm:px-5 py-2 rounded-full border border-gray-200 dark:border-[rgba(255,255,255,0.07)] bg-white dark:bg-[#10222e] text-gray-700 dark:text-[#eef2ff] text-sm font-medium transition-all hover:bg-gray-50 dark:hover:bg-[rgba(255,255,255,0.04)] hover:border-teal-500 dark:hover:border-[#2fd9d3] hover:text-teal-500 dark:hover:text-[#2fd9d3] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-4 sm:px-5 py-2 rounded-full border border-gray-200 dark:border-[rgba(255,255,255,0.07)] bg-white dark:bg-[#10222e] text-gray-700 dark:text-[#eef2ff] text-sm font-medium transition-all hover:bg-gray-50 dark:hover:bg-[rgba(255,255,255,0.04)] hover:border-blue-500 dark:hover:border-[#2fd9d3] hover:text-blue-500 dark:hover:text-[#2fd9d3] disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Previous
               </button>
@@ -413,7 +413,7 @@ const WalletStatement = () => {
                   setCurrentPage((prev) => Math.min(prev + 1, totalPages))
                 }
                 disabled={currentPage === totalPages || totalPages === 0}
-                className="px-4 sm:px-5 py-2 rounded-full border border-gray-200 dark:border-[rgba(255,255,255,0.07)] bg-white dark:bg-[#10222e] text-gray-700 dark:text-[#eef2ff] text-sm font-medium transition-all hover:bg-gray-50 dark:hover:bg-[rgba(255,255,255,0.04)] hover:border-teal-500 dark:hover:border-[#2fd9d3] hover:text-teal-500 dark:hover:text-[#2fd9d3] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-4 sm:px-5 py-2 rounded-full border border-gray-200 dark:border-[rgba(255,255,255,0.07)] bg-white dark:bg-[#10222e] text-gray-700 dark:text-[#eef2ff] text-sm font-medium transition-all hover:bg-gray-50 dark:hover:bg-[rgba(255,255,255,0.04)] hover:border-blue-500 dark:hover:border-[#2fd9d3] hover:text-blue-500 dark:hover:text-[#2fd9d3] disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Next
               </button>
