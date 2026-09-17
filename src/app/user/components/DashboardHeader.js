@@ -227,7 +227,7 @@ export default function DashboardHeader({
           <span className="w-4 text-center text-sm opacity-55 flex-shrink-0">
             <FiAward />
           </span>
-          <span>Rank Progress</span>
+          <span>Rank Reward</span>
         </Link>
 
         <Link 

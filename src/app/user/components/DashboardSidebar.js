@@ -280,7 +280,7 @@ export default function DashboardHeader({ sidebarOpen, setSidebarOpen }) {
   };
 
   const copyRef = async () => {
-    const refLink = referralLink || `https://roventar.com/user/register?ref=${userID || "XO5599007"}`;
+    const refLink = referralLink || `https://jmfinex.com/user/register?ref=${userID || "XO5599007"}`;
 
     try {
       const cleanLink = refLink.split('&Position=')[0];
@@ -293,9 +293,9 @@ export default function DashboardHeader({ sidebarOpen, setSidebarOpen }) {
   };
 
   const shareOn = (platform) => {
-    const refLink = referralLink || `https://roventar.com/user/register?ref=${userID || "XO5599007"}`;
+    const refLink = referralLink || `https://jmfinex.com/user/register?ref=${userID || "XO5599007"}`;
     const cleanLink = refLink.split('&Position=')[0];
-    const text = `Join me on Roventar - earn up to 8% commission! My ID: ${userID}`;
+    const text = `Join me on jmfinex - earn up to 8% commission! My ID: ${userID}`;
 
     let url = "";
     switch (platform) {
@@ -537,7 +537,7 @@ export default function DashboardHeader({ sidebarOpen, setSidebarOpen }) {
                   Invite &amp; <span className="text-purple-500 dark:text-purple-400">Earn</span>
                 </div>
                 <div className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
-                  Share your link · Earn up to <strong className="text-amber-500">8% commission</strong> on every trade — 3 levels deep, paid daily
+                  Share your link · Earn up to <strong className="text-amber-500">12% commission</strong> on every trade — Learn | Trade | Grow together! <span className="text-purple-500 dark:text-purple-400">💰</span>
                 </div>
               </div>
 
@@ -570,7 +570,7 @@ export default function DashboardHeader({ sidebarOpen, setSidebarOpen }) {
                 Your Unique Referral Link {leftUrl && rightUrl ? `(${selectedPosition === "L" ? "Left" : "Right"} Position)` : ""}
               </div>
               <div className="font-mono text-xs bg-gray-100 dark:bg-gray-800 rounded-xl p-3 border border-dashed border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 break-all mb-3">
-                {refrelLoading ? "Loading..." : (referralLink || `https://roventar.com/user/register?ref=${userID || "XO5599007"}`)}
+                {refrelLoading ? "Loading..." : (referralLink || `https://jmfinex.com/user/register?ref=${userID || "XO5599007"}`)}
               </div>
               <button 
                 className="w-full bg-gradient-to-r from-[#0057D9] to-[#38BDF8] hover:from-[#0046AE] hover:to-[#0EA5E9] text-white font-bold py-3 rounded-xl transition-all mb-4 disabled:opacity-50 disabled:cursor-not-allowed"
@@ -588,7 +588,7 @@ export default function DashboardHeader({ sidebarOpen, setSidebarOpen }) {
                   <FaWhatsapp />
                   WhatsApp
                 </button>
-                <a className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-sm font-bold" href="https://app.xoxofx.com/xoxofs/XoxoFxV5.pdf" target="_blank">
+                <a className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-sm font-bold" href="https://apis.jmfinex.com/JMFINEX.pdf" target="_blank">
                   <FaFilePdf />
                   PDF
                 </a>

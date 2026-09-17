@@ -1,5 +1,3 @@
-
-
 "use client";
 import React, { useEffect } from "react";
 import { RiMoneyDollarCircleLine, RiFlashlightLine, RiBatteryChargeLine } from "react-icons/ri";
@@ -13,12 +11,14 @@ const Reward = () => {
   const dispatch = useDispatch();
   const { PerformanceRewardListData } = useSelector((state) => state.wallet);
 
+
   const salaryStrongLeg = PerformanceRewardListData?.performanceReward?.[0]?.RewardAchvd || "";
-  const salarystrongLegBusines = PerformanceRewardListData?.performanceReward?.[0]?.LeftBuss || "";
-  const salaryweakerLegBusines = PerformanceRewardListData?.performanceReward?.[0]?.SalaryweakerLegBusines || "";
-  const salarystrongLegBusinesId = PerformanceRewardListData?.performanceReward?.[0]?.RightBuss || "";
-  const salaryweakerLegBusinesId = PerformanceRewardListData?.performanceReward?.[0]?.PendingRight || "";
-  const legwisefreshbus = PerformanceRewardListData?.performanceReward?.[0]?.PendingLeft || "";
+  const salarystrongLegBusines = PerformanceRewardListData?.performanceReward?.[0]?.BiggestLeg || "";
+  const salaryweakerLegBusines = PerformanceRewardListData?.performanceReward?.[0]?.BiggestLegPending || "";
+  const salarystrongLegBusinesId = PerformanceRewardListData?.performanceReward?.[0]?.Pending2ndLegTeam || "";
+  const salaryweakerLegBusinesId = PerformanceRewardListData?.performanceReward?.[0]?.PendingOtherTeam || "";
+  const legwisefreshbus = PerformanceRewardListData?.performanceReward?.[0]?.SecondLeg || "";
+   const otherleg = PerformanceRewardListData?.performanceReward?.[0]?.OtherLegBusines || "";
   const remainingDirectBus = PerformanceRewardListData?.performanceReward?.[0]?.RemainingDirectBus || "";
   const NextReleaseDate = PerformanceRewardListData?.performanceReward?.[0]?.NextReleaseDate || "";
 
@@ -27,9 +27,10 @@ const Reward = () => {
     dispatch(getPerformanceRewardListByURID(data));
   }, [dispatch]);
 
+  // ✅ Export to Excel functionality
   const exportToExcel = () => {
     if (!PerformanceRewardListData?.performanceReward) return;
-    const excelData = PerformanceRewardListData.performanceReward.map((rank, id) => ({
+    const excelData = PerformanceRewardListData.performanceReward.map((rank) => ({
       Rank: rank.rRank,
       "Business Volume": rank.BusinessVolume,
       "Monthly Salary Duration": rank.MonthlySalaryDuration,
@@ -44,15 +45,12 @@ const Reward = () => {
     saveAs(data, "Performance_Income_Report.xlsx");
   };
 
-  const formatCurrency = (value) => {
-    if (!value && value !== 0) return "$0.00";
-    const num = typeof value === "string" ? parseFloat(value) : value;
-    if (isNaN(num)) return "$0.00";
-    return `$${num.toFixed(2)}`;
-  };
+  
 
   return (
-    <div className="mx-auto px-4 sm:px-6 py-6">
+    <div className="mx-auto px-2 sm:px-6 py-6">
+
+
       {/* Stats Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
         {/* Achieved Rank Card */}
@@ -72,15 +70,15 @@ const Reward = () => {
           </div>
         </div>
 
-        {/* Left/Right Business Card */}
+        {/* Power Team / Weaker Team Business Card */}
         <div className="bg-white dark:bg-[#10222e] border border-gray-200 dark:border-[rgba(140,200,205,0.16)] rounded-2xl p-5 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md">
           <div className="flex justify-between items-start">
             <div>
               <p className="text-xs font-semibold text-gray-500 dark:text-[#9db4be] uppercase tracking-wider mb-1.5">
-                Left/Right Business
+                Biggest Leg Bus.
               </p>
               <p className="text-lg sm:text-xl font-extrabold text-gray-900 dark:text-[#eaf5f7]">
-                {formatCurrency(salarystrongLegBusines || "—")} / {formatCurrency(salarystrongLegBusinesId)}
+                {(salarystrongLegBusines || "—")}
               </p>
             </div>
             <div className="w-11 h-11 rounded-xl flex items-center justify-center bg-pink-100 dark:bg-pink-900/30">
@@ -89,15 +87,15 @@ const Reward = () => {
           </div>
         </div>
 
-        {/* Business Needed For Next Rank Card */}
+        {/* Pending Power / Weaker Team Business Card */}
         <div className="bg-white dark:bg-[#10222e] border border-gray-200 dark:border-[rgba(140,200,205,0.16)] rounded-2xl p-5 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md sm:col-span-2 lg:col-span-1">
           <div className="flex justify-between items-start">
             <div>
               <p className="text-xs font-semibold text-gray-500 dark:text-[#9db4be] uppercase tracking-wider mb-1.5">
-                Business Needed For Next Rank (L/R)
+                Second Leg Bus.
               </p>
               <p className="text-lg sm:text-xl font-extrabold text-gray-900 dark:text-[#eaf5f7]">
-                {formatCurrency(legwisefreshbus || "—")} / {formatCurrency(salaryweakerLegBusinesId)}
+                {(legwisefreshbus || "—")} 
               </p>
             </div>
             <div className="w-11 h-11 rounded-xl flex items-center justify-center bg-red-100 dark:bg-red-900/30">
@@ -105,6 +103,71 @@ const Reward = () => {
             </div>
           </div>
         </div>
+
+        <div className="bg-white dark:bg-[#10222e] border border-gray-200 dark:border-[rgba(140,200,205,0.16)] rounded-2xl p-5 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md sm:col-span-2 lg:col-span-1">
+          <div className="flex justify-between items-start">
+            <div>
+              <p className="text-xs font-semibold text-gray-500 dark:text-[#9db4be] uppercase tracking-wider mb-1.5">
+                Other Leg Bus.
+              </p>
+              <p className="text-lg sm:text-xl font-extrabold text-gray-900 dark:text-[#eaf5f7]">
+                {(otherleg || "0")}
+              </p>
+            </div>
+            <div className="w-11 h-11 rounded-xl flex items-center justify-center bg-red-100 dark:bg-red-900/30">
+              <RiMoneyDollarCircleLine className="w-5 h-5 text-red-600 dark:text-red-400" />
+            </div>
+          </div>
+        </div>
+
+         <div className="bg-white dark:bg-[#10222e] border border-gray-200 dark:border-[rgba(140,200,205,0.16)] rounded-2xl p-5 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md sm:col-span-2 lg:col-span-1">
+          <div className="flex justify-between items-start">
+            <div>
+              <p className="text-xs font-semibold text-gray-500 dark:text-[#9db4be] uppercase tracking-wider mb-1.5">
+                Biggest Leg Pending
+              </p>
+              <p className="text-lg sm:text-xl font-extrabold text-gray-900 dark:text-[#eaf5f7]">
+                {(salaryweakerLegBusines || "0")}
+              </p>
+            </div>
+            <div className="w-11 h-11 rounded-xl flex items-center justify-center bg-red-100 dark:bg-red-900/30">
+              <RiMoneyDollarCircleLine className="w-5 h-5 text-red-600 dark:text-red-400" />
+            </div>
+          </div>
+        </div>
+
+         <div className="bg-white dark:bg-[#10222e] border border-gray-200 dark:border-[rgba(140,200,205,0.16)] rounded-2xl p-5 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md sm:col-span-2 lg:col-span-1">
+          <div className="flex justify-between items-start">
+            <div>
+              <p className="text-xs font-semibold text-gray-500 dark:text-[#9db4be] uppercase tracking-wider mb-1.5">
+                Second Leg Pending
+              </p>
+              <p className="text-lg sm:text-xl font-extrabold text-gray-900 dark:text-[#eaf5f7]">
+                {(salarystrongLegBusinesId || "0")}
+              </p>
+            </div>
+            <div className="w-11 h-11 rounded-xl flex items-center justify-center bg-red-100 dark:bg-red-900/30">
+              <RiMoneyDollarCircleLine className="w-5 h-5 text-red-600 dark:text-red-400" />
+            </div>
+          </div>
+        </div>
+         <div className="bg-white dark:bg-[#10222e] border border-gray-200 dark:border-[rgba(140,200,205,0.16)] rounded-2xl p-5 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md sm:col-span-2 lg:col-span-1">
+          <div className="flex justify-between items-start">
+            <div>
+              <p className="text-xs font-semibold text-gray-500 dark:text-[#9db4be] uppercase tracking-wider mb-1.5">
+                Other Leg Pending
+              </p>
+              <p className="text-lg sm:text-xl font-extrabold text-gray-900 dark:text-[#eaf5f7]">
+                {(salaryweakerLegBusinesId || "0")}
+              </p>
+            </div>
+            <div className="w-11 h-11 rounded-xl flex items-center justify-center bg-red-100 dark:bg-red-900/30">
+              <RiMoneyDollarCircleLine className="w-5 h-5 text-red-600 dark:text-red-400" />
+            </div>
+          </div>
+        </div>
+
+       
       </div>
 
       {/* Performance Ranks Table */}
@@ -114,8 +177,9 @@ const Reward = () => {
             <thead className="bg-gray-50 dark:bg-[#142936] border-b border-gray-200 dark:border-[rgba(140,200,205,0.1)]">
               <tr>
                 <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-[#9db4be] uppercase tracking-wider whitespace-nowrap">#</th>
+                {/* ✅ Fixed typo: "Titile" → "Title" */}
                 <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-[#9db4be] uppercase tracking-wider whitespace-nowrap">Title</th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-[#9db4be] uppercase tracking-wider whitespace-nowrap">Business Volume</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-[#9db4be] uppercase tracking-wider whitespace-nowrap">Team Business</th>
                 <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-[#9db4be] uppercase tracking-wider whitespace-nowrap">Reward</th>
                 <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-[#9db4be] uppercase tracking-wider whitespace-nowrap">Status</th>
               </tr>
@@ -127,7 +191,7 @@ const Reward = () => {
                     <td className="px-4 py-3 text-gray-700 dark:text-[#eaf5f7] whitespace-nowrap">{index + 1}</td>
                     <td className="px-4 py-3 font-semibold text-gray-900 dark:text-[#eaf5f7] whitespace-nowrap">{rank.RewardTitle}</td>
                     <td className="px-4 py-3 text-gray-700 dark:text-[#eaf5f7] whitespace-nowrap">${rank.RequiredBusiness}</td>
-                    <td className="px-4 py-3 text-gray-700 dark:text-[#eaf5f7] whitespace-nowrap">{rank.Amount}</td>
+                    <td className="px-4 py-3 text-gray-700 dark:text-[#eaf5f7] whitespace-nowrap">{rank.RewardAmount}</td>
                     <td className="px-4 py-3 whitespace-nowrap">
                       <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
                         rank.Statusx === "Qualify" || rank.Statusx === "Qualify "

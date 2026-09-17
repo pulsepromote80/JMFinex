@@ -1,7 +1,9 @@
 
+
+
 // 'use client'
 
-// import React, { useState, useEffect, useRef, useCallback, Suspense } from "react"
+// import React, { useState, useEffect, Suspense } from "react"
 // import { useRouter } from "next/navigation"
 // import Select from "react-select"
 // import { userRegistration, getAllCountry, getReferralDataByLoginId } from "@/app/redux/slices/authSlice"
@@ -9,346 +11,69 @@
 // import { useDispatch } from 'react-redux'
 // import { useSearchParams } from "next/navigation"
 // import Link from "next/link"
-// import { User, Mail, Lock, Phone, Globe, UserPlus, RotateCcw, Check, ArrowRight, Users } from "lucide-react"
+// import { User, Mail, Lock, Phone, UserPlus, Shield, Check } from "lucide-react"
 
 // // ---------------------------------------------------------------------------
-// // IMAGE PUZZLE CAPTCHA COMPONENT
+// // SIMPLE CAPTCHA (I'm not a robot)
 // // ---------------------------------------------------------------------------
+// const SimpleCaptcha = ({ onVerify, isVerified }) => {
+//   const [isChecking, setIsChecking] = useState(false)
 
-// const PUZZLE_HEIGHT = 170
-// const PIECE_SIZE = 56      // plain square piece size
-// const TOLERANCE = 10       // px tolerance for success
-// const IMAGE_FETCH_WIDTH = 1000
-
-// const getRandomPuzzleImage = () => {
-//   const uniqueSeed = `${Date.now()}-${Math.floor(Math.random() * 100000)}`
-//   return `https://picsum.photos/seed/${uniqueSeed}/${IMAGE_FETCH_WIDTH}/${PUZZLE_HEIGHT}`
-// }
-
-// const preloadImage = (url, onLoaded) => {
-//   const img = new Image()
-//   img.onload = () => onLoaded(url)
-//   img.onerror = () => onLoaded(url)
-//   img.src = url
-// }
-
-// function ImagePuzzleCaptcha({ verified, onVerify, onReset }) {
-//   const stageRef = useRef(null)
-//   const trackRef = useRef(null)
-//   const [stageWidth, setStageWidth] = useState(0)
-//   const [image, setImage] = useState(() => getRandomPuzzleImage())
-//   const [isImageLoading, setIsImageLoading] = useState(true)
-//   const [targetX, setTargetX] = useState(0)
-//   const [targetY, setTargetY] = useState(0)
-//   const [pieceX, setPieceX] = useState(0)
-//   const [dragging, setDragging] = useState(false)
-//   const [failed, setFailed] = useState(false)
-
-//   const maxX = Math.max(0, stageWidth - PIECE_SIZE)
-
-//   useEffect(() => {
-//     if (!stageRef.current) return
-//     const update = () => setStageWidth(stageRef.current.offsetWidth)
-//     update()
-
-//     const observer = new ResizeObserver(update)
-//     observer.observe(stageRef.current)
-//     return () => observer.disconnect()
-//   }, [])
-
-//   const generatePuzzle = useCallback(() => {
-//     if (stageWidth <= 0) return
-//     const minX = Math.min(130, maxX * 0.4)
-//     const tx = Math.floor(minX + Math.random() * (maxX - minX - 10))
-//     const ty = Math.floor(Math.random() * (PUZZLE_HEIGHT - PIECE_SIZE))
-//     setTargetX(Math.max(0, tx))
-//     setTargetY(Math.max(0, ty))
-//     setPieceX(0)
-//     setFailed(false)
-
-//     setIsImageLoading(true)
-//     const newUrl = getRandomPuzzleImage()
-//     preloadImage(newUrl, (loadedUrl) => {
-//       setImage(loadedUrl)
-//       setIsImageLoading(false)
-//     })
-//   }, [maxX, stageWidth])
-
-//   useEffect(() => {
-//     if (stageWidth > 0) generatePuzzle()
-//   }, [stageWidth])
-
-//   const handleReset = () => {
-//     generatePuzzle()
-//     onReset?.()
+//   const handleCheck = () => {
+//     if (isVerified) return
+//     setIsChecking(true)
+//     setTimeout(() => {
+//       setIsChecking(false)
+//       onVerify(true)
+//     }, 800)
 //   }
-
-//   const startDrag = () => {
-//     if (verified || isImageLoading) return
-//     setDragging(true)
-//     setFailed(false)
-//   }
-
-//   const moveDrag = useCallback((clientX) => {
-//     if (!dragging || !trackRef.current) return
-//     const rect = trackRef.current.getBoundingClientRect()
-//     const handleW = 44
-//     const usable = rect.width - handleW
-//     const fraction = Math.max(0, Math.min(1, (clientX - rect.left - handleW / 2) / usable))
-//     const nextX = Math.round(fraction * maxX)
-//     setPieceX(Math.max(0, Math.min(maxX, nextX)))
-//   }, [dragging, maxX])
-
-//   const endDrag = useCallback(() => {
-//     if (!dragging) return
-//     setDragging(false)
-//     setPieceX((current) => {
-//       if (Math.abs(current - targetX) <= TOLERANCE) {
-//         // Fix: Use setTimeout to defer the state update to avoid rendering conflict
-//         setTimeout(() => onVerify(true), 0)
-//         return targetX
-//       }
-//       setFailed(true)
-//       setTimeout(() => setFailed(false), 900)
-//       return 0
-//     })
-//   }, [dragging, targetX, onVerify])
-
-//   useEffect(() => {
-//     const onMouseMove = (e) => moveDrag(e.clientX)
-//     const onTouchMove = (e) => moveDrag(e.touches[0].clientX)
-//     const onUp = () => endDrag()
-
-//     if (dragging) {
-//       window.addEventListener("mousemove", onMouseMove)
-//       window.addEventListener("touchmove", onTouchMove, { passive: false })
-//       window.addEventListener("mouseup", onUp)
-//       window.addEventListener("touchend", onUp)
-//     }
-//     return () => {
-//       window.removeEventListener("mousemove", onMouseMove)
-//       window.removeEventListener("touchmove", onTouchMove)
-//       window.removeEventListener("mouseup", onUp)
-//       window.removeEventListener("touchend", onUp)
-//     }
-//   }, [dragging, moveDrag, endDrag])
-
-//   const trackFraction = maxX > 0 ? (verified ? 1 : pieceX / maxX) : 0
 
 //   return (
-//     <div style={{ width: "100%" }}>
-//       <div
-//         style={{
-//           display: "flex",
-//           alignItems: "center",
-//           justifyContent: "space-between",
-//           marginBottom: 8,
-//         }}
-//       >
-//         <span style={{ fontSize: 13, color: "#fff" }}>
-//           Slide to complete the puzzle
-//         </span>
-//         <button
-//           type="button"
-//           onClick={handleReset}
-//           title="Refresh puzzle"
+//     <div
+//       className="d-flex align-items-center justify-content-between p-3 rounded-3"
+//       style={{
+//         background: 'rgba(255,255,255,0.04)',
+//         border: '1px solid rgba(255,255,255,0.1)',
+//       }}
+//     >
+//       <div className="d-flex align-items-center gap-3">
+//         <div
+//           onClick={handleCheck}
 //           style={{
-//             width: 30,
-//             height: 30,
-//             display: "flex",
-//             alignItems: "center",
-//             justifyContent: "center",
-//             background: "rgba(34, 232, 212, 0.08)",
-//             border: "1px solid rgba(34, 232, 212, 0.25)",
-//             borderRadius: 8,
-//             color: "#22e8d4",
-//             cursor: "pointer",
+//             width: '24px',
+//             height: '24px',
+//             borderRadius: '4px',
+//             cursor: 'pointer',
+//             border: isVerified ? 'none' : '2px solid rgba(255,255,255,0.3)',
+//             background: isVerified ? '#F59E0B' : 'transparent',
+//             display: 'flex',
+//             alignItems: 'center',
+//             justifyContent: 'center',
+//             transition: 'all 0.2s ease',
 //           }}
 //         >
-//           <RotateCcw size={14} />
-//         </button>
-//       </div>
-
-//       <div
-//         ref={stageRef}
-//         style={{
-//           position: "relative",
-//           width: "100%",
-//           height: PUZZLE_HEIGHT,
-//           borderRadius: 10,
-//           overflow: "hidden",
-//           border: "1px solid rgba(34, 232, 212, 0.25)",
-//           background: "#0a1120",
-//           userSelect: "none",
-//           isolation: "isolate",
-//         }}
-//       >
-//         <img
-//           src={image}
-//           alt="captcha"
-//           draggable={false}
-//           style={{
-//             position: "absolute",
-//             top: 0,
-//             left: 0,
-//             width: "100%",
-//             height: "100%",
-//             objectFit: "cover",
-//             display: "block",
-//             pointerEvents: "none",
-//             opacity: isImageLoading ? 0 : 1,
-//             transition: "opacity 0.15s ease",
-//           }}
-//         />
-
-//         {isImageLoading && (
-//           <div
-//             style={{
-//               position: "absolute",
-//               inset: 0,
-//               display: "flex",
-//               alignItems: "center",
-//               justifyContent: "center",
-//               background: "rgba(4,6,11,0.9)",
-//               zIndex: 3,
-//             }}
-//           >
+//           {isChecking && (
 //             <div
 //               style={{
-//                 width: 30,
-//                 height: 30,
-//                 border: "3px solid rgba(34,232,212,0.25)",
-//                 borderTop: "3px solid #22e8d4",
-//                 borderRight: "3px solid #cba463",
-//                 borderRadius: "50%",
-//                 animation: "puzzleSpin 0.7s linear infinite",
+//                 width: '14px',
+//                 height: '14px',
+//                 border: '2px solid rgba(255,255,255,0.3)',
+//                 borderTop: '2px solid #F59E0B',
+//                 borderRadius: '50%',
+//                 animation: 'spin 0.6s linear infinite',
 //               }}
 //             />
-//           </div>
-//         )}
-
-//         {!isImageLoading && (
-//           <div
-//             style={{
-//               position: "absolute",
-//               left: targetX,
-//               top: targetY,
-//               width: PIECE_SIZE,
-//               height: PIECE_SIZE,
-//               border: "2px solid rgba(255,255,255,0.9)",
-//               background: "rgba(255,255,255,0.15)",
-//               boxShadow: "0 0 0 9999px rgba(4,6,20,0.35)",
-//               borderRadius: 4,
-//               pointerEvents: "none",
-//             }}
-//           />
-//         )}
-
-//         {!isImageLoading && (
-//           <div
-//             style={{
-//               position: "absolute",
-//               left: Math.max(0, Math.min(maxX, pieceX)),
-//               top: targetY,
-//               width: PIECE_SIZE,
-//               height: PIECE_SIZE,
-//               borderRadius: 4,
-//               border: verified ? "2px solid #22c55e" : "2px solid #fff",
-//               backgroundImage: `url(${image})`,
-//               backgroundSize: `${stageWidth}px ${PUZZLE_HEIGHT}px`,
-//               backgroundPosition: `-${targetX}px -${targetY}px`,
-//               backgroundRepeat: "no-repeat",
-//               boxShadow: "0 2px 8px rgba(0,0,0,0.5)",
-//               cursor: verified ? "default" : "grab",
-//               animation: failed ? "puzzleShakeAnim 0.4s" : "none",
-//               transition: dragging ? "none" : "left 0.15s ease",
-//               zIndex: 2,
-//             }}
-//           />
-//         )}
-//       </div>
-
-//       <div
-//         ref={trackRef}
-//         style={{
-//           position: "relative",
-//           marginTop: 10,
-//           height: 44,
-//           width: "100%",
-//           background: "rgba(34, 232, 212, 0.05)",
-//           border: "1px solid rgba(34, 232, 212, 0.15)",
-//           borderRadius: 10,
-//           display: "flex",
-//           alignItems: "center",
-//           overflow: "hidden",
-//         }}
-//       >
-//         <div
-//           style={{
-//             position: "absolute",
-//             left: 0,
-//             top: 0,
-//             bottom: 0,
-//             width: `${trackFraction * 100}%`,
-//             background: "rgba(34, 232, 212, 0.15)",
-//             pointerEvents: "none",
-//           }}
-//         />
-//         <div
-//           onMouseDown={startDrag}
-//           onTouchStart={startDrag}
-//           style={{
-//             position: "absolute",
-//             top: 0,
-//             left: `calc(${trackFraction * 100}% - ${trackFraction * 44}px)`,
-//             width: 44,
-//             height: 44,
-//             borderRadius: 10,
-//             background: verified
-//               ? "linear-gradient(135deg, #22c55e, #16a34a)"
-//               : "linear-gradient(135deg, #22e8d4, #17b8a8)",
-//             color: "#fff",
-//             display: "flex",
-//             alignItems: "center",
-//             justifyContent: "center",
-//             fontSize: 18,
-//             cursor: isImageLoading ? "not-allowed" : verified ? "default" : "grab",
-//             opacity: isImageLoading ? 0.5 : 1,
-//             zIndex: 2,
-//           }}
-//         >
-//           {verified ? "✓" : "→"}
+//           )}
+//           {isVerified && <Check size={16} color="#0B1120" strokeWidth={3} />}
 //         </div>
-//         <span
-//           style={{
-//             width: "100%",
-//             textAlign: "center",
-//             fontSize: 13,
-//             color: "#fff",
-//             pointerEvents: "none",
-//           }}
-//         >
-//           {isImageLoading
-//             ? "Loading puzzle..."
-//             : verified
-//             ? "Verified"
-//             : failed
-//             ? "Not quite — try again"
-//             : "Drag the piece to match the puzzle"}
+//         <span style={{ color: '#cbd5e1', fontSize: '14px', fontWeight: '500' }}>
+//           I'm not a robot
 //         </span>
 //       </div>
-
-//       <style jsx global>{`
-//         @keyframes puzzleShakeAnim {
-//           0%, 100% { transform: translateX(0); }
-//           25% { transform: translateX(-6px); }
-//           75% { transform: translateX(6px); }
-//         }
-//         @keyframes puzzleSpin {
-//           0% { transform: rotate(0deg); }
-//           100% { transform: rotate(360deg); }
-//         }
-//       `}</style>
+//       <div className="d-flex flex-column align-items-center opacity-50">
+//         <Shield size={20} color="#F59E0B" />
+//         <span style={{ fontSize: '10px', color: '#94a3b8' }}>Privacy</span>
+//       </div>
 //     </div>
 //   )
 // }
@@ -387,158 +112,13 @@
 //     password: "", phoneNo: "", countryId: "", captcha: "", referralId: "",
 //   })
 
-//   // const introSideOptions = [
-//   //   { value: "L", label: "Team Left" },
-//   //   { value: "R", label: "Team Right" },
-//   // ]
-
-//   // ========== CANVAS ANIMATION ==========
 //   useEffect(() => {
-//     const canvas = document.createElement('canvas')
-//     canvas.id = 'bgAnimationCanvas'
-//     canvas.style.position = 'fixed'
-//     canvas.style.top = '0'
-//     canvas.style.left = '0'
-//     canvas.style.width = '100%'
-//     canvas.style.height = '100%'
-//     canvas.style.zIndex = '0'
-//     canvas.style.pointerEvents = 'none'
-//     document.body.appendChild(canvas)
-
-//     const ctx = canvas.getContext('2d')
-//     let animationId
-//     let particles = []
-
-//     const resizeCanvas = () => {
-//       canvas.width = window.innerWidth
-//       canvas.height = window.innerHeight
-//     }
-
-//     class Particle {
-//       constructor() {
-//         this.x = Math.random() * canvas.width
-//         this.y = Math.random() * canvas.height
-//         this.size = Math.random() * 2 + 0.5
-//         this.speedX = (Math.random() - 0.5) * 0.5
-//         this.speedY = (Math.random() - 0.5) * 0.5 + 0.2
-//         this.alpha = Math.random() * 0.5 + 0.1
-//       }
-
-//       update() {
-//         this.x += this.speedX
-//         this.y += this.speedY
-
-//         if (this.x < 0) this.x = canvas.width
-//         if (this.x > canvas.width) this.x = 0
-//         if (this.y < 0) this.y = canvas.height
-//         if (this.y > canvas.height) this.y = 0
-//       }
-
-//       draw() {
-//         ctx.beginPath()
-//         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2)
-//         ctx.fillStyle = `rgba(139, 92, 246, ${this.alpha})`
-//         ctx.fill()
-
-//         ctx.beginPath()
-//         ctx.arc(this.x, this.y, this.size * 0.6, 0, Math.PI * 2)
-//         ctx.fillStyle = `rgba(34, 211, 238, ${this.alpha * 0.7})`
-//         ctx.fill()
-//       }
-//     }
-
-//     const initParticles = () => {
-//       particles = []
-//       for (let i = 0; i < 60; i++) {
-//         particles.push(new Particle())
-//       }
-//     }
-
-//     const connectParticles = () => {
-//       for (let i = 0; i < particles.length; i++) {
-//         for (let j = i + 1; j < particles.length; j++) {
-//           const dx = particles[i].x - particles[j].x
-//           const dy = particles[i].y - particles[j].y
-//           const distance = Math.sqrt(dx * dx + dy * dy)
-
-//           if (distance < 100) {
-//             ctx.beginPath()
-//             ctx.strokeStyle = `rgba(139, 92, 246, ${0.15 * (1 - distance / 100)})`
-//             ctx.lineWidth = 0.5
-//             ctx.moveTo(particles[i].x, particles[i].y)
-//             ctx.lineTo(particles[j].x, particles[j].y)
-//             ctx.stroke()
-//           }
-//         }
-//       }
-//     }
-
-//     let time = 0
-//     const animate = () => {
-//       if (!ctx) return
-//       ctx.clearRect(0, 0, canvas.width, canvas.height)
-
-//       const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height)
-//       gradient.addColorStop(0, '#060918')
-//       gradient.addColorStop(0.5, '#0a0f2a')
-//       gradient.addColorStop(1, '#030617')
-//       ctx.fillStyle = gradient
-//       ctx.fillRect(0, 0, canvas.width, canvas.height)
-
-//       time += 0.005
-//       for (let i = 0; i < 4; i++) {
-//         const x = canvas.width * (0.2 + i * 0.2) + Math.sin(time + i) * 50
-//         const y = canvas.height * 0.5 + Math.cos(time * 0.7 + i) * 40
-//         const radius = 120 + Math.sin(time * 0.5 + i) * 30
-
-//         const radialGrad = ctx.createRadialGradient(x, y, 0, x, y, radius)
-//         radialGrad.addColorStop(0, 'rgba(139, 92, 246, 0.08)')
-//         radialGrad.addColorStop(1, 'rgba(34, 211, 238, 0)')
-//         ctx.fillStyle = radialGrad
-//         ctx.beginPath()
-//         ctx.arc(x, y, radius, 0, Math.PI * 2)
-//         ctx.fill()
-//       }
-
-//       particles.forEach(particle => {
-//         particle.update()
-//         particle.draw()
-//       })
-
-//       connectParticles()
-
-//       animationId = requestAnimationFrame(animate)
-//     }
-
-//     window.addEventListener('resize', () => {
-//       resizeCanvas()
-//       initParticles()
-//     })
-
-//     resizeCanvas()
-//     initParticles()
-//     animate()
-
-//     return () => {
-//       if (animationId) cancelAnimationFrame(animationId)
-//       if (canvas && canvas.parentNode) canvas.parentNode.removeChild(canvas)
-//       window.removeEventListener('resize', resizeCanvas)
-//     }
-//   }, [])
-//   // ========== END OF CANVAS ANIMATION ==========
-
-//   useEffect(() => {
-//     const timer = setTimeout(() => {
-//       setPageLoading(false)
-//     }, 500)
-
+//     const timer = setTimeout(() => setPageLoading(false), 500)
 //     return () => clearTimeout(timer)
 //   }, [])
 
 //   useEffect(() => {
-//     if (initialReferralId) {
-//       validateReferralId(initialReferralId)
-//     }
+//     if (initialReferralId) validateReferralId(initialReferralId)
 //   }, [])
 
 //   useEffect(() => {
@@ -571,13 +151,10 @@
 //       setReferralData(null)
 //       return false
 //     }
-
 //     setReferralLoading(true)
 //     setReferralError("")
-
 //     try {
 //       const res = await dispatch(getReferralDataByLoginId(referralId)).unwrap()
-
 //       if (res?.statusCode === 200 && res?.data) {
 //         setReferralData(res.data)
 //         setReferralError("")
@@ -603,13 +180,10 @@
 //   const handleReferralChange = (e) => {
 //     const { value } = e.target
 //     setFormData(prev => ({ ...prev, referralId: value }))
-
 //     if (typingTimer) clearTimeout(typingTimer)
-
 //     setReferralBlurCalled(false)
 //     setReferralData(null)
 //     setReferralError("")
-
 //     if (value.trim()) {
 //       setTypingTimer(
 //         setTimeout(() => {
@@ -641,57 +215,34 @@
 //     if (errors.countryId) setErrors(prev => ({ ...prev, countryId: "" }))
 //   }
 
-//   const handleIntroSideChange = (selectedOption) => {
-//     setFormData(prev => ({ ...prev, introSide: selectedOption?.value || "" }))
-//     if (errors.introSide) setErrors(prev => ({ ...prev, introSide: "" }))
-//   }
-
 //   const handleCaptchaVerify = (isVerified) => {
 //     setCaptchaVerified(isVerified)
 //     if (isVerified) setErrors(prev => ({ ...prev, captcha: "" }))
 //   }
 
-//   const handleCaptchaReset = () => {
-//     setCaptchaVerified(false)
-//   }
-
 //   const validateForm = () => {
 //     let newErrors = { firstName: "", lastName: "", email: "", password: "", phoneNo: "", countryId: "", captcha: "", referralId: "" }
-
 //     if (!formData.firstName?.trim()) newErrors.firstName = "First name is required"
 //     else if (formData.firstName.trim().length < 2) newErrors.firstName = "At least 2 characters"
-
 //     if (!formData.lastName?.trim()) newErrors.lastName = "Last name is required"
 //     else if (formData.lastName.trim().length < 2) newErrors.lastName = "At least 2 characters"
-
 //     if (!formData.email?.trim()) newErrors.email = "Email is required"
 //     else if (!/^\S+@\S+\.\S+$/.test(formData.email)) newErrors.email = "Enter a valid email"
-
 //     if (!formData.password) newErrors.password = "Password is required"
 //     else if (formData.password.length < 6) newErrors.password = "Min 6 characters"
-
 //     if (!formData.phoneNo) newErrors.phoneNo = "Mobile number is required"
 //     else if (formData.phoneNo.length < 8 || formData.phoneNo.length > 13) newErrors.phoneNo = "Phone number must be 8-13 digits"
-
 //     if (!formData.countryId) newErrors.countryId = "Please select a country"
-
 //     if (!formData.referralId?.trim()) newErrors.referralId = "Referral ID is required"
 //     else if (referralError) newErrors.referralId = referralError
-
-//     if (!captchaVerified) newErrors.captcha = "Please complete the puzzle captcha"
-
+//     if (!captchaVerified) newErrors.captcha = "Please verify you are not a robot"
 //     setErrors(newErrors)
 //     return !Object.values(newErrors).some(error => error !== "")
 //   }
 
 //   const handleSubmit = async (e) => {
 //     e.preventDefault()
-//     console.log("Form submitted", formData)
-//     if (!validateForm()) {
-//       console.log("Form validation failed", errors)
-//       return
-//     }
-
+//     if (!validateForm()) return
 //     if (!referralData && formData.referralId.trim()) {
 //       const isValid = await validateReferralId(formData.referralId)
 //       if (!isValid) {
@@ -699,7 +250,6 @@
 //         return
 //       }
 //     }
-
 //     setLoading(true)
 //     try {
 //       const payload = {
@@ -714,15 +264,9 @@
 //         introSide: formData.introSide || "L",
 //         otPregpage: ""
 //       }
-//       console.log("Sending registration payload:", payload)
-
 //       const res = await dispatch(userRegistration(payload)).unwrap()
-//       console.log("Registration response:", res)
-
 //       if (res?.statusCode !== 200) throw new Error(res?.message || "Signup failed")
-
 //       toast.success("Account created successfully!")
-
 //       if (typeof window !== "undefined") {
 //         localStorage.setItem("welcomeData", JSON.stringify({
 //           name: `${formData.firstName} ${formData.lastName}`,
@@ -730,17 +274,14 @@
 //           authPassword: formData.password,
 //         }))
 //       }
-
 //       setFormData({
 //         firstName: "", lastName: "", email: "", password: "",
-//         phoneNo: "", countryId: "",
-//         referralId: "", introSide: ""
+//         phoneNo: "", countryId: "", referralId: "", introSide: ""
 //       })
 //       setReferralData(null)
 //       setCaptchaVerified(false)
 //       setTimeout(() => router.push("/user/welcome"), 1500)
 //     } catch (err) {
-//       console.error("Registration error:", err)
 //       toast.error(err.message || err || "Signup failed")
 //       setCaptchaVerified(false)
 //     } finally {
@@ -748,24 +289,30 @@
 //     }
 //   }
 
-//   // ── react-select styles ──────────────────────────────────────────────────
+//   // ── react-select styles (Gold Theme, transparent) ──
 //   const selectStyles = {
 //     control: (base, state) => ({
 //       ...base,
-//       backgroundColor: "rgba(255,255,255,0.04)",
-//       borderColor: state.isFocused ? "#22e8d4" : "rgba(140,180,200,0.24)",
+//       backgroundColor: "transparent",
+//       borderColor: state.isFocused ? "#F59E0B" : "rgba(255,255,255,0.1)",
 //       borderRadius: "0.75rem",
 //       minHeight: "48px",
 //       boxShadow: "none",
 //       transition: "all 0.2s",
 //       cursor: "pointer",
-//       "&:hover": { borderColor: "rgba(34,232,212,0.55)" },
+//       "&:hover": { borderColor: "rgba(245,158,11,0.55)" },
 //     }),
-
-//     menuList: (base) => ({ ...base, padding: "4px", maxHeight: "200px" }),
+//     menu: (base) => ({
+//       ...base,
+//       backgroundColor: "#111827",
+//       border: "1px solid rgba(255,255,255,0.1)",
+//       boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
+//       zIndex: 9999,
+//     }),
+//     menuList: (base) => ({ ...base, padding: "4px", maxHeight: "200px", backgroundColor: "#111827" }),
 //     option: (base, state) => ({
 //       ...base,
-//       backgroundColor: state.isFocused ? "rgba(34,232,212,0.1)" : "transparent",
+//       backgroundColor: state.isFocused ? "rgba(245,158,11,0.1)" : "transparent",
 //       color: "#eef3f8",
 //       fontSize: "13px",
 //       borderRadius: "8px",
@@ -773,13 +320,13 @@
 //       padding: "8px 10px",
 //     }),
 //     singleValue: (base) => ({ ...base, color: "#eef3f8", fontSize: "14px" }),
-//     placeholder: (base) => ({ ...base, color: "#8ea0b5", fontSize: "14px" }),
+//     placeholder: (base) => ({ ...base, color: "#F59E0B", fontSize: "14px" }),
 //     input: (base) => ({ ...base, color: "#eef3f8", fontSize: "14px" }),
 //     indicatorSeparator: () => ({ display: "none" }),
 //     dropdownIndicator: (base) => ({
 //       ...base,
 //       color: "#8ea0b5",
-//       "&:hover": { color: "#22e8d4" },
+//       "&:hover": { color: "#F59E0B" },
 //     }),
 //   }
 
@@ -792,14 +339,12 @@
 //   )
 
 //   const handleFocus = (e) => {
-//     e.target.style.borderColor = "rgb(255 255 255 / 70%)"
-//     e.target.style.background = "rgba(34,232,212,0.08)"
+//     e.target.style.borderColor = "#F59E0B"
 //     e.target.style.boxShadow = "none"
 //   }
 
 //   const handleBlurStyle = (e, hasError) => {
-//     e.target.style.borderColor = hasError ? "rgba(239,68,68,0.45)" : "rgba(140,180,200,0.24)"
-//     e.target.style.background = "rgba(255,255,255,0.04)"
+//     e.target.style.borderColor = hasError ? "rgba(239,68,68,0.45)" : "rgba(255,255,255,0.1)"
 //     e.target.style.boxShadow = "none"
 //   }
 
@@ -815,7 +360,7 @@
 //     left: "10px",
 //     top: "50%",
 //     transform: "translateY(-50%)",
-//     color: "#22e8d4",
+//     color: "#F59E0B",
 //     pointerEvents: "none",
 //   }
 
@@ -826,42 +371,22 @@
 //         <link rel="stylesheet" href="/assets/css/login.css" />
 //         <style jsx>{`
 //           .loader-container {
-//             position: fixed;
-//             top: 0;
-//             left: 0;
-//             right: 0;
-//             bottom: 0;
-//             display: flex;
-//             align-items: center;
-//             justify-content: center;
-//             background: linear-gradient(135deg, #060918 0%, #0a0f2a 100%);
-//             z-index: 9999;
+//             position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+//             background: linear-gradient(135deg, #0B1120 0%, #111827 100%); z-index: 9999;
 //           }
 //           .loader-spinner {
-//             width: 60px;
-//             height: 60px;
-//             border: 3px solid rgba(139, 92, 246, 0.2);
-//             border-top: 3px solid #8b5cf6;
-//             border-right: 3px solid #22d3ee;
-//             border-radius: 50%;
-//             animation: spin 0.8s linear infinite;
+//             width: 60px; height: 60px;
+//             border: 3px solid rgba(245, 158, 11, 0.2);
+//             border-top: 3px solid #F59E0B;
+//             border-right: 3px solid #F59E0B;
+//             border-radius: 50%; animation: spin 0.8s linear infinite;
 //           }
-//           @keyframes spin {
-//             0% { transform: rotate(0deg); }
-//             100% { transform: rotate(360deg); }
-//           }
+//           @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 //           .loader-text {
-//             margin-top: 20px;
-//             color: #8b5cf6;
-//             font-family: monospace;
-//             font-size: 14px;
-//             letter-spacing: 2px;
-//             animation: pulse 1.5s ease-in-out infinite;
+//             margin-top: 20px; color: #F59E0B; font-family: monospace; font-size: 14px;
+//             letter-spacing: 2px; animation: pulse 1.5s ease-in-out infinite;
 //           }
-//           @keyframes pulse {
-//             0%, 100% { opacity: 0.5; }
-//             50% { opacity: 1; }
-//           }
+//           @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
 //         `}</style>
 //         <div className="loader-container">
 //           <div style={{ textAlign: "center" }}>
@@ -878,29 +403,47 @@
 //       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
 //       <link rel="stylesheet" href="/assets/css/login.css" />
 
-//      <Toaster
+//       <Toaster
 //         position="top-right"
 //         toastOptions={{
 //           duration: 4000,
 //           style: {
-//             background: "#060918",
-//             color: "#e8e0fa",
-//             border: "1px solid rgba(34,232,212,0.25)",
-//             borderRadius: "12px",
-//             fontSize: "13px",
+//             background: "#111827", color: "#f3f4f6",
+//             border: "1px solid rgba(245,158,11,0.3)",
+//             borderRadius: "12px", fontSize: "13px",
 //           },
-//           success: { iconTheme: { primary: "#22e8d4", secondary: "#04060b" } },
-//           error: { iconTheme: { primary: "#ef4444", secondary: "#e8e0fa" } },
+//           success: { iconTheme: { primary: "#F59E0B", secondary: "#0B1120" } },
+//           error: { iconTheme: { primary: "#ef4444", secondary: "#f3f4f6" } },
 //         }}
 //       />
 
-//       <div className="login-theme min-vh-100 d-flex align-items-center justify-content-center px-3 py-5 position-relative overflow-hidden">
-//         <div className="position-absolute rounded-circle pe-none orb-purple" />
-//         <div className="position-absolute rounded-circle pe-none orb-cyan" />
-//         <div className="position-absolute top-50 start-50 translate-middle rounded-circle pe-none orb-center" />
+//       <div className="d-flex align-items-center justify-content-center px-3 py-5 position-relative" style={{
+//         background: `url('/bg.jpg') center/cover no-repeat`,
+//         fontFamily: 'Geist, sans-serif',
+//         minHeight: '100vh',
+//         width: '100vw',
+//         position: 'fixed',
+//         top: 0,
+//         left: 0,
+//         right: 0,
+//         bottom: 0,
+//         overflow: 'auto'
+//       }}>
 
-//         <div className="position-relative z-1 w-100 px-4 px-md-5 py-5 rounded-4 signup-card login-card">
-//           <div className="position-absolute top-0 start-50 translate-middle-x shimmer-line" />
+//         <div className="position-absolute inset-0" style={{ background: 'rgba(11, 17, 32, 0.4)', zIndex: 0 }} />
+
+//         <div className="position-absolute rounded-circle pe-none orb-purple" style={{ background: 'radial-gradient(circle, rgba(245,158,11,0.1) 0%, transparent 70%)', zIndex: 0 }} />
+//         <div className="position-absolute rounded-circle pe-none orb-cyan" style={{ background: 'radial-gradient(circle, rgba(245,158,11,0.06) 0%, transparent 70%)', zIndex: 0 }} />
+//         <div className="position-absolute top-50 start-50 translate-middle rounded-circle pe-none orb-center" style={{ background: 'radial-gradient(circle, rgba(245,158,11,0.04) 0%, transparent 70%)', zIndex: 0 }} />
+
+//         <div className="position-relative z-1 w-100 px-4 px-md-5 py-5 rounded-4 signup-card login-card"
+//           style={{
+//             background: 'rgba(17, 24, 39, 0.9)',
+//             backdropFilter: 'blur(20px)',
+//             border: '1px solid rgba(255,255,255,0.08)',
+//             zIndex: 1
+//           }}>
+//           <div className="position-absolute top-0 start-50 translate-middle-x shimmer-line" style={{ background: 'linear-gradient(90deg, transparent, #F59E0B, transparent)' }} />
 
 //           <div className="d-flex justify-content-center mb-2">
 //             <Link href='/'>
@@ -909,9 +452,9 @@
 //           </div>
 
 //           <div className="d-flex align-items-center gap-3 mt-4 mb-4">
-//             <div className="flex-grow-1 divider-line" />
-//             <span className="login-label">Create Account</span>
-//             <div className="flex-grow-1 divider-line" />
+//             <div className="flex-grow-1 divider-line" style={{ background: 'rgba(255,255,255,0.08)' }} />
+//             <span className="login-label" style={{ color: '#94a3b8' }}>Create Account</span>
+//             <div className="flex-grow-1 divider-line" style={{ background: 'rgba(255,255,255,0.08)' }} />
 //           </div>
 
 //           <form onSubmit={handleSubmit}>
@@ -921,28 +464,41 @@
 //                 { name: "lastName", label: "Last Name", placeholder: "Enter Last Name", error: errors.lastName },
 //               ].map(({ name, label, placeholder, error }) => (
 //                 <div className="col-12 col-sm-6" key={name}>
-//                   <label className="login-label">{label}</label>
+//                   <label className="form-label text-white-50 small fw-bold text-uppercase" style={{ letterSpacing: '1px' }}>{label}</label>
 //                   <div className="position-relative">
-//                     <span style={iconStyle}><User size={15} /></span>
+//                     <div className="position-absolute top-50 start-0 translate-middle-y ms-3" style={{ color: '#F59E0B', zIndex: 2 }}>
+//                       <User size={18} />
+//                     </div>
 //                     <input
 //                       type="text"
 //                       name={name}
 //                       placeholder={placeholder}
 //                       value={formData[name]}
 //                       onChange={handleChange}
-//                       className={`form-control pe-5 login-input ${error ? 'login-input-error' : ''}`}
-//                       onFocus={handleFocus}
-//                       onBlur={(e) => handleBlurStyle(e, error)}
+//                       className="form-control bg-transparent text-white ps-5 py-3"
+//                       style={{
+//                         borderRadius: '10px',
+//                         border: error ? '1px solid #ef4444' : '1px solid rgba(255,255,255,0.1)',
+//                         boxShadow: 'none',
+//                         color: '#fff',
+//                         transition: 'border 0.2s ease',
+//                       }}
+//                       onFocus={(e) => (e.target.style.border = '1px solid #F59E0B')}
+//                       onBlur={(e) =>
+//                         (e.target.style.border = error
+//                           ? '1px solid #ef4444'
+//                           : '1px solid rgba(255,255,255,0.1)')
+//                       }
 //                     />
 //                   </div>
-//                   {error && <div className="error-message" style={errorStyle}>{error}</div>}
+//                   {error && <div className="text-danger mt-1" style={{ fontSize: '12px' }}>⚠ {error}</div>}
 //                 </div>
 //               ))}
 //             </div>
 
 //             <div className="row g-3 mb-3">
 //               <div className="col-12 col-sm-6">
-//                 <label className="login-label">Country</label>
+//                 <label className="login-label" style={{ color: '#cbd5e1' }}>Country</label>
 //                 <Select
 //                   options={countryOptions}
 //                   onChange={handleCountryChange}
@@ -951,31 +507,45 @@
 //                   isSearchable
 //                   styles={selectStyles}
 //                   value={countryOptions.find((o) => o.value === formData.countryId) || null}
+//                   classNamePrefix="rs"
 //                 />
 //                 {errors.countryId && <div className="error-message" style={errorStyle}>{errors.countryId}</div>}
 //               </div>
 //               <div className="col-12 col-sm-6">
-//                 <label className="login-label">Email</label>
+//                 <label className="form-label text-white-50 small fw-bold text-uppercase" style={{ letterSpacing: '1px' }}>Email</label>
 //                 <div className="position-relative">
-//                   <span style={iconStyle}><Mail size={15} /></span>
+//                   <div className="position-absolute top-50 start-0 translate-middle-y ms-3" style={{ color: '#F59E0B', zIndex: 2 }}>
+//                     <Mail size={18} />
+//                   </div>
 //                   <input
 //                     type="email"
 //                     name="email"
 //                     placeholder="Enter Email"
 //                     value={formData.email}
 //                     onChange={handleChange}
-//                     className={`form-control pe-5 login-input  ${errors.email ? 'login-input-error' : ''}`}
-//                     onFocus={handleFocus}
-//                     onBlur={(e) => handleBlurStyle(e, errors.email)}
+//                     className="form-control bg-transparent text-white ps-5 py-3"
+//                     style={{
+//                       borderRadius: '10px',
+//                       border: errors.email ? '1px solid #ef4444' : '1px solid rgba(255,255,255,0.1)',
+//                       boxShadow: 'none',
+//                       color: '#fff',
+//                       transition: 'border 0.2s ease',
+//                     }}
+//                     onFocus={(e) => (e.target.style.border = '1px solid #F59E0B')}
+//                     onBlur={(e) => {
+//                       e.target.style.border = errors.email
+//                         ? '1px solid #ef4444'
+//                         : '1px solid rgba(255,255,255,0.1)'
+//                     }}
 //                   />
 //                 </div>
-//                 {errors.email && <div className="error-message" style={errorStyle}>{errors.email}</div>}
+//                 {errors.email && <div className="text-danger mt-1" style={{ fontSize: '12px' }}>⚠ {errors.email}</div>}
 //               </div>
 //             </div>
 
 //             <div className="row g-3 mb-3">
 //               <div className="col-12 col-sm-6">
-//                 <label className="login-label">Mobile Number</label>
+//                 <label className="login-label" style={{ color: '#cbd5e1' }}>Mobile Number</label>
 //                 <div className="position-relative">
 //                   <span style={iconStyle}><Phone size={15} /></span>
 //                   <input
@@ -984,7 +554,15 @@
 //                     placeholder="Enter Mobile Number"
 //                     value={formData.phoneNo}
 //                     onChange={handleChange}
-//                     className={`form-control pe-5 login-input  ${errors.phoneNo ? 'login-input-error' : ''}`}
+//                     className="form-control bg-transparent text-white pe-5 py-3"
+//                     style={{
+//                       borderRadius: '10px',
+//                       border: errors.phoneNo ? '1px solid #ef4444' : '1px solid rgba(255,255,255,0.1)',
+//                       boxShadow: 'none',
+//                       color: '#fff',
+//                       paddingLeft: '2.25rem',
+//                       transition: 'border 0.2s ease',
+//                     }}
 //                     onFocus={handleFocus}
 //                     onBlur={(e) => handleBlurStyle(e, errors.phoneNo)}
 //                   />
@@ -992,7 +570,7 @@
 //                 {errors.phoneNo && <div className="error-message" style={errorStyle}>{errors.phoneNo}</div>}
 //               </div>
 //               <div className="col-12 col-sm-6">
-//                 <label className="login-label">Password</label>
+//                 <label className="login-label" style={{ color: '#cbd5e1' }}>Password</label>
 //                 <div className="position-relative">
 //                   <span style={iconStyle}><Lock size={15} /></span>
 //                   <input
@@ -1001,7 +579,16 @@
 //                     placeholder="Enter Password"
 //                     value={formData.password}
 //                     onChange={handleChange}
-//                     className={`form-control pe-5 login-input  ${errors.password ? 'login-input-error' : ''}`}
+//                     className="form-control bg-transparent text-white pe-5 py-3"
+//                     style={{
+//                       borderRadius: '10px',
+//                       border: errors.password ? '1px solid #ef4444' : '1px solid rgba(255,255,255,0.1)',
+//                       boxShadow: 'none',
+//                       color: '#fff',
+//                       paddingLeft: '2.25rem',
+//                       paddingRight: '2.5rem',
+//                       transition: 'border 0.2s ease',
+//                     }}
 //                     onFocus={handleFocus}
 //                     onBlur={(e) => handleBlurStyle(e, errors.password)}
 //                   />
@@ -1009,6 +596,7 @@
 //                     type="button"
 //                     onClick={() => setShowPassword(p => !p)}
 //                     className="password-toggle-btn"
+//                     style={{ color: '#F59E0B' }}
 //                   >
 //                     {showPassword ? (
 //                       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -1030,7 +618,7 @@
 
 //             <div className="row g-3 mb-3">
 //               <div className="col-12 col-sm-6">
-//                 <label className="login-label">Referral ID</label>
+//                 <label className="login-label" style={{ color: '#cbd5e1' }}>Referral ID</label>
 //                 <div className="position-relative">
 //                   <span style={iconStyle}><UserPlus size={15} /></span>
 //                   <input
@@ -1039,7 +627,15 @@
 //                     placeholder="Enter Referral ID"
 //                     value={formData.referralId}
 //                     onChange={handleReferralChange}
-//                     className={`form-control pe-5 login-input  ${errors.referralId ? 'login-input-error' : ''}`}
+//                     className="form-control bg-transparent text-white pe-5 py-3"
+//                     style={{
+//                       borderRadius: '10px',
+//                       border: errors.referralId ? '1px solid #ef4444' : '1px solid rgba(255,255,255,0.1)',
+//                       boxShadow: 'none',
+//                       color: '#fff',
+//                       paddingLeft: '2.25rem',
+//                       transition: 'border 0.2s ease',
+//                     }}
 //                     onFocus={handleFocus}
 //                     onBlur={(e) => handleBlurStyle(e, errors.referralId)}
 //                   />
@@ -1050,13 +646,13 @@
 //                     {referralLoading ? (
 //                       <div className="referral-loading">
 //                         <span className="referral-spinner"></span>
-//                         <span className="referral-validating-text">Validating referral...</span>
+//                         <span className="referral-validating-text" style={{ color: '#94a3b8' }}>Validating referral...</span>
 //                       </div>
 //                     ) : referralError ? (
 //                       <p className="error-message" style={errorStyle}>{referralError}</p>
 //                     ) : referralData ? (
 //                       <div className="referral-success">
-//                         <p className="referral-name">
+//                         <p className="referral-name" style={{ color: '#22c55e' }}>
 //                           {referralData.fullName || `${referralData.fName} ${referralData.lName}` || "Referral found"}
 //                         </p>
 //                       </div>
@@ -1064,17 +660,13 @@
 //                   </div>
 //                 )}
 //               </div>
-
-              
 //             </div>
 
 //             <div className="row g-3 mb-4">
 //               <div className="col-12">
-//                 <label className="login-label">Captcha</label>
-//                 <ImagePuzzleCaptcha
-//                   verified={captchaVerified}
+//                 <SimpleCaptcha
+//                   isVerified={captchaVerified}
 //                   onVerify={handleCaptchaVerify}
-//                   onReset={handleCaptchaReset}
 //                 />
 //                 {errors.captcha && <div className="error-message text-center" style={errorStyle}>{errors.captcha}</div>}
 //               </div>
@@ -1083,36 +675,210 @@
 //             <button
 //               type="submit"
 //               disabled={loading}
-//               className={`btn w-100 d-flex align-items-center justify-content-center gap-2 fw-bold text-uppercase mt-2 login-submit ${loading ? 'login-submit-loading' : ''}`}
+//               className={`btn w-100 d-flex align-items-center justify-content-center gap-2 fw-bold text-uppercase mt-2 ${loading ? 'login-submit-loading' : ''}`}
+//               style={{
+//                 background: '#F59E0B',
+//                 color: '#0B1120',
+//                 borderRadius: '10px',
+//                 fontSize: '14px',
+//                 letterSpacing: '1px',
+//                 padding: '12px',
+//                 border: 'none'
+//               }}
 //             >
 //               {loading && (
-//                 <span className="spinner-border spinner-border-sm spinner-white" />
+//                 <span className="spinner-border spinner-border-sm" style={{ color: '#0B1120' }} />
 //               )}
 //               {loading ? "Creating Account..." : "Create Account"}
 //             </button>
 //           </form>
 
 //           <div className="d-flex align-items-center gap-2 my-4">
-//             <div className="flex-grow-1 or-divider" />
-//             <span className="or-text">or</span>
-//             <div className="flex-grow-1 or-divider" />
+//             <div className="flex-grow-1 or-divider" style={{ height: '1px', background: 'rgba(255,255,255,0.08)' }} />
+//             <span className="or-text" style={{ color: '#64748b', fontSize: '12px' }}>or</span>
+//             <div className="flex-grow-1 or-divider" style={{ height: '1px', background: 'rgba(255,255,255,0.08)' }} />
 //           </div>
 
 //           <button
 //             onClick={() => router.push("/user/login")}
-//             className="btn w-100 signup-button"
+//             className="btn w-100"
+//             style={{
+//               background: 'transparent',
+//               border: '1px solid rgba(255,255,255,0.2)',
+//               color: '#fff',
+//               borderRadius: '10px',
+//               padding: '12px',
+//               fontSize: '14px',
+//               transition: 'all 0.3s ease'
+//             }}
+//             onMouseEnter={(e) => { e.currentTarget.style.border = '1px solid #F59E0B'; e.currentTarget.style.color = '#F59E0B'; e.currentTarget.style.background = 'rgba(245,158,11,0.1)'; }}
+//             onMouseLeave={(e) => { e.currentTarget.style.border = '1px solid rgba(255,255,255,0.2)'; e.currentTarget.style.color = '#fff'; e.currentTarget.style.background = 'transparent'; }}
 //           >
 //             Already have an account? Sign In
 //           </button>
 //         </div>
 //       </div>
+
+//       <style jsx global>{`
+//         /* ========== FORCE ALL INPUTS TRANSPARENT ========== */
+//         .signup-card .form-control,
+//         .signup-card input:not([type="checkbox"]),
+//         .signup-card input[type="text"],
+//         .signup-card input[type="email"],
+//         .signup-card input[type="password"] {
+//           background: transparent !important;
+//           background-color: transparent !important;
+//           color: #fff !important;
+//           box-shadow: none !important;
+//         }
+
+//         /* ✅ PLACEHOLDER GOLD */
+//         .signup-card .form-control::placeholder,
+//         .signup-card input::placeholder {
+//           color: #F59E0B !important;
+//           opacity: 1 !important;
+//         }
+
+//         /* Autofill override */
+//         .signup-card input:-webkit-autofill,
+//         .signup-card input:-webkit-autofill:hover,
+//         .signup-card input:-webkit-autofill:focus {
+//           -webkit-text-fill-color: #fff !important;
+//           -webkit-box-shadow: 0 0 0 1000px rgba(17,24,39,0.9) inset !important;
+//           box-shadow: 0 0 0 1000px rgba(17,24,39,0.9) inset !important;
+//           transition: background-color 5000s ease-in-out 0s !important;
+//           caret-color: #fff !important;
+//         }
+
+//         /* ========== CARD BACKGROUND ========== */
+//         .signup-card,
+//         .login-card {
+//           background: rgba(17, 24, 39, 0.9) !important;
+//         }
+
+//         /* ========== REACT-SELECT (Country) ========== */
+//         .signup-card [class*="-control"] {
+//           background-color: transparent !important;
+//           background: transparent !important;
+//           border-color: rgba(255,255,255,0.1) !important;
+//           box-shadow: none !important;
+//           min-height: 48px;
+//         }
+
+//         .signup-card [class*="-control"]:hover {
+//           border-color: rgba(245,158,11,0.55) !important;
+//         }
+
+//         .signup-card [class*="-control"][class*="is-focused"] {
+//           border-color: #F59E0B !important;
+//         }
+
+//         /* ✅ COUNTRY PLACEHOLDER GOLD */
+//         .signup-card [class*="-placeholder"] {
+//           color: #F59E0B !important;
+//           opacity: 1 !important;
+//         }
+
+//         .signup-card [class*="-singleValue"] {
+//           color: #ffffff !important;
+//         }
+
+//         .signup-card [class*="-input"] input,
+//         .signup-card [class*="-Input"] input {
+//           color: #ffffff !important;
+//           background: transparent !important;
+//           box-shadow: none !important;
+//         }
+
+//         .signup-card [class*="-indicatorContainer"],
+//         .signup-card [class*="-dropdownIndicator"] {
+//           color: #8ea0b5 !important;
+//         }
+
+//         .signup-card [class*="-dropdownIndicator"]:hover {
+//           color: #F59E0B !important;
+//         }
+
+//         .signup-card [class*="-indicatorSeparator"] {
+//           display: none !important;
+//         }
+
+//         /* Dropdown menu */
+//         .signup-card [class*="-menu"] {
+//           background-color: #111827 !important;
+//           border: 1px solid rgba(255,255,255,0.1) !important;
+//           box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
+//           z-index: 9999 !important;
+//         }
+
+//         .signup-card [class*="-menuList"] {
+//           background-color: #111827 !important;
+//         }
+
+//         /* ========== DROPDOWN OPTIONS — TEXT WHITE ========== */
+//         .signup-card [class*="-option"] {
+//           background-color: transparent !important;
+//           color: #ffffff !important;
+//           cursor: pointer !important;
+//         }
+
+//         .signup-card [class*="-option"]:hover,
+//         .signup-card [class*="-option"][class*="-focused"],
+//         .signup-card [class*="-option"][class*="focused"] {
+//           background-color: rgba(245, 158, 11, 0.15) !important;
+//           color: #ffffff !important;
+//         }
+
+//         .signup-card [class*="-option"][class*="is-selected"],
+//         .signup-card [class*="-option"][class*="isSelected"] {
+//           background-color: rgba(245, 158, 11, 0.25) !important;
+//           color: #ffffff !important;
+//         }
+
+//         /* ========== COUNTRY LABEL + DIAL CODE ========== */
+//         .signup-card .country-label {
+//           color: #ffffff !important;
+//         }
+
+//         .signup-card .country-dial-code {
+//           color: #ffffff !important;
+//         }
+
+//         .signup-card .country-flag {
+//           border-radius: 2px;
+//         }
+
+//         /* ========== NO OPTIONS MESSAGE ========== */
+//         .signup-card [class*="-noOptionsMessage"] {
+//           color: #ffffff !important;
+//           background-color: #111827 !important;
+//         }
+
+//         /* ========== LOADING MESSAGE ========== */
+//         .signup-card [class*="-loadingMessage"] {
+//           color: #ffffff !important;
+//           background-color: #111827 !important;
+//         }
+
+//         /* ========== BASE ========== */
+//         html, body {
+//           margin: 0;
+//           padding: 0;
+//           background: #0B1120;
+//         }
+
+//         @keyframes spin {
+//           0% { transform: rotate(0deg); }
+//           100% { transform: rotate(360deg); }
+//         }
+//       `}</style>
 //     </>
 //   )
 // }
 
 // export default function SignupPage() {
 //   return (
-//     <Suspense fallback={<div>Loading...</div>}>
+//     <Suspense fallback={<div className="min-h-screen bg-[#0B1120] flex items-center justify-center text-[#F59E0B]">Loading...</div>}>
 //       <SignupContent />
 //     </Suspense>
 //   )
@@ -1124,7 +890,7 @@
 import React, { useState, useEffect, Suspense } from "react"
 import { useRouter } from "next/navigation"
 import Select from "react-select"
-import { userRegistration, getAllCountry, getReferralDataByLoginId } from "@/app/redux/slices/authSlice"
+import { userRegistration, getAllCountry, getReferralDataByLoginId, sendOtpForUserRegistration } from "@/app/redux/slices/authSlice"
 import { Toaster, toast } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 import { useSearchParams } from "next/navigation"
@@ -1225,9 +991,14 @@ function SignupContent() {
   const [referralError, setReferralError] = useState("")
   const [referralBlurCalled, setReferralBlurCalled] = useState(!!initialReferralId)
 
+  // ✅ OTP STATES
+  const [otpSent, setOtpSent] = useState(false)
+  const [otpValue, setOtpValue] = useState("")
+  const [otpLoading, setOtpLoading] = useState(false)
+
   const [errors, setErrors] = useState({
     firstName: "", lastName: "", email: "",
-    password: "", phoneNo: "", countryId: "", captcha: "", referralId: "",
+    password: "", phoneNo: "", countryId: "", captcha: "", referralId: "", otp: "",
   })
 
   useEffect(() => {
@@ -1302,6 +1073,8 @@ function SignupContent() {
     setReferralBlurCalled(false)
     setReferralData(null)
     setReferralError("")
+    setOtpSent(false)   // ✅ reset OTP when referral changes
+    setOtpValue("")
     if (value.trim()) {
       setTypingTimer(
         setTimeout(() => {
@@ -1312,6 +1085,43 @@ function SignupContent() {
     } else {
       setErrors(prev => ({ ...prev, referralId: "" }))
     }
+  }
+
+  // ✅ SEND OTP HANDLER
+  const handleSendOtp = async () => {
+    if (!referralData || referralError) {
+      toast.error("Please enter a valid referral ID first")
+      return
+    }
+    if (!formData.email?.trim()) {
+      toast.error("Please enter your email first")
+      return
+    }
+
+    setOtpLoading(true)
+    try {
+      const res = await dispatch(sendOtpForUserRegistration(formData.email)).unwrap()
+      if (res?.statusCode === 200) {
+        setOtpSent(true)
+        setErrors(prev => ({ ...prev, otp: "" }))
+        toast.success("OTP sent successfully!")
+      } else {
+        toast.error(res?.message || "Failed to send OTP")
+      }
+    } catch (err) {
+      toast.error(err?.message || "Failed to send OTP")
+    } finally {
+      setOtpLoading(false)
+    }
+  }
+
+  // ✅ OTP INPUT HANDLER
+  const handleOtpChange = (e) => {
+    const { value } = e.target
+    if (!/^\d*$/.test(value)) return
+    if (value.length > 6) return
+    setOtpValue(value)
+    if (errors.otp) setErrors(prev => ({ ...prev, otp: "" }))
   }
 
   const handleChange = (e) => {
@@ -1339,7 +1149,10 @@ function SignupContent() {
   }
 
   const validateForm = () => {
-    let newErrors = { firstName: "", lastName: "", email: "", password: "", phoneNo: "", countryId: "", captcha: "", referralId: "" }
+    let newErrors = {
+      firstName: "", lastName: "", email: "", password: "",
+      phoneNo: "", countryId: "", captcha: "", referralId: "", otp: ""
+    }
     if (!formData.firstName?.trim()) newErrors.firstName = "First name is required"
     else if (formData.firstName.trim().length < 2) newErrors.firstName = "At least 2 characters"
     if (!formData.lastName?.trim()) newErrors.lastName = "Last name is required"
@@ -1354,6 +1167,12 @@ function SignupContent() {
     if (!formData.referralId?.trim()) newErrors.referralId = "Referral ID is required"
     else if (referralError) newErrors.referralId = referralError
     if (!captchaVerified) newErrors.captcha = "Please verify you are not a robot"
+
+    // ✅ OTP VALIDATION
+    if (!otpSent) newErrors.otp = "Please send OTP first"
+    else if (!otpValue.trim()) newErrors.otp = "OTP is required"
+    else if (otpValue.length < 6) newErrors.otp = "OTP must be 6 digits"
+
     setErrors(newErrors)
     return !Object.values(newErrors).some(error => error !== "")
   }
@@ -1380,7 +1199,7 @@ function SignupContent() {
         countryId: parseInt(formData.countryId),
         address: "",
         introSide: formData.introSide || "L",
-        otPregpage: ""
+        otPregpage: otpValue || ""   // ✅ send actual OTP value
       }
       const res = await dispatch(userRegistration(payload)).unwrap()
       if (res?.statusCode !== 200) throw new Error(res?.message || "Signup failed")
@@ -1398,6 +1217,8 @@ function SignupContent() {
       })
       setReferralData(null)
       setCaptchaVerified(false)
+      setOtpSent(false)
+      setOtpValue("")
       setTimeout(() => router.push("/user/welcome"), 1500)
     } catch (err) {
       toast.error(err.message || err || "Signup failed")
@@ -1734,6 +1555,7 @@ function SignupContent() {
               </div>
             </div>
 
+            {/* ✅ Referral + OTP row */}
             <div className="row g-3 mb-3">
               <div className="col-12 col-sm-6">
                 <label className="login-label" style={{ color: '#cbd5e1' }}>Referral ID</label>
@@ -1778,6 +1600,64 @@ function SignupContent() {
                   </div>
                 )}
               </div>
+
+              {/* ✅ OTP column */}
+              <div className="col-12 col-sm-6">
+                <label className="login-label" style={{ color: '#cbd5e1' }}>OTP</label>
+                {!otpSent ? (
+                  <button
+                    type="button"
+                    onClick={handleSendOtp}
+                    disabled={otpLoading}
+                    className="btn w-100 d-flex align-items-center justify-content-center gap-2 fw-bold text-uppercase"
+                    style={{
+                      height: "48px",
+                      background: otpLoading
+                        ? "rgba(140,180,200,0.2)"
+                        : "linear-gradient(135deg, #F59E0B, #d97706)",
+                      border: "1px solid rgba(245,158,11,0.25)",
+                      color: "#0B1120",
+                      borderRadius: "10px",
+                      cursor: otpLoading ? "not-allowed" : "pointer",
+                      opacity: otpLoading ? 0.5 : 1,
+                      fontSize: "14px",
+                      letterSpacing: "1px",
+                    }}
+                  >
+                    {otpLoading ? (
+                      <>
+                        <span className="spinner-border spinner-border-sm" style={{ color: '#0B1120' }} />
+                        Sending OTP...
+                      </>
+                    ) : (
+                      "Send OTP"
+                    )}
+                  </button>
+                ) : (
+                  <div className="position-relative">
+                    <span style={iconStyle}><Lock size={15} /></span>
+                    <input
+                      type="text"
+                      placeholder="Enter 6-digit OTP"
+                      value={otpValue}
+                      onChange={handleOtpChange}
+                      className="form-control bg-transparent text-white pe-5 py-3"
+                      style={{
+                        borderRadius: '10px',
+                        border: errors.otp ? '1px solid #ef4444' : '1px solid rgba(255,255,255,0.1)',
+                        boxShadow: 'none',
+                        color: '#fff',
+                        paddingLeft: '2.25rem',
+                        transition: 'border 0.2s ease',
+                      }}
+                      onFocus={handleFocus}
+                      onBlur={(e) => handleBlurStyle(e, errors.otp)}
+                      maxLength={6}
+                    />
+                  </div>
+                )}
+                {errors.otp && <div className="error-message" style={errorStyle}>{errors.otp}</div>}
+              </div>
             </div>
 
             <div className="row g-3 mb-4">
@@ -1792,7 +1672,7 @@ function SignupContent() {
 
             <button
               type="submit"
-              disabled={loading}
+              disabled={loading || !otpSent}
               className={`btn w-100 d-flex align-items-center justify-content-center gap-2 fw-bold text-uppercase mt-2 ${loading ? 'login-submit-loading' : ''}`}
               style={{
                 background: '#F59E0B',
@@ -1801,7 +1681,9 @@ function SignupContent() {
                 fontSize: '14px',
                 letterSpacing: '1px',
                 padding: '12px',
-                border: 'none'
+                border: 'none',
+                opacity: (!otpSent || loading) ? 0.6 : 1,
+                cursor: (!otpSent || loading) ? 'not-allowed' : 'pointer',
               }}
             >
               {loading && (
