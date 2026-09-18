@@ -1288,6 +1288,33 @@ export default function JMFinexDashboard() {
 
   // ===== Derived values from API =====
   const data = dashboardData?.[0] || {}
+  const boosterProgress = (value) => Number(value ?? 0) > 0 ? 100 : 0
+  const dynamicBoosters = [
+    { n: "Booster 1", tag: "First Directs", reward: "5%", progress: boosterProgress(data?.boster1st), status: data?.boster1Rem },
+    { n: "Booster 2", tag: "Next Directs", reward: "+4%", progress: boosterProgress(data?.boster2nd), status: data?.boster2Rem },
+    { n: "Booster 3", tag: "Next Directs", reward: "+3%", progress: boosterProgress(data?.boster3rd), status: data?.boster3Rem },
+    { n: "Booster 4", tag: "Next Directs", reward: "+2%", progress: boosterProgress(data?.boster4th), status: data?.boster4Rem },
+  ]
+  const investmentRows = [
+    {
+      name: "FMP (Fund Management Program)",
+      amount: Number(data?.TotalInvestment ?? 0),
+      status: data?.FMPStatus ?? data?.FmpStatus,
+    },
+    {
+      name: "Education",
+      amount: Number(data?.CoursePackage ?? 0),
+      status: data?.EducationStatus ?? data?.AcademicSelfTradeStatus ?? data?.AcademicStatus,
+    },
+    {
+      name: "Self Trade",
+      amount: Number(data?.SelfTrade ?? 0),
+      status: data?.SelfTradingStatus ?? data?.SelfTradeStatus,
+    },
+  ].map((item) => ({
+    ...item,
+    active: item.amount > 0,
+  }))
 
   // Trading Package card values
   const totalIncome = Number(data?.totatRoiLevelIncome ?? 0)
@@ -1530,19 +1557,10 @@ export default function JMFinexDashboard() {
           {/* ================= ACTIVATED INVESTMENTS ================= */}
           <Section title="Activated Investments" sub="Your live self-trading position." tagText="1 ACTIVE">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <InvestmentCard
-                title="Self Trading"
-                type="MANUAL / SELF-DIRECTED"
-                investment={`$${Number(data?.TotalInvestment ?? 0).toLocaleString()}`}
-                start={data?.StartDate || "—"}
-                profit={`$${Number(data?.DailyTradingProfit ?? 0).toLocaleString()}`}
-                limit={data?.EarningLimit ? `${data.EarningLimit}×` : "—"}
-                cycleDay={Number(data?.CycleDay ?? 0)}
-                barsOn={barsOn}
-              />
+               <InvestmentSummaryCard rows={investmentRows} />
               <div className={`${CARD_CLS} p-6`}>
                 <div className="flex justify-between items-center mb-3">
-                  <div className="text-[15px] font-semibold" style={{ fontFamily: DISPLAY_FONT }}>Trading Package</div>
+                  <div className="text-[15px] font-semibold" style={{ fontFamily: DISPLAY_FONT }}>FMP Package</div>
                   <span className={TAG_CLS}>${Number(data?.TotalInvestment || 0).toFixed(2)}</span>
                 </div>
 
@@ -1562,11 +1580,11 @@ export default function JMFinexDashboard() {
                 <div className="grid grid-cols-3 text-center gap-3">
                   <div>
                     <div className="text-[10px] text-[#4c5b7c]">Total Income</div>
-                    <div className="font-bold text-[#14b8a6]">${Number(data?.totatRoiLevelIncome || 0).toFixed(2)}</div>
+                    <div className="font-bold text-[#14b8a6]">${Number(data?.TotalIncome || 0).toFixed(2)}</div>
                   </div>
                   <div>
-                    <div className="text-[10px] text-[#4c5b7c]">Max Limit</div>
-                    <div className="font-bold text-[#f59e0b]">${Number(data?.GrandincomeLimit || 0).toFixed(2)}</div>
+                    <div className="text-[10px] text-[#4c5b7c]">Earning Limit</div>
+                    <div className="font-bold text-[#f59e0b]">${Number(data?.EarningLimit || 0).toFixed(2)}</div>
                   </div>
                   <div>
                     <div className="text-[10px] text-[#4c5b7c]">Remaining</div>
@@ -1582,9 +1600,11 @@ export default function JMFinexDashboard() {
           {/* ================= BOOSTER ================= */}
           <Section title="Growth Booster" sub="Add up to 14% by hitting weekly direct targets in sequence." tagText="MAX +14% MONTHLY">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-              {BOOSTERS.map((b) => {
+              {dynamicBoosters.map((b) => {
                 const circ = 2 * Math.PI * 33
                 const offset = circ - (circ * b.progress) / 100
+                const isDone = b.progress === 100
+                const isInProgress = String(b.status).toLowerCase() === "in progress"
                 return (
                   <div key={b.n} className={`${CARD_CLS} text-center px-5 pt-[26px] pb-[22px]`}>
                     <div className="relative mx-auto w-[78px] h-[78px] mb-3">
@@ -1602,15 +1622,15 @@ export default function JMFinexDashboard() {
                     </div>
                     <div className="font-semibold text-[13.5px]" style={{ fontFamily: DISPLAY_FONT }}>{b.n}</div>
                     <div className="text-[10.5px] text-[#4c5b7c] mt-0.5">{b.tag}</div>
-                    <div className="font-semibold text-[11.5px] text-[#e0ac2e] mt-2">{b.reward} Monthly Profit</div>
+                        <div className="font-semibold text-[11.5px] text-[#e0ac2e] mt-2">{b.reward} Monthly Profit</div>
                     <div
                       className={`inline-flex items-center font-bold rounded-full text-[10px] tracking-[.04em] px-[11px] py-1 mt-2.5 ${
-                        b.state === "done" ? "bg-[rgba(47,191,122,.12)] text-[#2fbf7a]"
-                        : b.state === "active" ? "bg-[rgba(47,107,255,.15)] text-[#2f6bff]"
+                            isDone ? "bg-[rgba(47,191,122,.12)] text-[#2fbf7a]"
+                            : isInProgress ? "bg-[rgba(47,107,255,.15)] text-[#2f6bff]"
                         : "bg-[rgba(15,45,100,.08)] text-[#5c6c8c]"
                       }`}
                     >
-                      {BOOSTER_TEXT[b.state]}
+                          {b.status || "Locked"}
                     </div>
                   </div>
                 )
@@ -1756,13 +1776,13 @@ export default function JMFinexDashboard() {
                     className="flex items-center justify-center font-bold w-1/2 text-[11.5px] text-white"
                     style={{ background: `linear-gradient(90deg, ${C.blue500}, ${C.blue400})` }}
                   >
-                    Power Team 50%
+                    Max 34% consider from any single wing.
                   </div>
                   <div
                     className="flex items-center justify-center font-bold w-1/2 text-[11.5px] text-[#241a04]"
                     style={{ background: `linear-gradient(90deg, rgba(212,166,58,.55), ${C.gold400})` }}
                   >
-                    Weaker Team 50%
+                    Other team business accumulated
                   </div>
                 </div>
                 <div className="flex justify-between mt-2 text-[10.5px] text-[#4c5b7c]">
@@ -1788,9 +1808,9 @@ export default function JMFinexDashboard() {
                   <TrItem label="TOTAL TEAM" value={totalTeam} />
                   <TrItem label="ACTIVE TEAM" value={activeTeam} />
                   <TrItem label="TEAM BUSINESS" value={`$${Number(teamBusiness).toLocaleString()}`} />
-                  <TrItem label="POWER TEAM" value={`$${Number(otherLegBusiness).toLocaleString()}`} />
-                  <TrItem label="POWER TEAM ID" value={strongTeamBusiness} />
-                  <TrItem label="WEAKER TEAM" value={`$${Number(weakTeamBussiness).toLocaleString()}`} />
+                  <TrItem label="Biggest Leg" value={`$${Number(otherLegBusiness).toLocaleString()}`} />
+                  <TrItem label="Second Leg" value={strongTeamBusiness} />
+                  <TrItem label="Other Leg" value={`$${Number(weakTeamBussiness).toLocaleString()}`} />
                 </div>
               </div>
               <div className={`${CARD_CLS} flex flex-col items-center justify-center p-6 gap-3.5`}>
@@ -1891,6 +1911,32 @@ function MiniStat({ value, label }) {
     <div className="text-center">
       <b className="block text-[22px] text-[#e0ac2e]" style={{ fontFamily: DISPLAY_FONT }}>{value}</b>
       <span className="text-[10px] text-[#4c5b7c]">{label}</span>
+    </div>
+  )
+}
+
+
+function InvestmentSummaryCard({ rows }) {
+  return (
+    <div className={`${CARD_CLS} p-6`}>
+      <div className="grid grid-cols-[minmax(0,1fr)_72px_120px] items-center gap-4 border-b border-[rgba(15,45,100,.13)] pb-3 text-[10px] font-semibold tracking-[.06em] text-[#4c5b7c]">
+        <span>PROGRAM</span>
+        <span className="text-center">STATUS</span>
+        <span className="text-right">AMOUNT</span>
+      </div>
+      <div className="divide-y divide-[rgba(15,45,100,.1)]">
+        {rows.map((row) => (
+          <div key={row.name} className="grid grid-cols-[minmax(0,1fr)_72px_120px] items-center gap-4 py-4">
+            <span className="text-sm font-semibold text-[#0c1c3d]">{row.name}</span>
+            <span className={`text-center text-lg font-bold ${row.active ? "text-[#2fbf7a]" : "text-[#ff6b7d]"}`}>
+              {row.active ? "✔" : "✖"}
+            </span>
+            <span className="text-right text-base font-bold text-[#0c1c3d]">
+              ${row.amount.toFixed(2)}
+            </span>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

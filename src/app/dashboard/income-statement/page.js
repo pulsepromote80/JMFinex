@@ -7,18 +7,21 @@ import { useSearchParams } from 'next/navigation';
 import { getUserId } from '@/app/api/auth';
 
 const TABS = [
+  'Referral Bonus',
   'Trading Profit',
-  'Direct Income',
-  'Tier Reward',
-  'Growth Reward',
-  'Leadership Income'
+  'Growth Booster',
+  'Level Bonus',
+  'Reward Bonus',
+  'Club Bonus'
 ];
 
 const KEY_TO_LABEL = {
-  GrowthReward: 'Growth Reward',
+  ReferralIncome: 'Referral Bonus',
   TradingProfit: 'Trading Profit',
-  TierReward: 'Tier Reward',
-  DirectIncome: 'Direct Income'
+  GrowthBooster: 'Growth Booster',
+  LevelIncome: 'Level Bonus',
+  RewardBonus: 'Reward Bonus',
+  ClubBonus: 'Club Bonus'
 };
 
 function IncomeStatementContent() {
@@ -117,7 +120,7 @@ function IncomeStatementContent() {
                 onClick={() => handleTabChange(tab)}
                 className={`flex-1 px-4 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 whitespace-nowrap ${
                   activeTab === tab
-                    ? "bg-gradient-to-r from-blue-400 to-blue-400 text-white shadow-md shadow-purple-500/25"
+                    ? "bg-gradient-to-r from-blue-400 to-blue-400 text-white shadow-md shadow-blue-500/25"
                     : "text-gray-600 dark:text-[#9db4be] hover:bg-gray-200 dark:hover:bg-gray-700/50 hover:text-gray-900 dark:hover:text-white"
                 }`}
               >
@@ -130,11 +133,11 @@ function IncomeStatementContent() {
         {/* Search + Summary Section */}
         <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 mb-4">
           {/* Summary Card */}
-          <div className="flex-1 min-w-[200px] bg-gradient-to-r from-blue-500/10 to-purple-500/5 rounded-2xl px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center border border-blue-500/20 flex-wrap gap-2">
+          <div className="flex-1 min-w-[200px] bg-gradient-to-r from-blue-500/10 to-blue-500/5 rounded-2xl px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center border border-blue-500/20 flex-wrap gap-2">
             <span className="text-xs sm:text-sm text-gray-500 dark:text-[#9db4be] uppercase tracking-[1px]">
               📊 Current Filter Total • {activeTab}
             </span>
-            <span className="text-base sm:text-xl font-bold bg-gradient-to-r from-teal-400 to-purple-400 bg-clip-text text-transparent">
+            <span className="text-base sm:text-xl font-bold bg-gradient-to-r from-blue-400 to-blue-400 bg-clip-text text-transparent">
               ${visibleTotal} USD
             </span>
           </div>
@@ -147,7 +150,7 @@ function IncomeStatementContent() {
                 placeholder="Search transactions (ID, amount, remark...)"
                 value={searchTerm}
                 onChange={handleSearch}
-                className="w-full px-4 py-2.5 pl-10 rounded-full bg-gray-100 dark:bg-[#142936] border border-gray-200 dark:border-[rgba(140,200,205,0.16)] text-gray-900 dark:text-[#eaf5f7] text-sm outline-none focus:border-teal-500 dark:focus:border-teal-400 focus:shadow-[0_0_0_2px_rgba(59,130,246,0.2)] transition-all placeholder:text-gray-400 dark:placeholder:text-gray-500"
+                className="w-full px-4 py-2.5 pl-10 rounded-full bg-gray-100 dark:bg-[#142936] border border-gray-200 dark:border-[rgba(140,200,205,0.16)] text-gray-900 dark:text-[#eaf5f7] text-sm outline-none focus:border-blue-500 dark:focus:border-blue-400 focus:shadow-[0_0_0_2px_rgba(59,130,246,0.2)] transition-all placeholder:text-gray-400 dark:placeholder:text-gray-500"
               />
               <svg
                 className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 dark:text-gray-500"
@@ -193,7 +196,7 @@ function IncomeStatementContent() {
                       <td className="px-4 sm:px-5 py-3 sm:py-4 text-gray-700 dark:text-[#eaf5f7] whitespace-nowrap">
                         {item.date}
                       </td>
-                      <td className="px-4 sm:px-5 py-3 sm:py-4 font-semibold text-teal-600 dark:text-[#2ed99a] whitespace-nowrap">
+                      <td className="px-4 sm:px-5 py-3 sm:py-4 font-semibold text-blue-600 dark:text-[#2ed99a] whitespace-nowrap">
                         ${Number(item.credit).toFixed(4)}
                       </td>
                       <td
@@ -242,17 +245,17 @@ function IncomeStatementContent() {
                 <button
                   onClick={() => goToPage(currentPage - 1)}
                   disabled={currentPage === 1}
-                  className="px-4 py-2 rounded-full bg-gradient-to-r from-teal-500 to-purple-600 hover:from-purple-600 hover:to-teal-500 text-white font-semibold text-sm transition-all duration-300 shadow-[0_4px_15px_rgba(113,51,219,0.25)] hover:shadow-[0_6px_20px_rgba(113,51,219,0.4)] hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none disabled:hover:translate-y-0 disabled:bg-gray-200 dark:disabled:bg-gray-700 disabled:text-gray-500 dark:disabled:text-gray-400"
+                  className="px-4 py-2 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 dark:bg-black dark:bg-none hover:from-blue-500 hover:to-blue-500 dark:hover:bg-black dark:hover:bg-none text-black dark:text-white font-semibold text-sm transition-all duration-300 shadow-[0_4px_15px_rgba(113,51,219,0.25)] hover:shadow-[0_6px_20px_rgba(113,51,219,0.4)] hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none disabled:hover:translate-y-0 disabled:bg-gray-200 dark:disabled:bg-black dark:disabled:bg-none disabled:text-black dark:disabled:text-white"
                 >
                   ← Prev
                 </button>
-                <span className="text-gray-900 dark:text-white font-semibold text-sm min-w-[100px] text-center">
+                <span className="text-black dark:text-white font-semibold text-sm min-w-[100px] text-center">
                   Page {currentPage} of {totalPages || 1}
                 </span>
                 <button
                   onClick={() => goToPage(currentPage + 1)}
                   disabled={currentPage === totalPages || totalPages === 0}
-                  className="px-4 py-2 rounded-full bg-gradient-to-r from-teal-500 to-purple-600 hover:from-purple-600 hover:to-teal-500 text-white font-semibold text-sm transition-all duration-300 shadow-[0_4px_15px_rgba(113,51,219,0.25)] hover:shadow-[0_6px_20px_rgba(113,51,219,0.4)] hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none disabled:hover:translate-y-0 disabled:bg-gray-200 dark:disabled:bg-gray-700 disabled:text-gray-500 dark:disabled:text-gray-400"
+                  className="px-4 py-2 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 dark:bg-black dark:bg-none hover:from-blue-600 hover:to-blue-500 dark:hover:bg-black dark:hover:bg-none text-black dark:text-white font-semibold text-sm transition-all duration-300 shadow-[0_4px_15px_rgba(113,51,219,0.25)] hover:shadow-[0_6px_20px_rgba(113,51,219,0.4)] hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none disabled:hover:translate-y-0 disabled:bg-gray-200 dark:disabled:bg-black dark:disabled:bg-none disabled:text-black dark:disabled:text-white"
                 >
                   Next →
                 </button>
@@ -268,7 +271,7 @@ function IncomeStatementContent() {
 export default function IncomeStatement() {
   return (
     <Suspense fallback={<div className="min-h-screen bg-gray-50 dark:bg-[#060918] flex items-center justify-center">
-      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
     </div>}>
       <IncomeStatementContent />
     </Suspense>

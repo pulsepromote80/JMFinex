@@ -13,7 +13,7 @@ import {
   getSearchAllUsers,
   getAllMenu,
   getToken, getRequest, getRequestWithToken,
-  setAdminToken,
+  setAdminToken,sendOtpUserRegistration,
 } from "../../api/auth";
 import cookies from "js-cookie";
 import { act } from "react";
@@ -39,7 +39,8 @@ const API_ENDPOINTS = {
   UPDATE_USER_PROFILE: "/Authentication/updateUserProfile",
   UPDATE_USER_PROFILE_ADMIN: "/Authentication/updateUserProfileAdmin",
   UPDATE_PASSWORD:"/Authentication/changePassword",
-  GET_PROFILE_DETAILS: '/WalletReport/getProfileDetails'
+  GET_PROFILE_DETAILS: '/WalletReport/getProfileDetails',
+  SEND_OTP_USER_REGISTRATION: "/SMTPServices/sendOtpUserrehistration"
 };
 
 export const appLogin = createAsyncThunk(
@@ -455,6 +456,21 @@ export const updatePassword = createAsyncThunk(
       console.error("API Error:", error.response?.data || error.message);
       return rejectWithValue(
         error.response?.data?.message || "Failed to UPDATE password"
+      );
+    }
+  }
+);
+
+export const sendOtpForUserRegistration = createAsyncThunk(
+  "auth/sendOtpForUserRegistration",
+  async (emailId, { rejectWithValue }) => {
+    try {
+      const response = await sendOtpUserRegistration(emailId);
+      return response;
+    } catch (error) {
+      console.error("API Error:", error.response?.data || error.message);
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to send OTP"
       );
     }
   }

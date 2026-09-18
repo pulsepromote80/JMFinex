@@ -1,4 +1,4 @@
-// app/avagen-engine/page.jsx
+// app/FMP-engine/page.jsx
 "use client";
 
 import { useEffect, useState, useRef, useCallback } from "react";
@@ -216,7 +216,7 @@ export default function CryptoTerminal() {
 
   const startup = useCallback(async () => {
     const startupLines = [
-      [G("[INFO] ") + GR("Initializing AVAGEN arbitrage engine..."), 80],
+      [G("[INFO] ") + GR("Initializing FMP arbitrage engine..."), 80],
       [G("[INFO] ") + GR("Loading configuration files..."), 60],
       [G("[INFO] ") + GR("Connecting to Ethereum RPC..."), 70],
       [G("[INFO] ") + GR("Connecting to BSC RPC..."), 70],

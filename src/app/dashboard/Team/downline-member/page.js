@@ -179,7 +179,7 @@ const DownlineMember = ({ isDownline = false }) => {
                                                 <th className="px-4 py-3 text-center text-xs font-semibold text-gray-500 dark:text-[#9db4be] uppercase tracking-wider whitespace-nowrap hidden lg:table-cell">Topup Date</th>
                                                 <th className="px-4 py-3 text-center text-xs font-semibold text-gray-500 dark:text-[#9db4be] uppercase tracking-wider whitespace-nowrap hidden xl:table-cell">Package</th>
                                                 <th className="px-4 py-3 text-center text-xs font-semibold text-gray-500 dark:text-[#9db4be] uppercase tracking-wider whitespace-nowrap">Team Business</th>
-                                                <th className="px-4 py-3 text-center text-xs font-semibold text-gray-500 dark:text-[#9db4be] uppercase tracking-wider whitespace-nowrap">Leadership Business</th>
+
                                                 <th className="px-4 py-3 text-center text-xs font-semibold text-gray-500 dark:text-[#9db4be] uppercase tracking-wider whitespace-nowrap">Status</th>
                                             </tr>
                                         </thead>
@@ -222,9 +222,7 @@ const DownlineMember = ({ isDownline = false }) => {
                                                         <td className="px-4 py-3 text-center text-gray-500 dark:text-[#9db4be] whitespace-nowrap">
                                                             ${Number(member.teambusiness || 0).toFixed(2)}
                                                         </td>
-                                                        <td className="px-4 py-3 text-center text-gray-500 dark:text-[#9db4be] whitespace-nowrap">
-                                                            ${Number(member.leaseAmount || 0).toFixed(2)}
-                                                        </td>
+                                                        
                                                         <td className="px-4 py-3 text-center whitespace-nowrap">
                                                             <span
                                                                 className={`inline-block px-2.5 py-1 rounded-full text-xs font-semibold border ${

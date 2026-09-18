@@ -26,19 +26,19 @@ export default function MyRewards() {
 
   const RewardsTab = [
     { img: "https://imagedelivery.net/nq9qT5FHZv9Sg48UUnD1-A/bd85e7b8-c7c1-4ab2-10fa-2893f5027900/public", id: "myRewards", label: "My Rewards" },
-    { img: "https://imagedelivery.net/nq9qT5FHZv9Sg48UUnD1-A/bd85e7b8-c7c1-4ab2-10fa-2893f5027900/public", id: "rankAchievement", label: "Rank Achievements" },
+    // { img: "https://imagedelivery.net/nq9qT5FHZv9Sg48UUnD1-A/bd85e7b8-c7c1-4ab2-10fa-2893f5027900/public", id: "rankAchievement", label: "Rank Achievements" },
   ];
 
   return (
     <div className="mx-auto px-4 sm:px-6 py-6">
       {/* Tabs */}
-      <div className="overflow-x-auto">
-        <div className="flex gap-1 bg-gray-100 dark:bg-[#142936] border border-gray-200 dark:border-[rgba(140,200,205,0.16)] rounded-xl p-1 mb-6">
+      <div className="w-fit max-w-full overflow-x-auto">
+        <div className="flex w-fit gap-1 bg-gray-100 dark:bg-[#142936] border border-gray-200 dark:border-[rgba(140,200,205,0.16)] rounded-xl p-1 mb-6">
           {RewardsTab.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex-1 px-4 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 whitespace-nowrap ${
+                className={`inline-flex px-15 py-3 rounded-lg text-base font-semibold transition-all duration-200 whitespace-nowrap ${
                 activeTab === tab.id
                   ? "bg-gradient-to-r from-blue-400 to-blue-400 text-white shadow-md shadow-purple-500/25"
                   : "text-gray-600 dark:text-[#9db4be] hover:bg-gray-200 dark:hover:bg-gray-700/50 hover:text-gray-900 dark:hover:text-white"
@@ -53,9 +53,9 @@ export default function MyRewards() {
       </div>
 
       {/* Tab Content */}
-      <div className="mt-4">
+      <div className="">
         {activeTab === "myRewards" && <Reward />}
-        {activeTab === "rankAchievement" && <Achievement />}
+        {/* {activeTab === "rankAchievement" && <Achievement />} */}
       </div>
     </div>
   );

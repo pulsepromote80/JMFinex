@@ -13,7 +13,7 @@ import { getUserId } from "@/app/api/auth";
 
 const WalletStatement = () => {
   const dispatch = useDispatch();
-  const [activeTab, setActiveTab] = useState("Deposit");
+  const [activeTab, setActiveTab] = useState("USDT");
   const [selectedTransType, setSelectedTransType] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -30,6 +30,13 @@ const WalletStatement = () => {
 
   const userId = getUserId();
   const itemsPerPage = 5;
+  const reportTabByLabel = {
+    USDT: "Deposit",
+    Working: "Income",
+    Trading: "Trading",
+    Withdrawal: "Withdrawal",
+  };
+  const reportTab = reportTabByLabel[activeTab] || activeTab;
 
   useEffect(() => {
     dispatch(getAllWalletTransType());
@@ -56,7 +63,7 @@ const WalletStatement = () => {
       transtype: "withdrawal",
       type: withdrawalType,
     };
-    switch (tab) {
+    switch (reportTabByLabel[tab] || tab) {
       case "Deposit":
         dispatch(getDepositWalletReport(payload));
         break;
@@ -76,7 +83,7 @@ const WalletStatement = () => {
 
   // Get current report data based on active tab
   const currentReportData = useMemo(() => {
-    switch (activeTab) {
+    switch (reportTab) {
       case "Deposit":
         return DepositWalletReportData;
       case "Income":
@@ -89,7 +96,7 @@ const WalletStatement = () => {
         return [];
     }
   }, [
-    activeTab,
+    reportTab,
     DepositWalletReportData,
     getIncomeWalletReportdata,
     roiWalletData,
@@ -99,7 +106,7 @@ const WalletStatement = () => {
   // Get available transaction types for dropdown
   const transTypeOptions = useMemo(() => {
     if (!walletData) return [];
-    switch (activeTab) {
+    switch (reportTab) {
       case "Deposit":
         return walletData.depositTransTypes || [];
       case "Income":
@@ -114,7 +121,7 @@ const WalletStatement = () => {
       default:
         return [];
     }
-  }, [activeTab, walletData]);
+  }, [reportTab, walletData]);
 
   // Filter & paginate data
   const filteredData = useMemo(() => {

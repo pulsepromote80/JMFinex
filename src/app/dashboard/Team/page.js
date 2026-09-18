@@ -26,7 +26,7 @@ const TeamReferral = () => {
     const tabLabels = {
         Summary: "Summary",
         team: "Direct Team",
-        binarytree: "Tree View",
+        // binarytree: "Tree View",
         Downline: "Downline Team",
         AffiliateTree: "Affiliate Tree",
     };
@@ -113,7 +113,7 @@ const TeamReferral = () => {
             {/* Tabs */}
             <div className="overflow-x-auto">
                 <div className="flex gap-1 bg-gray-100 dark:bg-[#142936] border border-gray-200 dark:border-[rgba(140,200,205,0.16)] rounded-xl p-1 mb-6 min-w-max">
-                    {["Summary", "team", "binarytree", "Downline", "AffiliateTree"].map((tab) => (
+                    {["Summary", "team", "Downline", "AffiliateTree"].map((tab) => (
                         <button
                             key={tab}
                             className={`flex-1 px-4 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 whitespace-nowrap ${
@@ -223,19 +223,31 @@ const TeamReferral = () => {
                                     </div>
                                     <div className="flex-1">
                                         <div className="text-sm font-bold text-gray-900 dark:text-[#eaf5f7]">
-                                            Strong Leg Analytics
+                                            Team Business
                                         </div>
                                         <div className="flex flex-col gap-1 text-[11px] text-gray-500 dark:text-[#9db4be]">
                                             <div>
-                                                Strong Leg Ids:{" "}
+                                                Biggest Leg Id:{" "}
                                                 <span className="text-gray-700 dark:text-[#eaf5f7]">
-                                                    {dashboardData?.[0]?.StrongLegID || 0}
+                                                    {dashboardData?.[0]?.BiggestLegID || 0}
                                                 </span>
                                             </div>
                                             <div>
-                                                Strong Leg Business:{" "}
+                                                Biggest Leg Business:{" "}
                                                 <span className="text-gray-700 dark:text-[#eaf5f7]">
-                                                    ${(dashboardData?.[0]?.StrongLegBus || 0).toFixed(2)}
+                                                    ${(dashboardData?.[0]?.BiggestLegBuss || 0).toFixed(2)}
+                                                </span>
+                                            </div>
+                                            <div>
+                                                Second Leg Id:{" "}
+                                                <span className="text-gray-700 dark:text-[#eaf5f7]">
+                                                    {dashboardData?.[0]?.SecondLegID || 0}
+                                                </span>
+                                            </div>
+                                            <div>
+                                                Second Leg Business:{" "}
+                                                <span className="text-gray-700 dark:text-[#eaf5f7]">
+                                                    ${(dashboardData?.[0]?.SecondLegBuss || 0).toFixed(2)}
                                                 </span>
                                             </div>
                                             <div>
@@ -323,7 +335,7 @@ const TeamReferral = () => {
                                                         <th className="px-4 py-3 text-center text-xs font-semibold text-gray-500 dark:text-[#9db4be] uppercase tracking-wider whitespace-nowrap">Package</th>
                                                         <th className="px-4 py-3 text-center text-xs font-semibold text-gray-500 dark:text-[#9db4be] uppercase tracking-wider whitespace-nowrap hidden md:table-cell">Topup Date</th>
                                                         <th className="px-4 py-3 text-center text-xs font-semibold text-gray-500 dark:text-[#9db4be] uppercase tracking-wider whitespace-nowrap hidden md:table-cell">Team Business</th>
-                                                        <th className="px-4 py-3 text-center text-xs font-semibold text-gray-500 dark:text-[#9db4be] uppercase tracking-wider whitespace-nowrap hidden md:table-cell">Leadership Business</th>
+
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -364,9 +376,7 @@ const TeamReferral = () => {
                                                                 <td className="px-4 py-3 text-center text-gray-500 dark:text-[#9db4be] whitespace-nowrap hidden md:table-cell">
                                                                     ${member.teambusiness || "0"}
                                                                 </td>
-                                                                <td className="px-4 py-3 text-center text-gray-500 dark:text-[#9db4be] whitespace-nowrap hidden md:table-cell">
-                                                                    ${member.leftbusiness || "0"}
-                                                                </td>
+                                                               
                                                             </tr>
                                                         ))
                                                     ) : (

@@ -3243,7 +3243,7 @@ export default function SonicScalper() {
             <div className="flex gap-3 w-full">
               <button
                 className="w-full py-3 rounded-lg bg-slate-600 hover:bg-slate-700 text-white text-[13px] font-semibold cursor-pointer transition-all flex-1"
-                onClick={() => handleDownloadInvoice(inv)}
+                // onClick={() => handleDownloadInvoice(inv)}
               >
                 <Download size={16} className="inline mr-1.5 align-middle" />
                 Download Invoice

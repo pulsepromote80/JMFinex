@@ -730,4 +730,21 @@ export const getAllMenu = async (adminUserId) => {
     throw error;
   }
 };
+export const sendOtpUserRegistration = async (emailId) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/SMTPServices/sendOtpUserrehistration`,
+      { emailId },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Send OTP User Registration API Call Failed:", error);
+    throw error;
+  }
+};
 
