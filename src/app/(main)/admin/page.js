@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useMemo } from 'react';
-import AllUsersSearch from '@/components/AllUsersSearch';
 import { exportUsersToExcel } from '@/app/utils/exportUsersToExcel';
 import {
   RiUser3Line,
@@ -19,16 +18,10 @@ import {
   RiBriefcaseLine,
 } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAdminDashboardDetails, getSearchAllUsersDetails } from '@/app/redux/slices/authSlice';
+import { getAdminDashboardDetails } from '@/app/redux/slices/authSlice';
 import { getAdminUserId } from '@/app/api/auth';
 
-const recentActivity = [
-  { id: 1, user: 'John Doe', action: 'Started a new conversation', time: '2 min ago', type: 'conversation' },
-  { id: 2, user: 'Jane Smith', action: 'Sent a message', time: '5 min ago', type: 'message' },
-  { id: 3, user: 'Mike Johnson', action: 'Completed onboarding', time: '15 min ago', type: 'onboarding' },
-  { id: 4, user: 'Sarah Wilson', action: 'Updated profile', time: '1 hour ago', type: 'profile' },
-  { id: 5, user: 'Tom Brown', action: 'Changed settings', time: '2 hours ago', type: 'settings' },
-];
+
 
 /* ── Mini bar chart SVG ── */
 const MiniBarChart = ({ color = '#6366f1', bars = [40, 65, 45, 80, 55, 70, 60] }) => (
@@ -89,7 +82,6 @@ export default function AdminDashboard() {
     if (adminUserId) {
       dispatch(getAdminDashboardDetails(adminUserId));
     }
-    dispatch(getSearchAllUsersDetails());
   }, [dispatch, adminUserId]);
 
   const getAPIData = () => {
@@ -99,7 +91,13 @@ export default function AdminDashboard() {
 
   const apiData = getAPIData();
   const fmt = (val) => Number(val ?? 0).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 3 });
-
+  const recentActivity = [
+    { id: 1, user: 'Today ROI', action: `$${apiData?.todayROI}`, time: '2 min ago', type: 'conversation' },
+    { id: 2, user: 'Today Direct Income', action: `$${apiData?.TodayDirectIncome}`, time: '5 min ago', type: 'message' },
+    { id: 3, user: 'Today Tier Reward', action: `$${apiData?.TodayTierReward}`, time: '15 min ago', type: 'onboarding' },
+    // { id: 4, user: 'Sarah Wilson', action: 'Updated profile', time: '1 hour ago', type: 'profile' },
+    // { id: 5, user: 'Tom Brown', action: 'Changed settings', time: '2 hours ago', type: 'settings' },
+  ];
   /* ── Top 5 stat cards ── */
   const topStats = [
     {
@@ -114,18 +112,18 @@ export default function AdminDashboard() {
       trend: '+12%',
       trendUp: true,
     },
-    {
-      label: 'Working Income Total',
-      value: `$${fmt(apiData?.WorkingIncomeTotal)}`,
-      icon: RiMoneyDollarCircleLine,
-      iconBg: 'bg-emerald-50',
-      iconColor: 'text-emerald-500',
-      accent: '#10b981',
-      barColor: '#10b981',
-      bars: [45, 60, 38, 80, 55, 68, 74],
-      trend: '+8.3%',
-      trendUp: true,
-    },
+    // {
+    //   label: 'Working Income Total',
+    //   value: `$${fmt(apiData?.WorkingIncomeTotal)}`,
+    //   icon: RiMoneyDollarCircleLine,
+    //   iconBg: 'bg-emerald-50',
+    //   iconColor: 'text-emerald-500',
+    //   accent: '#10b981',
+    //   barColor: '#10b981',
+    //   bars: [45, 60, 38, 80, 55, 68, 74],
+    //   trend: '+8.3%',
+    //   trendUp: true,
+    // },
     {
       label: 'Total Today Joining',
       value: fmt(apiData?.TotalToadyJoining),
@@ -144,49 +142,55 @@ export default function AdminDashboard() {
       icon: RiUser3Line,
       iconBg: 'bg-violet-50',
       iconColor: 'text-violet-500',
-      accent: '#8b5cf6',
-      barColor: '#8b5cf6',
+      accent: '#07dbc7',
+      barColor: '#07dbc7',
       bars: [60, 45, 70, 50, 80, 55, 65],
       trend: '+5.7%',
       trendUp: true,
     },
-    {
-      label: 'Total Business',
-      value: `$${fmt(apiData?.TotalBusiness)}`,
-      icon: RiBriefcaseLine,
-      iconBg: 'bg-rose-50',
-      iconColor: 'text-rose-500',
-      accent: '#f43f5e',
-      barColor: '#f43f5e',
-      bars: [70, 55, 45, 65, 40, 58, 50],
-      trend: '-2.4%',
-      trendUp: false,
-    },
+    // {
+    //   label: 'Total Business',
+    //   value: `$${fmt(apiData?.TotalBusiness)}`,
+    //   icon: RiBriefcaseLine,
+    //   iconBg: 'bg-rose-50',
+    //   iconColor: 'text-rose-500',
+    //   accent: '#f43f5e',
+    //   barColor: '#f43f5e',
+    //   bars: [70, 55, 45, 65, 40, 58, 50],
+    //   trend: '-2.4%',
+    //   trendUp: false,
+    // },
   ];
 
   /* ── Wallet banner cards ── */
   const walletCards = [
     {
-      label: 'Total Income Wallet',
-      value: `$${fmt(apiData?.TotalIncomeWallet)}`,
-      gradient: 'from-violet-500 via-indigo-500 to-blue-500',
-      chipText: 'Income',
+      label: 'Total Balance',
+      value: `$${fmt(apiData?.totalDepositWallet)}`,
+      gradient: 'from-teal-400 via-cyan-500 to-sky-500',
+      chipText: 'USDT Wallet',
     },
     {
-      label: 'Total Deposit Wallet',
-      value: `$${fmt(apiData?.TotalDepositWallet)}`,
+      label: 'Total Balance',
+      value: `$${fmt(apiData?.TotalIncomeWallet)}`,
+      gradient: 'from-violet-500 via-indigo-500 to-blue-500',
+      chipText: 'Bonus Wallet',
+    },
+    {
+      label: 'Total Balance',
+      value: `$${fmt(apiData?.totalROIWallet)}`,
       gradient: 'from-teal-400 via-cyan-500 to-sky-500',
-      chipText: 'Deposit',
+      chipText: 'ROI Trade Wallet',
     },
   ];
 
   /* ── Bottom 5 stat cards ── */
   const bottomStats = [
-    { label: 'Today Deposit',            value: `$${fmt(apiData?.TodayDeposit)}`,            pct: 62, barCol: 'bg-blue-500',    dotCol: 'bg-blue-500',   icon: RiBankLine },
-    { label: 'Total Income Withdrawal',  value: `$${fmt(apiData?.TotalIncomeWithdrawal)}`,   pct: 48, barCol: 'bg-amber-500',   dotCol: 'bg-amber-500',  icon: RiExchangeLine },
-    { label: 'Total Trading',            value: `$${fmt(apiData?.TotalROI)}`,                pct: 75, barCol: 'bg-violet-500',  dotCol: 'bg-violet-500', icon: RiLineChartLine },
-    { label: 'Working Income Today',     value: `$${fmt(apiData?.WorkingIncomeToday)}`,      pct: 55, barCol: 'bg-rose-500',    dotCol: 'bg-rose-500',   icon: RiMoneyDollarCircleLine },
-    { label: 'Today Business',           value: `$${fmt(apiData?.TodayBusiness)}`,           pct: 68, barCol: 'bg-teal-500',    dotCol: 'bg-teal-500',   icon: RiBriefcaseLine },
+    { label: 'ROI Withdrawal', value: `$${fmt(apiData?.ROIWithdrawal)}`, pct: 62, barCol: 'bg-blue-500', dotCol: 'bg-blue-500', icon: RiBankLine },
+    { label: 'Total Working Withdrawal', value: `$${fmt(apiData?.TotalIncomeWithdrawal)}`, pct: 48, barCol: 'bg-amber-500', dotCol: 'bg-amber-500', icon: RiExchangeLine },
+    { label: 'USDT Deposit', value: `$${fmt(apiData?.USDTDeposit)}`, pct: 75, barCol: 'bg-violet-500', dotCol: 'bg-violet-500', icon: RiLineChartLine },
+    { label: 'Fund Deposit By Admin', value: `$${fmt(apiData?.FundDepositBySystem)}`, pct: 55, barCol: 'bg-rose-500', dotCol: 'bg-rose-500', icon: RiMoneyDollarCircleLine },
+    { label: 'FUND TRANSFER', value: `$${fmt(apiData?.FUNDTRANSFER)}`, pct: 68, barCol: 'bg-teal-500', dotCol: 'bg-teal-500', icon: RiBriefcaseLine },
   ];
 
   /* ── Recent activity builder ── */
@@ -267,7 +271,7 @@ export default function AdminDashboard() {
 
   /* ────────────────────────────────────────── */
   return (
-    <div className="min-h-screen bg-[#f4f6fb] dark:bg-[#0f1117] font-sans">
+    <div className="min-h-screen  dark:bg-[#0f1117] font-sans">
       <div className="space-y-6">
 
         {/* ── Header ── */}
@@ -285,7 +289,7 @@ export default function AdminDashboard() {
           </div>
 
           {/* Tabs */}
-          <div className="flex gap-1 p-1 bg-white dark:bg-slate-800 rounded-xl shadow-[0_2px_12px_rgba(0,0,0,0.07)] w-full sm:w-auto">
+          {/* <div className="flex gap-1 p-1 bg-white dark:bg-slate-800 rounded-xl shadow-[0_2px_12px_rgba(0,0,0,0.07)] w-full sm:w-auto">
             {['overview', 'users'].map(tab => (
               <button
                 key={tab}
@@ -299,13 +303,13 @@ export default function AdminDashboard() {
                 {tab === 'overview' ? '⊞ Overview' : '👥 Users'}
               </button>
             ))}
-          </div>
+          </div> */}
         </div>
 
         {activeTab === 'overview' && (
           <>
             {/* ── TOP STAT CARDS ── */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-3 sm:gap-4">
               {loading
                 ? Array(5).fill(0).map((_, i) => <CardSkeleton key={i} />)
                 : topStats.map((stat, i) => (
@@ -399,24 +403,24 @@ export default function AdminDashboard() {
               ))}
 
               {/* donut — Total Revenue summary */}
-              <div className="bg-white dark:bg-slate-800 rounded-2xl p-5 sm:p-6
+              {/* <div className="bg-white dark:bg-slate-800 rounded-2xl p-5 sm:p-6
                 shadow-[0_2px_16px_rgba(0,0,0,0.06)] dark:border dark:border-slate-700/60
                 hover:shadow-[0_8px_30px_rgba(0,0,0,0.10)] hover:-translate-y-1 transition-all duration-300
                 flex flex-col justify-between gap-4">
                 <div>
-                  <p className="text-[11px] font-bold tracking-widest uppercase text-slate-400 mb-1">Category</p>
+                  <p className="text-[11px] font-bold tracking-widest uppercase text-slate-400 mb-1">ROI Wallet</p>
                   <p className="text-3xl font-black text-slate-800 dark:text-white tabular-nums">
-                    {fmt(apiData?.TotalBusiness) || '82k'}
+                    ${fmt(apiData?.totalROIWallet) || '82k'}
                   </p>
-                  <p className="text-xs text-slate-400 font-medium mt-0.5">Total Revenue</p>
+                  <p className="text-xs text-slate-400 font-medium mt-0.5">Total ROI Wallet</p>
                 </div>
                 <div className="flex items-center gap-5">
                   <DonutChart pct={75} color="#14b8a6" size={72} stroke={9} />
                   <div className="space-y-2 flex-1">
                     {[
                       { label: 'Business', pct: 75, col: 'bg-teal-500' },
-                      { label: 'Income',   pct: 58, col: 'bg-violet-500' },
-                      { label: 'Deposit',  pct: 42, col: 'bg-indigo-400' },
+                      { label: 'Income', pct: 58, col: 'bg-violet-500' },
+                      { label: 'Deposit', pct: 42, col: 'bg-indigo-400' },
                     ].map((item, i) => (
                       <div key={i}>
                         <div className="flex justify-between">
@@ -428,7 +432,7 @@ export default function AdminDashboard() {
                     ))}
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
 
             {/* ── BOTTOM STAT CARDS ── */}
@@ -463,10 +467,10 @@ export default function AdminDashboard() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-6">
 
               {/* Users search */}
-              <div className="lg:col-span-2 bg-white dark:bg-slate-800 rounded-2xl
+              {/* <div className="lg:col-span-2 bg-white dark:bg-slate-800 rounded-2xl
                 shadow-[0_2px_16px_rgba(0,0,0,0.06)] dark:border dark:border-slate-700/60 overflow-hidden">
                 <AllUsersSearch onExport={handleExport} />
-              </div>
+              </div> */}
 
               {/* Recent Activity */}
               <div className="bg-white dark:bg-slate-800 rounded-2xl
@@ -480,7 +484,7 @@ export default function AdminDashboard() {
                       <div className="w-8 h-8 rounded-xl bg-violet-50 dark:bg-violet-900/30 flex items-center justify-center">
                         <RiTimeLine className="text-violet-500 text-base" />
                       </div>
-                      <span className="text-sm font-bold text-slate-700 dark:text-white">Recent Activity</span>
+                      <span className="text-sm font-bold text-slate-700 dark:text-white">Today Income</span>
                     </div>
                     <span className="flex items-center gap-1.5 text-[10px] font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-900/30 dark:text-emerald-400 px-2.5 py-1 rounded-full uppercase tracking-wide">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse inline-block" />
@@ -545,12 +549,7 @@ export default function AdminDashboard() {
           </>
         )}
 
-        {activeTab === 'users' && (
-          <div className="bg-white dark:bg-slate-800 rounded-2xl
-            shadow-[0_2px_16px_rgba(0,0,0,0.06)] dark:border dark:border-slate-700/60 overflow-hidden">
-            <AllUsersSearch onExport={handleExport} />
-          </div>
-        )}
+     
 
       </div>
     </div>

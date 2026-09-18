@@ -569,7 +569,7 @@ function AIAssistant() {
       {/* MAIN CONTENT */}
       <div className="p-4 sm:p-5 lg:p-6 flex flex-col gap-5">
         {/* CREDITS BAR */}
-        <div className="flex flex-wrap items-center gap-3.5">
+        {/* <div className="flex flex-wrap items-center gap-3.5">
           <div className="flex items-center gap-3.5 bg-gradient-to-r from-blue-500/10 to-white/50 dark:from-[rgba(47,217,211,0.1)] dark:to-[rgba(255,255,255,0.05)] border border-blue-500/20 dark:border-[rgba(47,217,211,0.2)] rounded-xl px-4 sm:px-5 py-3.5 relative overflow-hidden">
             <div className="w-9 h-9 rounded-xl bg-blue-500/10 dark:bg-[rgba(47,217,211,0.12)] flex items-center justify-center text-lg flex-shrink-0 text-blue-500 dark:text-[#2fd9d3]">⚡</div>
             <div>
@@ -591,7 +591,7 @@ function AIAssistant() {
             </svg>
             <span id="ata-clock">--:--:-- UTC</span>
           </div>
-        </div>
+        </div> */}
 
         {/* MAIN LAYOUT */}
         <div className="grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-4 lg:gap-5 items-start">

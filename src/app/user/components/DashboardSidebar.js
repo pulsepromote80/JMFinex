@@ -425,7 +425,7 @@ export default function DashboardHeader({ sidebarOpen, setSidebarOpen }) {
 
           {/* Deposit Button */}
           <Link href="/dashboard/fund-director">
-            <div className="px-3 py-1.5 rounded-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 text-xs font-bold text-gray-700 dark:text-gray-300 cursor-pointer">
+            <div className="px-3 py-1.5 rounded-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 text-xs font-bold text-amber-400 dark:text-amber-300 cursor-pointer">
               + Deposit
             </div>
           </Link>

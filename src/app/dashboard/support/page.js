@@ -379,7 +379,7 @@ const SupportContent = () => {
       {!showForm && (
         <div className="flex items-center justify-center mt-5 mb-8">
           <button
-            className="inline-flex items-center gap-2.5 px-7 py-3 rounded-xl bg-gradient-to-r from-teal-500 to-cyan-500 dark:from-[#2fd9d3] dark:to-[#18c7c2] text-white dark:text-[#04131a] font-bold text-sm border-none cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-[0_4px_15px_rgba(20,184,166,0.3)] dark:hover:shadow-[0_4px_15px_rgba(47,217,211,0.4)]"
+            className="inline-flex items-center gap-2.5 px-7 py-3 rounded-xl bg-gradient-to-r from-teal-500 to-blue-500 dark:from-blue-300 dark:to-blue-200 text-white dark:text-[#04131a] font-bold text-sm border-none cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-[0_4px_15px_rgba(20,184,166,0.3)] dark:hover:shadow-[0_4px_15px_rgba(47,217,211,0.4)]"
             onClick={() => setShowForm(true)}
           >
             <LifeBuoy size={18} />

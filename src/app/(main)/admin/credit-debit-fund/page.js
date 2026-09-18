@@ -326,7 +326,7 @@ const CreditDebitFund = () => {
                           <FaMoneyBillWave className="text-emerald-600 dark:text-emerald-400" />
                         </div>
                         <div>
-                          <p className="text-xs text-gray-500 dark:text-gray-400">Income Wallet</p>
+                          <p className="text-xs text-gray-500 dark:text-gray-400">Bonus Wallet</p>
                           <p className="text-lg font-bold text-emerald-600 dark:text-emerald-400">
                             ${walletData.walletDetails.incomeWallet}
                           </p>
@@ -337,7 +337,7 @@ const CreditDebitFund = () => {
                           <FaCreditCard className="text-blue-600 dark:text-blue-400" />
                         </div>
                         <div>
-                          <p className="text-xs text-gray-500 dark:text-gray-400">Deposit Wallet</p>
+                          <p className="text-xs text-gray-500 dark:text-gray-400">USDT Wallet</p>
                           <p className="text-lg font-bold text-blue-600 dark:text-blue-400">
                             ${walletData.walletDetails.depositWallet}
                           </p>

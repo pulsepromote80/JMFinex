@@ -255,7 +255,7 @@ const UserTransfer = () => {
           {/* Transfer Header */}
           <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
             <h2 className="text-xl font-bold text-gray-900 dark:text-[#eaf5f7] relative z-10">
-              Deposit Wallet Transfer
+              USDT Wallet Transfer
             </h2>
             <h2 className="text-sm font-semibold text-blue-600 dark:text-blue-400">
               Balance: ${(depositWallet || 0).toFixed(2)}
@@ -467,7 +467,7 @@ const UserTransfer = () => {
       <div className="bg-white dark:bg-[#10222e] border border-gray-200 dark:border-[rgba(140,200,205,0.16)] rounded-2xl shadow-sm overflow-hidden">
         <div className="p-6">
           <h1 className="text-xl font-bold text-gray-900 dark:text-[#eaf5f7] mb-5">
-            P2P Transfer Report
+           Transfer Report
           </h1>
 
           {/* Table Controls */}
