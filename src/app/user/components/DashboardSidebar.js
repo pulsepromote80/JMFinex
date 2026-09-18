@@ -307,7 +307,7 @@ export default function DashboardHeader({ sidebarOpen, setSidebarOpen }) {
         break;
       case "Instagram":
         window.open(
-          "https://www.instagram.com/xoxofx_official/",
+          "https://www.instagram.com/",
           "_blank"
         );
         return;
