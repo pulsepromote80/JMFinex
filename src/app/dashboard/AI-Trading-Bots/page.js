@@ -3063,14 +3063,13 @@ export default function SonicScalper() {
       if (Array.isArray(result) && result.length > 0) transactionData = result[0];
       else transactionData = result;
 
-      const getPackageNameByAmount = (amount) => {
-        if (!amount || isNaN(amount)) return null;
-        if (amount >= 100 && amount <= 999) return "Basic";
-        else if (amount >= 1000 && amount <= 4999) return "Standard";
-        else if (amount >= 5000 && amount <= 9999) return "Elite";
-        else if (amount >= 10000 && amount <= 14999) return "Growth";
-        return null;
-      };
+     const getPackageNameByAmount = (amount) => {
+  if (!amount || isNaN(amount)) return null;
+  if (amount >= 100 && amount <= 900) return "Standard";
+  if (amount >= 1000 && amount <= 4900) return "Premium";
+  if (amount >= 5000) return "Premium Plus"; 
+  return null;
+};
 
       const o = {
         id: `JM-${Date.now()}`,
