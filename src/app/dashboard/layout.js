@@ -61,104 +61,27 @@ export default function DashboardLayout({ children }) {
           <link rel="shortcut icon" href="/favicon.png" />
           <link rel="apple-touch-icon" href="/favicon.png" />
         </Head>
-        
-        <div className="fixed inset-0 flex items-center justify-center z-[9999] m-0 p-0 bg-gradient-to-br from-[#060918] to-[#0a0f2a]">
-          <div className="text-center">
-            <svg
-              width="80"
-              height="80"
-              viewBox="0 0 100 100"
-              xmlns="http://www.w3.org/2000/svg"
-              className="mb-5"
-            >
-              <defs>
-                <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" style={{ stopColor: "#8b5cf6", stopOpacity: 1 }} />
-                  <stop offset="100%" style={{ stopColor: "#22d3ee", stopOpacity: 1 }} />
-                </linearGradient>
-                <linearGradient id="gradient2" x1="100%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" style={{ stopColor: "#22d3ee", stopOpacity: 1 }} />
-                  <stop offset="100%" style={{ stopColor: "#8b5cf6", stopOpacity: 1 }} />
-                </linearGradient>
-              </defs>
-              
-              <circle
-                cx="50"
-                cy="50"
-                r="40"
-                fill="none"
-                stroke="rgba(139, 92, 246, 0.1)"
-                strokeWidth="4"
-              />
-              
-              <circle
-                cx="50"
-                cy="50"
-                r="40"
-                fill="none"
-                stroke="url(#gradient1)"
-                strokeWidth="4"
-                strokeLinecap="round"
-                strokeDasharray="60 190"
-                strokeDashoffset="0"
-                transform="rotate(0 50 50)"
-              >
-                <animateTransform
-                  attributeName="transform"
-                  type="rotate"
-                  from="0 50 50"
-                  to="360 50 50"
-                  dur="1.2s"
-                  repeatCount="indefinite"
-                />
-              </circle>
-              
-              <circle
-                cx="50"
-                cy="50"
-                r="30"
-                fill="none"
-                stroke="url(#gradient2)"
-                strokeWidth="3"
-                strokeLinecap="round"
-                strokeDasharray="40 150"
-                strokeDashoffset="0"
-                transform="rotate(180 50 50)"
-              >
-                <animateTransform
-                  attributeName="transform"
-                  type="rotate"
-                  from="360 50 50"
-                  to="0 50 50"
-                  dur="1.5s"
-                  repeatCount="indefinite"
-                />
-              </circle>
-              
-              <circle cx="50" cy="50" r="5" fill="#8b5cf6">
-                <animate
-                  attributeName="r"
-                  values="3;6;3"
-                  dur="1s"
-                  repeatCount="indefinite"
-                />
-                <animate
-                  attributeName="opacity"
-                  values="0.5;1;0.5"
-                  dur="1s"
-                  repeatCount="indefinite"
-                />
-              </circle>
-            </svg>
 
-            <div className="text-purple-500 font-mono text-[13px] tracking-[3px] animate-pulse">
+        <div className="fixed inset-0 z-[9999] m-0 p-0 flex items-center justify-center bg-[#040d22]">
+          <div className="text-center">
+            <div className="relative mx-auto mb-5 flex h-[90px] w-[90px] items-center justify-center">
+              <div className="absolute inset-0 rounded-full border border-[rgba(86,166,255,0.20)] shadow-[inset_0_0_14px_rgba(86,166,255,0.08)]" />
+
+              <div className="absolute inset-[8px] rounded-full border-[2px] border-transparent border-t-[#5dc8ff] border-r-[#7ea6ff] animate-[spin_1.6s_linear_infinite] shadow-[0_0_14px_rgba(93,200,255,0.22)]" />
+
+              <div className="absolute inset-[18px] rounded-full border-[2px] border-transparent border-b-[#d4a633] border-l-[#5aaef7] animate-[spinReverse_1.8s_linear_infinite] shadow-[0_0_12px_rgba(212,166,51,0.22)]" />
+
+              <div className="absolute left-1/2 top-[18px] h-[9px] w-[9px] -translate-x-1/2 rounded-full bg-[linear-gradient(135deg,#f8dc85_0%,#d4a633_100%)] shadow-[0_0_18px_rgba(248,220,133,0.85)]" />
+            </div>
+
+            <div className="text-[12px] font-bold tracking-[0.28rem] text-[#9ab7ff] uppercase drop-shadow-[0_0_12px_rgba(126,160,255,0.38)]">
               LOADING
             </div>
-            
-            <div className="flex gap-2 justify-center mt-3">
-              <div className="w-1.5 h-1.5 rounded-full bg-purple-500 animate-bounce [animation-delay:0s]"></div>
-              <div className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-bounce [animation-delay:0.2s]"></div>
-              <div className="w-1.5 h-1.5 rounded-full bg-purple-300 animate-bounce [animation-delay:0.4s]"></div>
+
+            <div className="mt-3 flex justify-center gap-2">
+              <div className="h-2 w-2 animate-[dotPulse_1.2s_ease-in-out_0s_infinite] rounded-full bg-[#60c5ff] shadow-[0_0_10px_rgba(96,197,255,0.8)]"></div>
+              <div className="h-2 w-2 animate-[dotPulse_1.2s_ease-in-out_0.18s_infinite] rounded-full bg-[#7aaeff] shadow-[0_0_10px_rgba(122,174,255,0.8)]"></div>
+              <div className="h-2 w-2 animate-[dotPulse_1.2s_ease-in-out_0.36s_infinite] rounded-full bg-[#d4a633] shadow-[0_0_10px_rgba(212,166,51,0.8)]"></div>
             </div>
           </div>
         </div>
@@ -246,6 +169,16 @@ export default function DashboardLayout({ children }) {
         @keyframes bounce {
           0%, 60%, 100% { transform: translateY(0); }
           30% { transform: translateY(-8px); }
+        }
+        @keyframes spin {
+          to { transform: rotate(360deg); }
+        }
+        @keyframes spinReverse {
+          to { transform: rotate(-360deg); }
+        }
+        @keyframes dotPulse {
+          0%, 100% { transform: translateY(0); opacity: 0.5; }
+          50% { transform: translateY(-4px); opacity: 1; }
         }
         .opacity-12 { opacity: 0.12; }
         .opacity-32 { opacity: 0.32; }
