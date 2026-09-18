@@ -32,7 +32,7 @@ const WalletStatement = () => {
   const itemsPerPage = 5;
   const reportTabByLabel = {
     USDT: "Deposit",
-    Working: "Income",
+    Bonus: "Income",
     Trading: "Trading",
     Withdrawal: "Withdrawal",
   };
@@ -139,7 +139,7 @@ const WalletStatement = () => {
     currentPage * itemsPerPage
   );
 
-  const tabs = ["USDT", "Working", "Trading", "Withdrawal"];
+  const tabs = ["USDT", "Bonus", "Trading", "Withdrawal"];
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -253,7 +253,7 @@ const WalletStatement = () => {
                       <th className="text-left px-3 sm:px-4 py-3 text-xs font-semibold text-blue-600 dark:text-[#00d4ff] uppercase tracking-wider whitespace-nowrap">Date</th>
                       <th className="text-left px-3 sm:px-4 py-3 text-xs font-semibold text-blue-600 dark:text-[#00d4ff] uppercase tracking-wider whitespace-nowrap">Credit</th>
                       <th className="text-left px-3 sm:px-4 py-3 text-xs font-semibold text-blue-600 dark:text-[#00d4ff] uppercase tracking-wider whitespace-nowrap">Debit</th>
-                      <th className="text-left px-3 sm:px-4 py-3 text-xs font-semibold text-blue-600 dark:text-[#00d4ff] uppercase tracking-wider whitespace-nowrap">Type</th>
+
                       <th className="text-left px-3 sm:px-4 py-3 text-xs font-semibold text-blue-600 dark:text-[#00d4ff] uppercase tracking-wider whitespace-nowrap">Remark</th>
                       <th className="text-left px-3 sm:px-4 py-3 text-xs font-semibold text-blue-600 dark:text-[#00d4ff] uppercase tracking-wider whitespace-nowrap">Status</th>
                     </>
@@ -357,9 +357,7 @@ const WalletStatement = () => {
                           <td className="px-3 sm:px-4 py-3 font-semibold text-red-500 dark:text-[#ff4d6d] whitespace-nowrap">
                             {item.debit ?? 0}
                           </td>
-                          <td className="px-3 sm:px-4 py-3 text-gray-600 dark:text-[#9ca3af] whitespace-nowrap">
-                            {item.transType || "-"}
-                          </td>
+                        
                           <td className="px-3 sm:px-4 py-3 text-gray-600 dark:text-[#9ca3af] max-w-[150px] truncate">
                             {item.remark || "-"}
                           </td>

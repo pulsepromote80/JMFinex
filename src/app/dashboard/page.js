@@ -1104,7 +1104,7 @@
 import React, { useEffect, useRef, useState } from "react"
 import { useTheme } from "next-themes"
 import {
-  Layers, Shield, Trophy, Rocket, Repeat, TrendingUp, UserPlus, Check, Crown, Gem, Moon, Sun, ArrowUpRight,
+  Layers, Shield, Trophy, Rocket, Repeat, TrendingUp, UserPlus, Check, Crown, Gem, Moon, Sun, ArrowUpRight, CircleDollarSign,
 } from "lucide-react"
 import { Line } from "react-chartjs-2"
 import {
@@ -1465,15 +1465,13 @@ export default function JMFinexDashboard() {
       status: data?.FMPStatus ?? data?.FmpStatus,
     },
     {
-      name: "Education",
+      name: "Deposit",
+      description: "Trade smarter with a strategy designed to optimize your potential returns.",
+      icon: CircleDollarSign,
       amount: Number(data?.CoursePackage ?? 0),
       status: data?.EducationStatus ?? data?.AcademicSelfTradeStatus ?? data?.AcademicStatus,
     },
-    {
-      name: "Self Trade",
-      amount: Number(data?.SelfTrade ?? 0),
-      status: data?.SelfTradingStatus ?? data?.SelfTradeStatus,
-    },
+   
   ].map((item) => ({
     ...item,
     active: item.amount > 0,
@@ -1729,9 +1727,12 @@ const visualPercent = Number(usedPercentage.toFixed(1));
           </section>
 
           {/* ================= ACTIVATED INVESTMENTS ================= */}
-          <Section title="Activated Investments" sub="Your live self-trading position." tagText="1 ACTIVE">
+          <Section title="Executing Trades" sub="Your live self-trading position." tagText="1 ACTIVE">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-               <InvestmentSummaryCard rows={investmentRows} />
+               <InvestmentSummaryCard
+                 rows={investmentRows}
+                 onDepositClick={() => router.push("/dashboard/fund-director")}
+               />
               <div className={`${CARD_CLS} p-6`}>
                 <div className="flex justify-between items-center mb-3">
                   <div className="text-[15px] font-semibold" style={{ fontFamily: DISPLAY_FONT }}>FMP Package</div>
@@ -2021,14 +2022,14 @@ const visualPercent = Number(usedPercentage.toFixed(1));
           </Section>
 
           {/* ================= WALLET ================= */}
-          <Section title="Wallet Summary" sub="Working balance and recent activity.">
+          <Section title="Wallet Summary" sub="Wallet balance and recent activity.">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
-              <StatTile value={`$${incomeWallet.toLocaleString()}`} label="WORKING WALLET" color={C.gold400} />
-              <StatTile value={`$${tradingWallet.toLocaleString()}`} label="TRADE WALLET BALANCE" />
-              <StatTile value={`$${depositWallet.toLocaleString()}`} label="DEPOSIT WALLET" color={C.blue500} />
+              <StatTile value={`$${incomeWallet.toLocaleString()}`} label="BONUS FUND" color={C.gold400} />
+              <StatTile value={`$${tradingWallet.toLocaleString()}`} label="TRADE FUND" />
+              <StatTile value={`$${depositWallet.toLocaleString()}`} label="USDT FUND" color={C.blue500} />
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <WithdrawalTile value={`$${incomeWithdrawal.toLocaleString()}`} label="WORKING WITHDRAWAL" />
+              <WithdrawalTile value={`$${incomeWithdrawal.toLocaleString()}`} label="BONUS WITHDRAWAL" />
               <WithdrawalTile value={`$${tradingWithdrawal.toLocaleString()}`} label="TRADE PROFIT WITHDRAWAL" />
             </div>
           </Section>
@@ -2089,18 +2090,49 @@ function MiniStat({ value, label }) {
 }
 
 
-function InvestmentSummaryCard({ rows }) {
+function InvestmentSummaryCard({ rows, onDepositClick }) {
   return (
     <div className={`${CARD_CLS} p-6`}>
       <div className="grid grid-cols-[minmax(0,1fr)_72px_120px] items-center gap-4 border-b border-[rgba(15,45,100,.13)] pb-3 text-[10px] font-semibold tracking-[.06em] text-[#4c5b7c]">
-        <span>PROGRAM</span>
+            <span>PROGRAM</span>
         <span className="text-center">STATUS</span>
-        <span className="text-right">AMOUNT</span>
+            <span className="text-right">AMOUNT</span>
       </div>
       <div className="divide-y divide-[rgba(15,45,100,.1)]">
         {rows.map((row) => (
+          row.name === "Deposit" ? (
+            <div key={row.name} className="flex justify-center py-5">
+              <button
+                type="button"
+                onClick={onDepositClick}
+                className="flex w-full max-w-[280px] flex-col items-center justify-center rounded-2xl border border-[rgba(47,107,255,.2)] bg-[linear-gradient(135deg,rgba(47,107,255,.1),rgba(212,166,58,.1))] px-5 py-4 text-center transition-all hover:-translate-y-0.5 hover:border-[rgba(47,107,255,.4)] hover:shadow-[0_10px_24px_rgba(47,107,255,.14)]"
+              >
+                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[linear-gradient(135deg,#2f6bff,#5b8bff)] text-white shadow-[0_6px_16px_rgba(47,107,255,.25)]">
+                  <row.icon size={20} />
+                </span>
+                <span className="mt-2 text-sm font-bold text-[#0c1c3d]">Deposit</span>
+                <span className="mt-1 text-[10px] leading-4 text-[#617493]">
+                  {row.description}
+                </span>
+              </button>
+            </div>
+          ) : (
           <div key={row.name} className="grid grid-cols-[minmax(0,1fr)_72px_120px] items-center gap-4 py-4">
-            <span className="text-sm font-semibold text-[#0c1c3d]">{row.name}</span>
+            <div className="flex min-w-0 items-center gap-3">
+              {row.icon && (
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[rgba(47,107,255,.16)] bg-[rgba(47,107,255,.1)]">
+                  <row.icon size={18} className="text-[#2f6bff]" />
+                </div>
+              )}
+              <div className="min-w-0">
+                <span className="block text-sm font-semibold text-[#0c1c3d]">{row.name}</span>
+                {row.description && (
+                  <span className="mt-1 block max-w-[240px] text-[10px] leading-4 text-[#617493]">
+                    {row.description}
+                  </span>
+                )}
+              </div>
+            </div>
             <span className={`text-center text-lg font-bold ${row.active ? "text-[#2fbf7a]" : "text-[#ff6b7d]"}`}>
               {row.active ? "✔" : "✖"}
             </span>
@@ -2108,6 +2140,7 @@ function InvestmentSummaryCard({ rows }) {
               ${row.amount.toFixed(2)}
             </span>
           </div>
+          )
         ))}
       </div>
     </div>

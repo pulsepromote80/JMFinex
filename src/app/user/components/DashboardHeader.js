@@ -60,12 +60,12 @@ export default function DashboardHeader({
       {/* Logo Area */}
       <div className={`flex items-center gap-3 px-4 py-0.5 border-b border-gray-200 dark:border-gray-800 dark:bg-[#10222e]  bg-white/95 `}>
         <Image
-          src={mounted && theme === "dark" ? "/Logo.png" : "/LogoBlack.png"}
+          src={mounted && theme === "dark" ? "/logo.png" : "/LogoBlack.png"}
           alt="Logo"
           width={200}
           height={60}
           priority
-          className="object-contain dark:brightness-[0.6] dark:contrast-[1.2]"
+          className="object-contain dark:brightness-125 dark:contrast-125"
         />
         <button 
           className="lg:hidden w-9 h-9 min-w-[36px] rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rotate-90 transition-all duration-300 flex items-center justify-center"
@@ -106,7 +106,7 @@ export default function DashboardHeader({
           <span className="w-4 text-center text-sm opacity-55 flex-shrink-0">
             <FiZap />
           </span>
-          <span>AI Trading Bots</span>
+          <span>FMP Strategy  </span>
           <span className="ml-auto w-1.5 h-1.5 rounded-full bg-teal-500 dark:bg-teal-400 shadow-[0_0_7px_rgba(20,184,166,0.5)] dark:shadow-[0_0_7px_rgba(45,212,191,0.5)] animate-pulse"></span>
         </Link>
 
