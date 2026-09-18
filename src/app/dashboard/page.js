@@ -1040,12 +1040,12 @@ const BOOSTER_TEXT = { done: "Qualified", active: "In progress", locked: "Locked
   };
 
 const INCOME_STREAMS_STATIC = [
-  { name: "Referral Income", icon: UserPlus, key: "DirectIncome" },
-  { name: "Trading Profit Income", icon: TrendingUp, key: "DailyTradingProfit" },
-  { name: "Booster Income", icon: Rocket, key: "BoostIncome" },
-  { name: "Level Income", icon: Layers, key: "TierLevelIncome" },
-  { name: "Growth Reward Income", icon: Trophy, key: "RewardIncome" },
-  { name: "Club Income", icon: Shield, key: "ClubIncome" },
+  { name: "Referral Bonus", icon: UserPlus, key: "ReferralIncome" },
+  { name: "Trading Profit", icon: TrendingUp, key: "TradingProfit" },
+  { name: "Booster Bonus", icon: Rocket, key: "GrowthBooster" },
+  { name: "Level Bonus", icon: Layers, key: "LevelIncome" },
+  { name: "Growth Reward Bonus", icon: Trophy, key: "RewardBonus" },
+  { name: "Club Bonus", icon: Shield, key: "ClubBonus" },
 ]
 
 const fmt = (n) => "$" + Number(n || 0).toLocaleString()
@@ -1317,11 +1317,13 @@ export default function JMFinexDashboard() {
   }))
 
   // Trading Package card values
-  const totalIncome = Number(data?.totatRoiLevelIncome ?? 0)
-  const earningLimit = Number(data?.EarningLimit ?? data?.GrandincomeLimit ?? 0)
+const totalIncome   = Number(data?.TotalIncome   || 0);
+const earningLimit  = Number(data?.EarningLimit  || 0);
   const remainingLimit = Number(data?.RemainingLimit ?? Math.max(0, earningLimit - totalIncome))
-  const usedPercentage = earningLimit > 0 ? Math.min(100, (totalIncome / earningLimit) * 100) : 0
-  const visualPercent = Number(usedPercentage.toFixed(1))
+const usedPercentage =
+  earningLimit > 0 ? Math.min(100, (totalIncome / earningLimit) * 100) : 0;
+const visualPercent = Number(usedPercentage.toFixed(1));
+  
 
   // Team / business
   const leftBiz = Number(data?.LeftBussiness ?? data?.LeftBusiness ?? 0)
@@ -1329,8 +1331,8 @@ export default function JMFinexDashboard() {
   const totalTeam = data?.TotalTeam ?? ((data?.LeftTeam || 0) + (data?.RightTeam || 0))
   const activeTeam = data?.ActiveTeam ?? 0
   const teamBusiness = data?.Teambusiness ?? (leftBiz + rightBiz)
-  const strongTeamBusiness = data?.StrongLegID ?? Math.max(leftBiz, rightBiz)
-  const otherLegBusiness = data?.StrongLegBus ?? Math.min(leftBiz, rightBiz)
+  const strongTeamBusiness = data?.SecondLegBuss ?? Math.max(leftBiz, rightBiz)
+  const otherLegBusiness = data?.BiggestLegBuss ?? Math.min(leftBiz, rightBiz)
   const weakTeamBussiness = data?.OtherLegBus ?? Math.min(leftBiz, rightBiz)
 
   // Direct team
@@ -1398,6 +1400,7 @@ export default function JMFinexDashboard() {
     return {
       name: s.name,
       icon: s.icon,
+      key: s.key,
       value: val,
       chg: "—",
       up: true,
@@ -1636,24 +1639,26 @@ export default function JMFinexDashboard() {
                 )
               })}
             </div>
-            <div className="flex items-center justify-between flex-wrap gap-5 rounded-2xl px-[22px] py-[18px] bg-[rgba(47,107,255,.07)] border border-[rgba(91,139,255,.22)] mt-[18px]">
-              <div className="text-[12.5px] text-[#3a4a6b] max-w-[420px]">
-                <b className="block text-[15px] text-[#0c1c3d] mb-0.5" style={{ fontFamily: DISPLAY_FONT }}>Booster 2 is 2 Directs away.</b>
-                You're at 4 of 6 directs for Week 2 — bring in 2 more before the window closes to lock in an additional 4% monthly.
-              </div>
-              <div className="flex gap-[22px]">
-                <MiniStat value="4/6" label="DIRECTS" />
-                <MiniStat value="2" label="REMAINING" />
-                <MiniStat value="6d" label="TIME LEFT" />
-              </div>
+
+            <h3 className="text-[30px] font-semibold mt-6" style={{ fontFamily: DISPLAY_FONT }}>My Directs</h3>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-5 mt-5">
+              <StatTile value={directIds} label="DIRECT TEAM" />
+              <StatTile value={activeDirectIds} label="ACTIVE DIRECT" color={C.blue500} />
+              <StatTile value={inactiveDirectIds} label="INACTIVE DIRECT" color={C.red} />
+              <StatTile value={`${levelOpen}/20`} label="LEVEL OPEN" color={C.gold400} />
             </div>
+           
           </Section>
 
           {/* ================= INCOME CENTER ================= */}
-          <Section title="Income Overview" sub="Your earnings across all Roventar income streams">
+          <Section title="Income Overview" sub="Your earnings across all JMFINEX income streams">
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
               {INCOME_STREAMS.map((s) => (
-                <div key={s.name} className={`${CARD_CLS} p-7 min-h-[200px]`}>
+                <Link
+                  key={s.name}
+                  href={`/dashboard/income-statement?tab=${encodeURIComponent(s.key)}`}
+                  className={`${CARD_CLS} block p-7 min-h-[200px] hover:-translate-y-0.5 transition-transform cursor-pointer`}
+                >
                   <div className="flex items-start justify-between">
                     <div className="rounded-2xl flex items-center justify-center w-[52px] h-[52px] bg-[rgba(47,107,255,.12)] border border-[rgba(91,139,255,.12)]">
                       <s.icon size={22} strokeWidth={1.8} className="text-[#2f6bff]" />
@@ -1664,7 +1669,7 @@ export default function JMFinexDashboard() {
                   </div>
                   <div className="text-[15px] text-[#617493] mt-7">{s.name}</div>
                   <div className="font-bold text-[30px] leading-none mt-3" style={{ fontFamily: DISPLAY_FONT }}><CountUp value={s.value} /></div>
-                </div>
+                </Link>
               ))}
             </div>
           </Section>
@@ -1794,13 +1799,7 @@ export default function JMFinexDashboard() {
           </Section>
 
           {/* ================= TEAM ================= */}
-          <Section title="My Team & Direct Network" sub="Direct line performance and level access.">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-5">
-              <StatTile value={directIds} label="DIRECT TEAM" />
-              <StatTile value={activeDirectIds} label="ACTIVE DIRECT" color={C.blue500} />
-              <StatTile value={inactiveDirectIds} label="INACTIVE DIRECT" color={C.red} />
-              <StatTile value={`${levelOpen}/20`} label="LEVEL OPEN" color={C.gold400} />
-            </div>
+          <Section title="My Team Network" sub="Direct line performance and level access.">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <div className={`${CARD_CLS} p-6`}>
                 <span className={`${TAG_CLS} inline-block mb-3.5`}>TEAM REPORT</span>
@@ -1809,7 +1808,8 @@ export default function JMFinexDashboard() {
                   <TrItem label="ACTIVE TEAM" value={activeTeam} />
                   <TrItem label="TEAM BUSINESS" value={`$${Number(teamBusiness).toLocaleString()}`} />
                   <TrItem label="Biggest Leg" value={`$${Number(otherLegBusiness).toLocaleString()}`} />
-                  <TrItem label="Second Leg" value={strongTeamBusiness} />
+                  <TrItem label="Second Leg" value= {`$${Number(strongTeamBusiness).toLocaleString()}`} />
+               
                   <TrItem label="Other Leg" value={`$${Number(weakTeamBussiness).toLocaleString()}`} />
                 </div>
               </div>

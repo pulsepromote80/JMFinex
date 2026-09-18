@@ -123,16 +123,16 @@ function HistoryCard({ transaction, index }) {
           </div>
 
           {/* Details — 2 cols */}
-          <div className="grid grid-cols-2 gap-1.5 px-2.5 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg max-[400px]:grid-cols-1 max-[400px]:gap-1">
-            <div className="flex flex-col gap-0.5 pr-2.5 border-r border-slate-200 dark:border-slate-700 max-[400px]:border-r-0 max-[400px]:pr-0">
+          <div className="grid grid-cols-[minmax(0,1.45fr)_minmax(92px,1fr)] gap-1.5 px-2.5 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg max-[400px]:grid-cols-1 max-[400px]:gap-1">
+            <div className="flex min-w-0 flex-col gap-0.5 pr-2.5 border-r border-slate-200 dark:border-slate-700 max-[400px]:border-r-0 max-[400px]:pr-0">
               <span className="text-[9px] font-semibold text-slate-400 uppercase tracking-wider">Activated By</span>
-              <span className="text-[13px] font-semibold text-slate-900 dark:text-slate-100">
+              <span className="min-w-0 wrap-break-word text-[13px] font-semibold leading-tight text-slate-900 dark:text-slate-100">
                 {transaction.AuthLogin || "Welcome"}
               </span>
             </div>
-            <div className="flex flex-col gap-0.5 pl-2.5 max-[400px]:pl-0">
+            <div className="flex min-w-0 flex-col gap-0.5 pl-2.5 max-[400px]:pl-0">
               <span className="text-[9px] font-semibold text-slate-400 uppercase tracking-wider">Date</span>
-              <span className="text-[13px] font-semibold text-slate-900 dark:text-slate-100">
+              <span className="whitespace-nowrap text-[13px] font-semibold leading-tight text-slate-900 dark:text-slate-100">
                 {formatDate(transaction.OrderDate)}
               </span>
             </div>
@@ -159,24 +159,24 @@ function HistoryCard({ transaction, index }) {
           </div>
 
           {/* Withdrawal section */}
-          {transaction.LeftDaysWithdrawal != 0 && (
-            <div className="grid grid-cols-1 gap-1 px-2.5 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-center">
-              <span className="text-[9px] font-semibold text-slate-400 uppercase tracking-wider leading-tight">
-                Days Until Principal Withdrawal
-              </span>
-              <span className="text-[13px] font-semibold text-slate-900 dark:text-slate-100 leading-tight -mt-0.5">
-                Available in {transaction.LeftDaysWithdrawal || "30"} days
-              </span>
-              <div className="flex items-center justify-center gap-2 mt-2">
-                <button
-                  onClick={() => setShowWithdrawalModal(true)}
-                  className="px-3 py-1 border border-blue-600 rounded-md bg-blue-600 text-white text-[11px] font-medium cursor-pointer transition-all hover:bg-blue-700 hover:border-blue-700"
-                >
-                  Withdrawal
-                </button>
+            {/* {transaction.LeftDaysWithdrawal != 0 && (
+              <div className="grid grid-cols-1 gap-1 px-2.5 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-center">
+                <span className="text-[9px] font-semibold text-slate-400 uppercase tracking-wider leading-tight">
+                  Days Until Principal Withdrawal
+                </span>
+                <span className="text-[13px] font-semibold text-slate-900 dark:text-slate-100 leading-tight -mt-0.5">
+                  Available in {transaction.LeftDaysWithdrawal || "30"} days
+                </span>
+                <div className="flex items-center justify-center gap-2 mt-2">
+                  <button
+                    onClick={() => setShowWithdrawalModal(true)}
+                    className="px-3 py-1 border border-blue-600 rounded-md bg-blue-600 text-white text-[11px] font-medium cursor-pointer transition-all hover:bg-blue-700 hover:border-blue-700"
+                  >
+                    Withdrawal
+                  </button>
+                </div>
               </div>
-            </div>
-          )}
+            )} */}
         </div>
       </div>
 
