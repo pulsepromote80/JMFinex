@@ -6,7 +6,7 @@ export default function RankProgress({
   totQualifyRnk = 0,
   total = 7,
   activeRank = "No Rank",
-  description = "Welcome back to your Roventar ecosystem. Monitor your trading performance, team growth and reward progress from one place.",
+  description = "Welcome back to your JMFINEX ecosystem. Monitor your trading performance, team growth and reward progress from one place.",
   title = "Good Morning UserName",
 }) {
   const pct = Math.min(100, Math.max(0, Math.round((totQualifyRnk / total) * 100)));
@@ -29,7 +29,7 @@ export default function RankProgress({
                   <path d="M7 5H4.5A1.5 1.5 0 0 0 3 6.5v0A3.5 3.5 0 0 0 6.5 10H7" />
                 </svg>
               </div>
-              <span>ROVENTAR ECOSYSTEM</span>
+              <span>JMFINEX ECOSYSTEM</span>
             </div>
 
             {/* Title */}

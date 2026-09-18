@@ -2220,7 +2220,7 @@ const mapApiDataToBots = (activeProducts) => {
       confidence: config.confidence,
       timeframe: config.timeframe,
       market: config.market,
-      myfxbookLink: product.url,
+      myfxbookLink: product.url || config.myfxbookLink,
       risk: config.risk || "Medium",
       apr: `${product.roi}%`,
       winRate: `${product.winrate}%`,
@@ -2804,6 +2804,7 @@ export default function SonicScalper() {
   const [showInvestModal, setShowInvestModal] = useState(false);
   const [selectedBot, setSelectedBot] = useState(null);
   const [inv, setInv] = useState(null);
+  const [isDownloadingInvoice, setIsDownloadingInvoice] = useState(false);
   const [showDetailModal, setShowDetailModal] = useState(false);
   const [detailBot, setDetailBot] = useState(null);
   const [initialDataLoaded, setInitialDataLoaded] = useState(false);
@@ -2890,7 +2891,7 @@ export default function SonicScalper() {
     }
   };
 
-  const handleDownloadInvoice = (invoiceData) => {
+  const handleDownloadInvoice = async (invoiceData) => {
     const invoiceNo = invoiceData.id || `INV-${Date.now()}`;
     const userName = invoiceData.user || "User";
     const userId = invoiceData.uid || "N/A";
@@ -2905,71 +2906,71 @@ export default function SonicScalper() {
       PackageName: invoiceData.package,
     };
 
-    const invoiceHTML = `<!DOCTYPE html><html><head><meta charset="UTF-8" /><title>Roventar Invoice ${invoiceNo}</title>
+    const invoiceHTML = `<!DOCTYPE html><html><head><meta charset="UTF-8" /><title>JMFINX Invoice ${invoiceNo}</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    body{background:#e8e8e8;padding:10px;font-family:"Inter",-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',sans-serif;display:flex;justify-content:center;align-items:center;min-height:100vh}
-    .invoice{max-width:780px;width:100%;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.15);page-break-inside:avoid;break-inside:avoid}
-    .top-bar{background:#1a1a1a;padding:12px 28px;display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid #333}
+    body{background:#eaf2fb;padding:10px;font-family:"Inter",-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',sans-serif;display:flex;justify-content:center;align-items:center;min-height:100vh}
+    .invoice{width:700px;max-width:700px;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(7,31,51,.2);page-break-inside:avoid;break-inside:avoid}
+    .top-bar{background:#071f33;padding:16px 28px;display:flex;justify-content:space-between;align-items:center;border-bottom:4px solid #075bda}
     .top-bar .brand{display:flex;flex-direction:column;align-items:flex-start;gap:2px}
-    .top-bar .brand .logo-img{width:100%;max-width:180px;height:auto;object-fit:contain;display:block}
+    .top-bar .brand .logo-img{width:180px;max-width:180px;height:auto;object-fit:contain;display:block}
     .top-bar .invoice-tag{text-align:right}
-    .top-bar .invoice-tag .label{font-size:8px;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:1.5px;font-weight:600}
+    .top-bar .invoice-tag .label{font-size:8px;color:#8fdff2;text-transform:uppercase;letter-spacing:1.5px;font-weight:600}
     .top-bar .invoice-tag .number{font-size:13px;font-weight:700;color:#fff}
-    .header{background:#f5f5f5;padding:16px 28px 14px;border-bottom:1px solid #d0d0d0}
+    .header{background:#f3f7fb;padding:16px 28px 14px;border-bottom:1px solid #c9d8e8}
     .header-content{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
-    .header-left .greeting{font-size:20px;font-weight:700;color:#1a1a1a}
-    .header-left .greeting span{color:#444}
-    .header-left .sub{font-size:12px;color:#666;font-weight:400;margin-top:1px}
+    .header-left .greeting{font-size:20px;font-weight:700;color:#071f33}
+    .header-left .greeting span{color:#075bda}
+    .header-left .sub{font-size:12px;color:#536b80;font-weight:400;margin-top:1px}
     .header-right{text-align:right}
-    .header-right .amount-label{font-size:10px;color:#555;text-transform:uppercase;letter-spacing:1px;font-weight:700}
+    .header-right .amount-label{font-size:10px;color:#536b80;text-transform:uppercase;letter-spacing:1px;font-weight:700}
     .header-right .amount-wrapper{display:flex;align-items:baseline;justify-content:flex-end;gap:4px}
-    .header-right .amount{font-size:28px;font-weight:900;color:#1a1a1a;line-height:1.1}
-    .header-right .currency{font-size:14px;font-weight:600;color:#555}
-    .status-row{display:flex;justify-content:space-between;align-items:center;padding:8px 28px;background:#fff;border-bottom:1px solid #d0d0d0;flex-wrap:wrap;gap:6px}
-    .status-row .date{font-size:12px;color:#666;font-weight:500}
-    .status-row .date strong{color:#1a1a1a;font-weight:700}
-    .status-badge{display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:#333}
+    .header-right .amount{font-size:28px;font-weight:900;color:#075bda;line-height:1.1}
+    .header-right .currency{font-size:14px;font-weight:600;color:#536b80}
+    .status-row{display:flex;justify-content:space-between;align-items:center;padding:8px 28px;background:#fff;border-bottom:1px solid #c9d8e8;flex-wrap:wrap;gap:6px}
+    .status-row .date{font-size:12px;color:#536b80;font-weight:500}
+    .status-row .date strong{color:#071f33;font-weight:700}
+    .status-badge{display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:#087f5b}
     .body{padding:14px 28px 10px;background:#fff}
     .section{margin-bottom:18px}
     .section:last-of-type{margin-bottom:0}
-    .section-title{font-size:10px;font-weight:800;color:#1a1a1a;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid #ccc}
+    .section-title{font-size:10px;font-weight:800;color:#075bda;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid #8fdff2}
     .section-title .icon{margin-right:6px;font-size:13px}
     .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}
     .grid-3{grid-template-columns:repeat(3,1fr)}
-    .card{background:#f5f5f5;border-radius:10px;padding:8px 14px;border:1px solid #d0d0d0}
-    .card .label{font-size:9px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.8px;margin-bottom:2px}
-    .card .value{font-size:14px;font-weight:700;color:#1a1a1a}
-    .card .value-sm{font-size:13px;font-weight:600;color:#1a1a1a}
-    .highlight-box{background:#f0f0f0;border:2px solid #aaa;border-radius:10px;padding:10px 18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-top:2px}
-    .highlight-box .left .label,.highlight-box .right .label{font-size:10px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:1px}
-    .highlight-box .left .value{font-size:16px;font-weight:800;color:#1a1a1a;margin-top:1px}
+    .card{background:#f3f7fb;border-radius:10px;padding:8px 14px;border:1px solid #c9d8e8}
+    .card .label{font-size:9px;font-weight:700;color:#536b80;text-transform:uppercase;letter-spacing:.8px;margin-bottom:2px}
+    .card .value{font-size:14px;font-weight:700;color:#071f33}
+    .card .value-sm{font-size:13px;font-weight:600;color:#071f33}
+    .highlight-box{background:#eaf7fb;border:2px solid #00a8e8;border-radius:10px;padding:10px 18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-top:2px}
+    .highlight-box .left .label,.highlight-box .right .label{font-size:10px;font-weight:700;color:#536b80;text-transform:uppercase;letter-spacing:1px}
+    .highlight-box .left .value{font-size:16px;font-weight:800;color:#071f33;margin-top:1px}
     .highlight-box .right{text-align:right}
-    .highlight-box .right .value{font-size:18px;font-weight:900;color:#333;margin-top:1px}
-    .company-address{background:#f5f5f5;padding:8px 18px;border-radius:10px;border:1px solid #d0d0d0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px}
-    .company-address .address-text{font-size:10px;color:#666;line-height:1.5}
-    .company-address .address-text strong{color:#1a1a1a}
+    .highlight-box .right .value{font-size:18px;font-weight:900;color:#075bda;margin-top:1px}
+    .company-address{background:#f3f7fb;padding:8px 18px;border-radius:10px;border:1px solid #c9d8e8;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px}
+    .company-address .address-text{font-size:10px;color:#536b80;line-height:1.5}
+    .company-address .address-text strong{color:#071f33}
     .stamp-section{display:flex;justify-content:flex-end;align-items:center;margin-top:8px;padding-top:8px;border-top:2px dashed #ccc}
     .stamp-box{display:flex;flex-direction:column;align-items:center;gap:2px}
-    .stamp-box .stamp-label{font-size:7px;color:#888;text-transform:uppercase;letter-spacing:1px;font-weight:600}
-    .stamp-box .stamp-image{width:120px;height:120px;object-fit:contain;border-radius:8px;background:#fff;padding:4px}
-    .footer{background:#f5f5f5;padding:10px 28px 8px;text-align:center;border-top:2px solid #ccc}
-    .footer .brand-name{font-size:14px;font-weight:800;color:#1a1a1a;letter-spacing:1px}
-    .footer .brand-name span{color:#555}
-    .footer .divider{width:25px;height:2px;background:#555;margin:4px auto;border-radius:2px}
-    .footer p{font-size:10px;color:#1a1a1a;font-weight:500;line-height:1.4}
-    .footer .note{font-size:7px;color:#888;font-weight:500;margin-top:3px}
-    .brand-logo-span{color:#fff;font-weight:400;font-size:12px}
+    .stamp-box .stamp-label{font-size:7px;color:#536b80;text-transform:uppercase;letter-spacing:1px;font-weight:600}
+    .stamp-box .stamp-image{width:88px;height:88px;object-fit:contain;border-radius:8px;background:#fff;padding:4px}
+    .footer{background:#071f33;padding:12px 28px 10px;text-align:center;border-top:3px solid #f59e0b}
+    .footer .brand-name{font-size:14px;font-weight:800;color:#fff;letter-spacing:1px}
+    .footer .brand-name span{color:#00a8e8}
+    .footer .divider{width:25px;height:2px;background:#f59e0b;margin:4px auto;border-radius:2px}
+    .footer p{font-size:10px;color:#dbeafe;font-weight:500;line-height:1.4}
+    .footer .note{font-size:7px;color:#8fdff2;font-weight:500;margin-top:3px}
+    .brand-logo-span{color:#f59e0b;font-weight:700;font-size:12px;letter-spacing:.5px}
     @media (max-width:700px){.top-bar{flex-direction:column;gap:6px;padding:10px 16px;text-align:center}.top-bar .brand{align-items:center;width:100%}.top-bar .brand .logo-img{max-width:150px}.top-bar .invoice-tag{text-align:center}.header{padding:12px 16px}.header-content{flex-direction:column;align-items:flex-start}.header-right{text-align:left;width:100%}.header-right .amount-wrapper{justify-content:flex-start}.header-right .amount{font-size:24px}.body{padding:10px 16px}.grid-3{grid-template-columns:1fr 1fr}.status-row{padding:6px 16px;flex-direction:column;align-items:flex-start}.footer{padding:8px 16px}.stamp-section{justify-content:center}.company-address{flex-direction:column;text-align:center}.stamp-box .stamp-image{width:100px;height:100px}}
     @media (max-width:480px){.grid-3{grid-template-columns:1fr}.top-bar .brand .logo-img{max-width:120px}.header-left .greeting{font-size:17px}}
     @media print{body{background:#fff;padding:0;margin:0}.invoice{box-shadow:none;border-radius:0;max-width:100%}.top-bar{background:#1a1a1a!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}.top-bar .brand .logo-img{-webkit-print-color-adjust:exact;print-color-adjust:exact}.status-badge{color:#333!important}.highlight-box,.card,.footer,.header,.company-address,.stamp-image{-webkit-print-color-adjust:exact;print-color-adjust:exact}.stamp-section{page-break-inside:avoid;break-inside:avoid}}
     </style></head>
     <body>
     <div class="invoice">
-      <div class="top-bar"><div class="brand"><img src="/logo.png" alt="Roventar Logo" class="logo-img" /><span class="brand-logo-span">Smart Trading · Better Future</span></div>
+      <div class="top-bar"><div class="brand"><img src="/logo.png" alt="JMFinex Logo" class="logo-img" /><span class="brand-logo-span">LEARN | TRADE | GROW</span></div>
       <div class="invoice-tag"><div class="label">Invoice Number</div><div class="number">#${invoiceNo}</div></div></div>
-      <div class="header"><div class="header-content"><div class="header-left"><div class="greeting">Hello, <span>${userName}</span></div><div class="sub">Thank you for investing with Roventar</div></div>
+      <div class="header"><div class="header-content"><div class="header-left"><div class="greeting">Hello, <span>${userName}</span></div><div class="sub">Thank you for investing with JMFINEX</div></div>
       <div class="header-right"><div class="amount-label">Total Investment</div><div class="amount-wrapper"><span class="amount">$${amount.toFixed(
         2
       )}</span><span class="currency">USD</span></div></div></div></div>
@@ -2996,50 +2997,59 @@ export default function SonicScalper() {
             2
           )}</div></div></div></div>
         <div class="section" style="margin-bottom:4px"><div class="section-title"><span class="icon">🏢</span> Company Details</div>
-          <div class="company-address"><div class="address-text"><strong>ROVENTAR TRADING LLC</strong><br />Registered Agent: As per Articles of Organization<br />State of Missouri, USA<br />Date Filed: 08/26/2026</div>
-          <div class="address-text" style="text-align:right"><strong>Email:</strong> support@roventar.com<br /><strong>Phone:</strong> +1 (800) 555-0199</div></div></div>
-        <div class="stamp-section"><div class="stamp-box"><span class="stamp-label">Company Stamp</span><img src="/stampbackremove.png" alt="Roventar CAPITAL MANAGEMENT LLC Stamp" class="stamp-image" /></div></div>
+          <div class="company-address"><div class="address-text"><strong>JMFINEX</strong><br />838, Castries, Rodney Court Building<br />Rodney Bay, St Lucia</div>
+          <div class="address-text" style="text-align:right"><strong>Email:</strong> support@jmfinex.com<br /><strong>Phone:</strong> +1 (800) 555-0199</div></div></div>
+        <div class="stamp-section"><div class="stamp-box"><span class="stamp-label">Company Stamp</span><img src="/stampbackremove.png" alt="JMFINEX Stamp" class="stamp-image" /></div></div>
       </div>
-      <div class="footer"><div class="brand-name">✦ Rove<span>ntar</span></div><div class="divider"></div>
-        <p>Thank you for trusting Roventar with your investment.<br />Our AI-driven strategies are working to grow your wealth.</p>
-        <div class="note">© ${new Date().getFullYear()} Roventar · All Rights Reserved · Computer Generated Invoice</div></div>
+      <div class="footer"><div class="brand-name">✦ JM<span>Finex</span></div><div class="divider"></div>
+        <p>Thank you for trusting JMFINEX with your investment.<br />Our AI-driven strategies are working to grow your wealth.</p>
+        <div class="note">© ${new Date().getFullYear()} JMFINEX · All Rights Reserved · Computer Generated Invoice</div></div>
     </div></body></html>`;
 
-    const tempDiv = document.createElement("div");
-    tempDiv.innerHTML = invoiceHTML;
-    tempDiv.style.position = "absolute";
-    tempDiv.style.left = "-9999px";
-    document.body.appendChild(tempDiv);
-    const element = tempDiv.querySelector(".invoice");
+    const invoiceFrame = document.createElement("iframe");
+    invoiceFrame.setAttribute("aria-hidden", "true");
+    invoiceFrame.style.cssText =
+      "position:fixed;left:-100000px;top:0;width:720px;height:1100px;border:0;opacity:0;pointer-events:none;z-index:-1;";
+    const frameReady = new Promise((resolve, reject) => {
+      invoiceFrame.onload = resolve;
+      invoiceFrame.onerror = reject;
+    });
+    invoiceFrame.srcdoc = invoiceHTML;
+    document.body.appendChild(invoiceFrame);
+    await frameReady;
+    const element = invoiceFrame.contentDocument.querySelector(".invoice");
     const opt = {
       margin: 10,
-      filename: `Roventar_Invoice_${invoiceNo}.pdf`,
+      filename: `JMFINEX_Invoice_${invoiceNo}.pdf`,
       image: { type: "jpeg", quality: 0.98 },
-      html2canvas: { scale: 2, useCORS: true },
+      html2canvas: { scale: 1.5, useCORS: true },
       jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+      pagebreak: { mode: ["css", "avoid-all"] },
     };
+    const cleanup = () => {
+      if (invoiceFrame.parentNode) invoiceFrame.parentNode.removeChild(invoiceFrame);
+    };
+
     if (typeof html2pdf !== "undefined") {
-      html2pdf()
-        .set(opt)
-        .from(element)
-        .save()
-        .then(() => {
-          document.body.removeChild(tempDiv);
-        });
+      try {
+        await html2pdf().set(opt).from(element).save();
+      } finally {
+        cleanup();
+      }
     } else {
       const script = document.createElement("script");
       script.src =
         "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js";
-      script.onload = () => {
-        html2pdf()
-          .set(opt)
-          .from(element)
-          .save()
-          .then(() => {
-            document.body.removeChild(tempDiv);
-          });
-      };
-      document.head.appendChild(script);
+      try {
+        await new Promise((resolve, reject) => {
+          script.onload = resolve;
+          script.onerror = reject;
+          document.head.appendChild(script);
+        });
+        await html2pdf().set(opt).from(element).save();
+      } finally {
+        cleanup();
+      }
     }
   };
 
@@ -3063,7 +3073,7 @@ export default function SonicScalper() {
       };
 
       const o = {
-        id: `R-${Date.now()}`,
+        id: `JM-${Date.now()}`,
         bot: bot.name,
         logo: bot.icon || "🤖",
         user: uname,
@@ -3206,15 +3216,15 @@ export default function SonicScalper() {
           className="fixed inset-0 z-[1000] flex items-center justify-center p-4 bg-black/50 dark:bg-black/70 animate-sb-fadeIn"
           onClick={(e) => e.target === e.currentTarget && setShowSuccess(false)}
         >
-          <div className="w-full max-w-[420px] rounded-2xl bg-white dark:bg-slate-800 p-5 shadow-2xl text-center animate-sb-slideUp">
-            <div className="text-5xl mb-2.5">🎉</div>
-            <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100 mb-2">
+          <div className="w-full max-w-[520px] rounded-[24px] bg-white dark:bg-slate-800 p-6 sm:p-7 shadow-2xl text-center animate-sb-slideUp">
+            <div className="text-6xl mb-3">🎉</div>
+            <h3 className="text-2xl sm:text-[30px] leading-tight font-bold text-slate-900 dark:text-slate-100 mb-2.5">
               Congratulations!
             </h3>
-            <p className="text-[13px] text-slate-900 dark:text-slate-100 mb-3.5">
+            <p className="text-[15px] sm:text-base text-slate-900 dark:text-slate-100 mb-5">
               Your AI bot investment is now live and running.
             </p>
-            <div className="mb-3.5 p-3.5 border border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-900 text-left">
+            <div className="mb-5 p-4 border border-slate-200 dark:border-slate-700 rounded-2xl bg-slate-50 dark:bg-slate-900 text-left">
               {[
                 { label: "Order ID", value: inv.id },
                 { label: "Bot Strategy", value: inv.bot },
@@ -3225,13 +3235,13 @@ export default function SonicScalper() {
               ].map((item, i) => (
                 <div
                   key={i}
-                  className="flex justify-between py-1.5 border-b border-slate-200 dark:border-slate-700 last:border-b-0 gap-2"
+                  className="flex items-start justify-between py-2 border-b border-slate-200 dark:border-slate-700 last:border-b-0 gap-4"
                 >
-                  <span className="text-xs font-medium text-slate-900 dark:text-slate-100">
+                  <span className="text-sm font-medium text-slate-900 dark:text-slate-100 shrink-0">
                     {item.label}
                   </span>
                   <span
-                    className={`text-xs text-slate-900 dark:text-slate-100 break-words ${
+                    className={`min-w-0 text-right text-sm text-slate-900 dark:text-slate-100 wrap-break-word ${
                       item.highlight ? "font-bold" : ""
                     }`}
                   >
@@ -3240,16 +3250,24 @@ export default function SonicScalper() {
                 </div>
               ))}
             </div>
-            <div className="flex gap-3 w-full">
+            <div className="flex flex-col sm:flex-row gap-3 w-full">
               <button
-                className="w-full py-3 rounded-lg bg-slate-600 hover:bg-slate-700 text-white text-[13px] font-semibold cursor-pointer transition-all flex-1"
-                // onClick={() => handleDownloadInvoice(inv)}
+                className="w-full py-3.5 rounded-full bg-slate-600 hover:bg-slate-700 text-white text-[15px] font-semibold cursor-pointer transition-all flex-1 disabled:cursor-wait disabled:opacity-70"
+                disabled={isDownloadingInvoice}
+                onClick={async () => {
+                  setIsDownloadingInvoice(true);
+                  try {
+                    // await handleDownloadInvoice(inv);
+                  } finally {
+                    setIsDownloadingInvoice(false);
+                  }
+                }}
               >
                 <Download size={16} className="inline mr-1.5 align-middle" />
-                Download Invoice
+                {isDownloadingInvoice ? "Preparing Invoice..." : "Download Invoice"}
               </button>
               <button
-                className="w-full py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-[13px] font-semibold cursor-pointer transition-all flex-1"
+                className="w-full py-3.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-[15px] font-semibold cursor-pointer transition-all flex-1"
                 onClick={() => setShowSuccess(false)}
               >
                 Done

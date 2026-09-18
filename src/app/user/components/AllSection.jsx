@@ -112,10 +112,10 @@ export default function AllSection() {
             >
               <span className="relative z-[2]">Explore Platform</span>
             </a>
-            <a href="#"
+            <a href="/user/login"
               className="group relative inline-flex items-center justify-center gap-2.5 rounded-full font-semibold text-[0.86rem] cursor-pointer border border-transparent overflow-hidden whitespace-nowrap py-[11px] px-6 text-[#0A0E1A] [background:linear-gradient(135deg,#F0B429_0%,#D4A017_100%)] transition-transform duration-350 hover:-translate-y-0.5 hover:[box-shadow:0_12px_32px_-8px_rgba(240,180,41,.55),0_0_24px_-4px_rgba(255,215,0,.4)] before:content-[''] before:absolute before:top-0 before:-left-[75%] before:w-1/2 before:h-full before:z-[1] before:[background:linear-gradient(115deg,transparent,rgba(255,240,200,0.6),transparent)] before:[transform:skewX(-20deg)] before:transition-[left] before:duration-700 hover:before:left-[130%]"
             >
-              <span className="relative z-[2]">Get Signup</span>
+              <span className="relative z-[2]">Get SignIn</span>
             </a>
           </div>
 
