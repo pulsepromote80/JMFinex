@@ -426,7 +426,7 @@ const SupportContent = () => {
                         <option value="">Select Ticket Type</option>
                         <option value="Profile">Profile</option>
                         <option value="Withdrawal">Withdrawal</option>
-                        <option value="Staking">Staking</option>
+                        <option value="Staking">FMP</option>
                         <option value="Incomes">Incomes</option>
                         <option value="Fund Deposit">Fund Deposit</option>
                         <option value="General">General Inquiry</option>

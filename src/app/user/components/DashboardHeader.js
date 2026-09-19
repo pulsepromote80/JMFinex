@@ -58,20 +58,21 @@ export default function DashboardHeader({
     `}>
       
       {/* Logo Area */}
-      <div className={`flex items-center gap-3 px-4 py-0.5 border-b border-gray-200 dark:border-gray-800 dark:bg-[#10222e]  bg-white/95 `}>
+      <div className={`flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-800 dark:bg-[#10222e]  bg-white/95 `}>
         <Image
           src={mounted && theme === "dark" ? "/logo.png" : "/LogoBlack.png"}
           alt="Logo"
           width={200}
           height={60}
           priority
-          className="object-contain dark:brightness-125 dark:contrast-125"
+          className="object-contain dark:brightness-125 dark:contrast-125 w-[120px] h-auto lg:w-[180px]"
         />
         <button 
-          className="lg:hidden w-9 h-9 min-w-[36px] rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rotate-90 transition-all duration-300 flex items-center justify-center"
+          className="lg:hidden w-10 h-10 min-w-[40px] rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rotate-90 transition-all duration-300 flex items-center justify-center shadow-md flex-shrink-0"
           onClick={closeSidebar}
+          aria-label="Close sidebar"
         >
-          <FiX className="w-5 h-5" />
+          <FiX className="w-6 h-6" />
         </button>
       </div>
 
@@ -83,6 +84,7 @@ export default function DashboardHeader({
 
         <Link 
           href="/dashboard" 
+          onClick={closeSidebar}
           className={`flex items-center gap-2.5 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 border-l-[3px] border-transparent ${
             pathname === '/dashboard' 
               ? 'text-[#0057D9] dark:text-[#38BDF8] bg-[#EAF3FF] dark:bg-[#0B2347]/60 border-l-[#0057D9] dark:border-l-[#38BDF8]'
@@ -97,6 +99,7 @@ export default function DashboardHeader({
 
         <Link 
           href="/dashboard/AI-Trading-Bots" 
+          onClick={closeSidebar}
           className={`flex items-center gap-2.5 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 border-l-[3px] border-transparent ${
             pathname === '/dashboard/AI-Trading-Bots' 
               ? 'text-[#0057D9] dark:text-[#38BDF8] bg-[#EAF3FF] dark:bg-[#0B2347]/60 border-l-[#0057D9] dark:border-l-[#38BDF8]'
@@ -112,6 +115,7 @@ export default function DashboardHeader({
 
         <Link 
           href="/dashboard/engine" 
+          onClick={closeSidebar}
           className={`flex items-center gap-2.5 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 border-l-[3px] border-transparent ${
             pathname === '/dashboard/engine' 
               ? 'text-[#0057D9] dark:text-[#38BDF8] bg-[#EAF3FF] dark:bg-[#0B2347]/60 border-l-[#0057D9] dark:border-l-[#38BDF8]'
@@ -127,6 +131,7 @@ export default function DashboardHeader({
 
         <Link 
           href="/dashboard/analytics" 
+          onClick={closeSidebar}
           className={`flex items-center gap-2.5 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 border-l-[3px] border-transparent ${
             pathname === '/dashboard/analytics' 
               ? 'text-[#0057D9] dark:text-[#38BDF8] bg-[#EAF3FF] dark:bg-[#0B2347]/60 border-l-[#0057D9] dark:border-l-[#38BDF8]'
@@ -141,6 +146,7 @@ export default function DashboardHeader({
 
         <Link 
           href="/dashboard/fund-director" 
+          onClick={closeSidebar}
           className={`flex items-center gap-2.5 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 border-l-[3px] border-transparent ${
             pathname === '/dashboard/fund-director' 
               ? 'text-[#0057D9] dark:text-[#38BDF8] bg-[#EAF3FF] dark:bg-[#0B2347]/60 border-l-[#0057D9] dark:border-l-[#38BDF8]'
@@ -155,6 +161,7 @@ export default function DashboardHeader({
 
         <Link 
           href="/dashboard/Team" 
+          onClick={closeSidebar}
           className={`flex items-center gap-2.5 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 border-l-[3px] border-transparent ${
             pathname === '/dashboard/Team' 
               ? 'text-[#0057D9] dark:text-[#38BDF8] bg-[#EAF3FF] dark:bg-[#0B2347]/60 border-l-[#0057D9] dark:border-l-[#38BDF8]'
@@ -169,6 +176,7 @@ export default function DashboardHeader({
 
           <Link 
           href="/dashboard/crypto-terminal" 
+          onClick={closeSidebar}
           className={`flex items-center gap-2.5 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 border-l-[3px] border-transparent ${
             pathname === '/dashboard/crypto-terminal' 
               ? 'text-[#0057D9] dark:text-[#38BDF8] bg-[#EAF3FF] dark:bg-[#0B2347]/60 border-l-[#0057D9] dark:border-l-[#38BDF8]'
@@ -190,6 +198,7 @@ export default function DashboardHeader({
 
         <Link 
           href="/dashboard/income-statement" 
+          onClick={closeSidebar}
           className={`flex items-center gap-2.5 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 border-l-[3px] border-transparent ${
             pathname === '/dashboard/income-statement' 
               ? 'text-[#0057D9] dark:text-[#38BDF8] bg-[#EAF3FF] dark:bg-[#0B2347]/60 border-l-[#0057D9] dark:border-l-[#38BDF8]'
@@ -204,6 +213,7 @@ export default function DashboardHeader({
 
         <Link 
           href="/dashboard/wallet-statement" 
+          onClick={closeSidebar}
           className={`flex items-center gap-2.5 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 border-l-[3px] border-transparent ${
             pathname === '/dashboard/wallet-statement' 
               ? 'text-[#0057D9] dark:text-[#38BDF8] bg-[#EAF3FF] dark:bg-[#0B2347]/60 border-l-[#0057D9] dark:border-l-[#38BDF8]'
@@ -218,6 +228,7 @@ export default function DashboardHeader({
 
         <Link 
           href="/dashboard/my-rewards" 
+          onClick={closeSidebar}
           className={`flex items-center gap-2.5 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 border-l-[3px] border-transparent ${
             pathname === '/dashboard/my-rewards' 
               ? 'text-[#0057D9] dark:text-[#38BDF8] bg-[#EAF3FF] dark:bg-[#0B2347]/60 border-l-[#0057D9] dark:border-l-[#38BDF8]'
@@ -232,6 +243,7 @@ export default function DashboardHeader({
 
         <Link 
           href="/dashboard/ai-assistant" 
+          onClick={closeSidebar}
           className={`flex items-center gap-2.5 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 border-l-[3px] border-transparent ${
             pathname === '/dashboard/ai-assistant' 
               ? 'text-[#0057D9] dark:text-[#38BDF8] bg-[#EAF3FF] dark:bg-[#0B2347]/60 border-l-[#0057D9] dark:border-l-[#38BDF8]'
@@ -253,6 +265,7 @@ export default function DashboardHeader({
 
         <Link 
           href="/dashboard/profile" 
+          onClick={closeSidebar}
           className={`flex items-center gap-2.5 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 border-l-[3px] border-transparent ${
             pathname === '/dashboard/profile' 
               ? 'text-[#0057D9] dark:text-[#38BDF8] bg-[#EAF3FF] dark:bg-[#0B2347]/60 border-l-[#0057D9] dark:border-l-[#38BDF8]'
@@ -267,7 +280,10 @@ export default function DashboardHeader({
 
         <Link
           href="/user/login"
-          onClick={doUserLogout}
+          onClick={() => {
+            doUserLogout();
+            closeSidebar();
+          }}
           className="flex items-center gap-2.5 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 border border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-950/30 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/50 hover:border-red-300 dark:hover:border-red-700"
         >
           <span className="w-4 text-center text-sm flex-shrink-0">

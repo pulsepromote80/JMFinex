@@ -579,11 +579,11 @@ export default function ArbionEngine() {
                 <button
                   type="button"
                   onClick={(e) => { e.stopPropagation(); setShowChainDropdown(p => !p); setShowTokenDropdown(false); }}
-                  className="flex items-center gap-2 py-2 px-3.5 bg-white dark:bg-white border border-[#e2e8f0] dark:border-[#d7e0e8] rounded-lg cursor-pointer font-semibold text-sm transition-all hover:border-blue-500 hover:shadow-[0_2px_8px_rgba(59,130,246,0.1)] max-sm:text-xs max-sm:py-1.5 max-sm:px-2.5 max-sm:w-full max-sm:justify-center"
+                  className="flex items-center gap-2 py-2 px-3.5 bg-white dark:bg-[#172b38] border border-[#e2e8f0] dark:border-[#3b5262] rounded-lg cursor-pointer font-semibold text-sm transition-all hover:border-blue-500 hover:shadow-[0_2px_8px_rgba(59,130,246,0.1)] max-sm:text-xs max-sm:py-1.5 max-sm:px-2.5 max-sm:w-full max-sm:justify-center"
                 >
                   <span className="text-lg max-sm:text-sm">{CHAINS[selectedChain]?.icon}</span>
-                  <span className="font-semibold text-[#16283a] dark:text-[#16283a]">{selectedChain}</span>
-                  <span className="text-[10px] opacity-50 text-[#475569] dark:text-[#475569]">▾</span>
+                  <span className="font-semibold text-[#0f172a] dark:text-[#eaf4ff]">{selectedChain}</span>
+                  <span className="text-[10px] opacity-70 text-[#1e293b] dark:text-[#eaf4ff]">▾</span>
                 </button>
                 {showChainDropdown && (
                   <div className="absolute top-[calc(100%+6px)] left-0 min-w-[210px] max-h-[300px] bg-white dark:bg-[#172b38] border border-[#e2e8f0] dark:border-[#3b5262] rounded-[10px] shadow-[0_12px_30px_rgba(0,0,0,0.18)] dark:shadow-[0_15px_35px_rgba(0,0,0,0.45)] z-[999999] overflow-y-auto overflow-x-hidden max-sm:min-w-full max-sm:max-h-[180px] max-sm:left-0 max-sm:right-0">
@@ -594,12 +594,12 @@ export default function ArbionEngine() {
                         className={`flex items-center gap-2.5 py-2.5 px-3.5 cursor-pointer transition-colors max-sm:py-2 max-sm:px-3 max-sm:text-[13px] ${
                           selectedChain === key
                             ? 'bg-blue-500 text-white'
-                            : 'hover:bg-[#f1f5f9] dark:hover:bg-[#243d4d] text-[#eaf4ff] dark:text-[#eaf4ff]'
+                            : 'hover:bg-[#f1f5f9] dark:hover:bg-[#243d4d] text-[#16283a] dark:text-[#eaf4ff]'
                         }`}
                       >
                         <span className="text-lg">{CHAINS[key].icon}</span>
                         <span>{CHAINS[key].name}</span>
-                        <span className={`ml-auto text-[11px] font-semibold ${selectedChain === key ? 'opacity-100' : 'opacity-60 text-[#9fb0c0] dark:text-[#9fb0c0]'}`}>
+                        <span className={`ml-auto text-[11px] font-semibold ${selectedChain === key ? 'opacity-100' : 'opacity-60 text-[#64748b] dark:text-[#9fb0c0]'}`}>
                           {key}
                         </span>
                       </div>
@@ -613,10 +613,10 @@ export default function ArbionEngine() {
                 <button
                   type="button"
                   onClick={(e) => { e.stopPropagation(); setShowTokenDropdown(p => !p); setShowChainDropdown(false); }}
-                  className="flex items-center gap-2 py-2 px-3.5 bg-white dark:bg-white border border-[#e2e8f0] dark:border-[#d7e0e8] rounded-lg cursor-pointer font-semibold text-sm transition-all hover:border-blue-500 hover:shadow-[0_2px_8px_rgba(6,182,212,0.1)] max-sm:text-xs max-sm:py-1.5 max-sm:px-2.5 max-sm:w-full max-sm:justify-center"
+                  className="flex items-center gap-2 py-2 px-3.5 bg-white dark:bg-[#172b38] border border-[#e2e8f0] dark:border-[#3b5262] rounded-lg cursor-pointer font-semibold text-sm transition-all hover:border-blue-500 hover:shadow-[0_2px_8px_rgba(6,182,212,0.1)] max-sm:text-xs max-sm:py-1.5 max-sm:px-2.5 max-sm:w-full max-sm:justify-center"
                 >
-                  <span className="font-semibold text-[#16283a] dark:text-[#16283a]">{selectedToken}</span>
-                  <span className="text-[10px] opacity-50 text-[#475569] dark:text-[#475569]">▾</span>
+                  <span className="font-semibold text-[#0f172a] dark:text-[#eaf4ff]">{selectedToken}</span>
+                  <span className="text-[10px] opacity-70 text-[#1e293b] dark:text-[#eaf4ff]">▾</span>
                 </button>
                 {showTokenDropdown && (
                   <div className="absolute top-[calc(100%+6px)] left-0 min-w-[190px] max-h-[300px] bg-white dark:bg-[#172b38] border border-[#e2e8f0] dark:border-[#3b5262] rounded-[10px] shadow-[0_12px_30px_rgba(0,0,0,0.18)] dark:shadow-[0_15px_35px_rgba(0,0,0,0.45)] z-[999999] overflow-y-auto max-sm:min-w-full max-sm:max-h-[180px] max-sm:left-0 max-sm:right-0">
@@ -627,11 +627,11 @@ export default function ArbionEngine() {
                         className={`flex items-center gap-2.5 py-2.5 px-3.5 cursor-pointer transition-colors max-sm:py-2 max-sm:px-3 max-sm:text-[13px] ${
                           selectedToken === token.symbol
                             ? 'bg-blue-500 text-white'
-                            : 'hover:bg-[#f1f5f9] dark:hover:bg-[#243d4d] text-[#eaf4ff] dark:text-[#eaf4ff]'
+                            : 'hover:bg-[#f1f5f9] dark:hover:bg-[#243d4d] text-[#16283a] dark:text-[#eaf4ff]'
                         }`}
                       >
                         <span>{token.symbol}</span>
-                        <span className={`text-[11px] ml-auto ${selectedToken === token.symbol ? 'opacity-100' : 'opacity-60 text-[#9fb0c0] dark:text-[#9fb0c0]'}`}>
+                        <span className={`text-[11px] ml-auto ${selectedToken === token.symbol ? 'opacity-100' : 'opacity-60 text-[#64748b] dark:text-[#9fb0c0]'}`}>
                           {token.name}
                         </span>
                       </div>
@@ -643,7 +643,7 @@ export default function ArbionEngine() {
               <div className="flex items-center gap-4 ml-auto max-sm:ml-0 max-sm:justify-between max-sm:w-full">
                 <div className="flex flex-col items-end max-sm:items-start">
                   <span className="text-[10px] uppercase text-[#94a3b8] dark:text-[#9fb0c0] font-semibold tracking-wider">PRICE</span>
-                  <span className="text-xl max-sm:text-base font-bold text-[#0f2942] dark:text-[#102a43]">
+                  <span className="text-xl max-sm:text-base font-bold text-[#0f2942] dark:text-[#eaf4ff]">
                     {isLoadingPrice ? <span className="animate-pulse">...</span> : formatCurrency(tokenPrice)}
                   </span>
                 </div>
@@ -738,11 +738,11 @@ export default function ArbionEngine() {
 
             {/* Chain info */}
             <div className="flex items-center gap-3 flex-wrap p-3 bg-[#f8fafc] dark:bg-[#102531] rounded-lg mt-2 max-sm:gap-1.5 max-sm:p-2">
-              <div className="flex items-center gap-1.5 py-1 px-3 bg-white dark:bg-[#172b38] rounded-md border border-[#e2e8f0] dark:border-[#526777] text-[13px] max-sm:text-[11px] max-sm:py-0.5 max-sm:px-2.5 font-semibold text-[#eaf4ff] dark:text-[#eaf4ff]">
+              <div className="flex items-center gap-1.5 py-1 px-3 bg-white dark:bg-[#172b38] rounded-md border border-[#e2e8f0] dark:border-[#526777] text-[13px] max-sm:text-[11px] max-sm:py-0.5 max-sm:px-2.5 font-semibold text-[#0f172a] dark:text-[#eaf4ff]">
                 <span className="text-lg">{CHAINS[selectedChain]?.icon}</span>
                 <span>{CHAINS[selectedChain]?.name}</span>
               </div>
-              <div className="flex items-center gap-2 py-1 px-3 bg-white dark:bg-[#172b38] rounded-md border border-[#e2e8f0] dark:border-[#526777] text-[13px] max-sm:text-[11px] max-sm:py-0.5 max-sm:px-2.5 font-semibold text-[#eaf4ff] dark:text-[#eaf4ff]">
+              <div className="flex items-center gap-2 py-1 px-3 bg-white dark:bg-[#172b38] rounded-md border border-[#e2e8f0] dark:border-[#526777] text-[13px] max-sm:text-[11px] max-sm:py-0.5 max-sm:px-2.5 font-semibold text-[#0f172a] dark:text-[#eaf4ff]">
                 <span>{selectedToken}</span>
                 <span className="text-xs text-[#64748b] dark:text-[#aebdcc] font-normal">
                   {formatCurrency(tokenPrice)}
@@ -750,7 +750,7 @@ export default function ArbionEngine() {
               </div>
               <button
                 onClick={() => { setEntryPrice(0); setExitPrice(0); setQuantity(0); }}
-                className="ml-auto py-1 px-3.5 text-xs max-sm:text-[10px] max-sm:py-0.5 max-sm:px-2.5 font-semibold border border-[#e2e8f0] dark:border-[#d7e0e8] rounded-md bg-white dark:bg-white text-red-500 cursor-pointer transition-all hover:bg-red-500 hover:text-white hover:border-red-500 max-sm:ml-0"
+                className="ml-auto py-1 px-3.5 text-xs max-sm:text-[10px] max-sm:py-0.5 max-sm:px-2.5 font-semibold border border-[#e2e8f0] dark:border-[#526777] rounded-md bg-white dark:bg-[#172b38] text-red-500 dark:text-red-400 cursor-pointer transition-all hover:bg-red-500 hover:text-white hover:border-red-500 max-sm:ml-0"
               >
                 ✕ Clear All
               </button>

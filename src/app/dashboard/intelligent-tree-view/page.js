@@ -24,29 +24,31 @@ const buildTreeData = (data, collapsedMap) => {
       (child) => child.SponsorId === node.Loginid
     );
     nodeMap.set(node.Loginid, {
-      name: node.Name,
+       name: node.Name || node.Loginid,
       loginid: node.Loginid,
       attributes: {
-        sponsor: node.SponsorId,
-        downline: children.length,
-        email: node.Email,
-        regDate: node.RegDate,
-        leaseAmount: node.Package,
-        urank: node.Urank,
-        teamBusiness: node.TeamBusiness,
-        activeTeam: node.ActiveTeam,
-        directBusiness: node.DirectBusiness,
-        topupDate: node.TopupDate,
-        totalTeam: node.TotalActiveDirect,
-        mobile: node.Mobile,
-        uLvl: node.uLvl,
-        ActivationDate: node.ActivationDate,
-        leftTeam: node.LeftTeam,
-        rightTeam: node.RightTeam,
-        leftAvtive:node.LeftActiveTeam,
-        RightAvtive:node.RightActiveTeam,
-        leftBusiness: node.LeftBussiness,
-        rightBusiness: node.RightBussiness,
+        sponsor: node.SponsorId || "",
+        downline: 0,
+        email: node.Email || "",
+        regDate: node.RegDate || "",
+        leaseAmount: node.Package || 0,
+        urank: node.uLvl || 0,
+        teamBusiness: node.Teambusiness || 0,
+        activeTeam: node.ActiveTeam || 0,
+        directBusiness: node.DirectBusiness || 0,
+        topupDate: node.TopupDate || "",
+        totalTeam: node.TotalActiveDirect || 0,
+        mobile: node.Mobile || "",
+        uLvl: node.uLvl || 0,
+        ActivationDate: node.ActivationDate || "",
+        leftTeam: node.TotalTeam || 0,
+        rightTeam: node.ActiveTeam || 0,
+        leftAvtive: node.Teambusiness || 0,
+        RightAvtive: node.RightActiveTeam || 0,
+        leftBusiness: node.LeftBussiness || 0,
+        rightBusiness: node.RightBussiness || 0,
+        status: node.status || "",
+        level: node.uLvl || 0
       },
       children: [],
       __rd3t: {
@@ -74,7 +76,7 @@ const CustomNode = ({ nodeDatum, toggleNode }) => {
   const [showTooltip, setShowTooltip] = useState(false);
   const [tooltipPos, setTooltipPos] = useState({ top: 10, left: 0 });
   const nodeRef = useRef(null);
- 
+
   const lease = Number(nodeDatum.attributes?.leaseAmount || 0);
   const headerColor = lease > 0 ? "#16a34a" : "#dc2626";
 
@@ -101,8 +103,9 @@ const CustomNode = ({ nodeDatum, toggleNode }) => {
   return (
     <g>
       <foreignObject x="-100" y="-80" width="200" height="200">
-        <div 
-          style={{ 
+        <div
+          className="tree-node-card"
+          style={{
             pointerEvents: "auto",
             backgroundColor: "#ffffff",
             border: "1px solid #e5e7eb",
@@ -113,8 +116,8 @@ const CustomNode = ({ nodeDatum, toggleNode }) => {
             height: "100%",
             overflow: "hidden",
             fontFamily: "system-ui, -apple-system, sans-serif"
-          }} 
-          ref={nodeRef} 
+          }}
+          ref={nodeRef}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
           onMouseOver={handleMouseEnter}
@@ -150,16 +153,16 @@ const CustomNode = ({ nodeDatum, toggleNode }) => {
             <span>ID: {nodeDatum.loginid}</span>
           </div>
 
-          <div style={{ padding: "12px", textAlign: "center", flexGrow: 1 }}>
-            <h3 style={{ fontSize: "14px", fontWeight: "bold", margin: "0 0 8px 0", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+          <div className="tree-node-content" style={{ padding: "12px", textAlign: "center", flexGrow: 1 }}>
+            <h3 className="tree-node-title" style={{ fontSize: "14px", fontWeight: "bold", margin: "0 0 8px 0", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
               {nodeDatum.name}
             </h3>
 
-            <p style={{ fontSize: "11px", margin: "4px 0" }}>
+            <p className="tree-node-text" style={{ fontSize: "11px", margin: "4px 0" }}>
               Package: ${lease.toLocaleString()}
             </p>
 
-            <p style={{ fontSize: "11px", margin: "4px 0" }}>
+            <p className="tree-node-text" style={{ fontSize: "11px", margin: "4px 0" }}>
               Total Direct: {nodeDatum.attributes?.totalTeam || 0}
             </p>
           </div>
@@ -189,6 +192,7 @@ const CustomNode = ({ nodeDatum, toggleNode }) => {
           {showTooltip &&
             createPortal(
               <div
+                className="tree-tooltip"
                 style={{
                   position: "absolute",
                   top: tooltipPos.top,
@@ -207,20 +211,17 @@ const CustomNode = ({ nodeDatum, toggleNode }) => {
                   fontFamily: "system-ui, -apple-system, sans-serif"
                 }}
               >
-                
-                <p style={{ margin: "4px 0",color:'var(--text-2)' }}>SponsorId: {nodeDatum.attributes?.sponsor || "None"}</p>
-                <p style={{ margin: "4px 0",color:'var(--text-2)' }}>Avtivated Date: {nodeDatum.attributes?.ActivationDate || ""}</p>
-                <p style={{ margin: "4px 0",color:'var(--text-2)' }}>Left Team:{formatAmount(nodeDatum.attributes?.leftTeam || 0)}
+
+                 <p style={{ margin: "4px 0",color:'var(--text-2)' }}>SponsorId: {nodeDatum.attributes?.sponsor || "None"}</p>
+                <p style={{ margin: "4px 0",color:'var(--text-2)' }}>Activated Date: {nodeDatum.attributes?.ActivationDate || ""}</p>
+                <p style={{ margin: "4px 0",color:'var(--text-2)' }}>Level: {nodeDatum.attributes?.level || 0}</p>
+                <p style={{ margin: "4px 0",color:'var(--text-2)' }}>Total Team: {formatAmount(nodeDatum.attributes?.leftTeam || 0)}
                 </p>
-                 <p style={{ margin: "4px 0",color:'var(--text-2)' }}>Right Team:{formatAmount(nodeDatum.attributes?.rightTeam || 0)}
+                 <p style={{ margin: "4px 0",color:'var(--text-2)' }}>Active Team: {formatAmount(nodeDatum.attributes?.rightTeam || 0)}
                 </p>
-                <p style={{ margin: "4px 0",color:'var(--text-2)' }}>Left Active:{formatAmount(nodeDatum.attributes?.leftAvtive || 0)}
+                <p style={{ margin: "4px 0",color:'var(--text-2)' }}>Team Business: ${formatAmount(nodeDatum.attributes?.leftAvtive || 0)}
                 </p>
-                <p style={{ margin: "4px 0",color:'var(--text-2)' }}>Right Active:{formatAmount(nodeDatum.attributes?.RightAvtive || 0)}
-                </p>
-                <p style={{ margin: "4px 0",color:'var(--text-2)' }}>Left Buss.: ${nodeDatum.attributes?.leftBusiness || 0}</p>
-                <p style={{ margin: "4px 0",color:'var(--text-2)' }}>Right Buss.: ${nodeDatum.attributes?.rightBusiness || 0}</p>
-               
+
               </div>,
               document.body
             )}
@@ -233,32 +234,32 @@ const CustomNode = ({ nodeDatum, toggleNode }) => {
 // Global styles as a style tag
 const GlobalStyles = () => (
   <style>{`
- 
+
     .tree-content {
       padding: 16px 24px;
       flex-grow: 1;
     }
-    
+
     @media (max-width: 768px) {
       .tree-content {
         padding: 8px 12px;
       }
     }
-    
+
     .tree-wrapper {
       width: 100%;
       height: 75vh;
       background-color:var(--bg-card);
-      border-radius: 16px;  
-     
+      border-radius: 16px;
+
     }
-    
+
     @media (min-width: 768px) {
       .tree-wrapper {
         height: 85vh;
       }
     }
-    
+
     .loading-container {
       display: flex;
       height: 100%;
@@ -266,7 +267,7 @@ const GlobalStyles = () => (
       justify-content: center;
       gap: 8px;
     }
-    
+
     .loading-dot {
       width: 12px;
       height: 12px;
@@ -274,7 +275,7 @@ const GlobalStyles = () => (
       border-radius: 50%;
       animation: bounce 1s infinite;
     }
-    
+
     @keyframes bounce {
       0%, 100% {
         transform: translateY(0);
@@ -283,7 +284,7 @@ const GlobalStyles = () => (
         transform: translateY(-10px);
       }
     }
-    
+
     .loading-text {
       color: #94a3b8;
       font-weight: 500;
@@ -291,18 +292,66 @@ const GlobalStyles = () => (
       text-transform: uppercase;
       font-size: 12px;
     }
-    
+
     .rd3t-link {
       stroke: #cbd5e1 !important;
       stroke-width: 2px !important;
     }
-    
+
     .rd3t-label {
       display: none;
     }
-    
+
     svg {
       touch-action: none;
+    }
+
+    /* Dark mode styles for tree nodes */
+    @media (prefers-color-scheme: dark) {
+      .tree-node-card {
+        background-color: #1f2937 !important;
+        border-color: #374151 !important;
+      }
+
+      .tree-node-title {
+        color: #f9fafb !important;
+      }
+
+      .tree-node-text {
+        color: #d1d5db !important;
+      }
+
+      .tree-tooltip {
+        background-color: #1f2937 !important;
+        border: 1px solid #374151 !important;
+      }
+
+      .rd3t-link {
+        stroke: #4b5563 !important;
+      }
+    }
+
+    /* Class-based dark mode support */
+    .dark .tree-node-card {
+      background-color: #1f2937 !important;
+      border-color: #374151 !important;
+    }
+
+    .dark .tree-node-title {
+      color: #f9fafb !important;
+    }
+
+    .dark .tree-node-text {
+      color: #d1d5db !important;
+    }
+
+    .dark .tree-tooltip {
+      background-color: #1f2937 !important;
+      border: 1px solid #374151 !important;
+    }
+
+    .dark .rd3t-link {
+      stroke: #4b5563 !important;
     }
   `}</style>
 );
@@ -361,7 +410,7 @@ export default function IntelligentTreeView() {
   return (
     <div className="">
       <GlobalStyles />
-      
+
       <div className="">
         <div
           ref={containerRef}

@@ -1046,97 +1046,97 @@ function InvestModal({ bot, onClose, onSubmit, walletBalance, isLoading }) {
 
   return (
     <div
-      className="fixed inset-0 z-[1000] flex items-center justify-center p-4 bg-[#2b2b2d]/55 backdrop-blur-[2px] animate-sb-fadeIn"
+      className="fixed inset-0 z-[1000] flex items-center justify-center p-4 bg-[#2b2b2d]/55 dark:bg-black/70 backdrop-blur-[2px] animate-sb-fadeIn"
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
-      <div className="w-full max-w-[500px] rounded-[26px] border border-[#dfe5ee] bg-[#f3f5f7] p-4 shadow-[0_16px_38px_rgba(15,23,42,0.18)] max-h-[88vh] overflow-y-auto animate-sb-slideUp">
+      <div className="w-full max-w-[500px] rounded-[26px] border border-[#dfe5ee] dark:border-slate-700 bg-[#f3f5f7] dark:bg-slate-800 p-4 shadow-[0_16px_38px_rgba(15,23,42,0.18)] max-h-[88vh] overflow-y-auto animate-sb-slideUp">
         <div className="mb-3 flex items-start justify-between gap-3">
           <div>
-            <h3 className="m-0 text-[24px] md:text-[28px] font-black leading-none tracking-[-0.04em] text-slate-900">
+            <h3 className="m-0 text-[24px] md:text-[28px] font-black leading-none tracking-[-0.04em] text-slate-900 dark:text-slate-100">
               Invest in {bot?.name}
             </h3>
-            <p className="mt-1.5 text-xs text-slate-500">Enter investment details below</p>
+            <p className="mt-1.5 text-xs text-slate-500 dark:text-slate-400">Enter investment details below</p>
           </div>
           <button
             onClick={onClose}
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-[22px] text-slate-500 shadow-sm transition hover:bg-slate-100"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-[22px] text-slate-500 dark:text-slate-300 shadow-sm transition hover:bg-slate-100 dark:hover:bg-slate-600"
             aria-label="Close investment modal"
           >
             ✕
           </button>
         </div>
 
-        <div className="mb-3 rounded-full border border-[#58d69b] bg-[#dff7ea] px-3 py-2 shadow-inner shadow-white/20">
+        <div className="mb-3 rounded-full border border-[#58d69b] dark:border-green-600 bg-[#dff7ea] dark:bg-[#14532d]/40 px-3 py-2 shadow-inner shadow-white/20">
           <div className="flex items-center justify-between gap-3">
-            <span className="text-[12px] font-semibold text-[#1d8d57]">Wallet Balance</span>
-            <span className="text-[24px] font-black leading-none text-[#1d8d57]">
+            <span className="text-[12px] font-semibold text-[#1d8d57] dark:text-green-400">Wallet Balance</span>
+            <span className="text-[24px] font-black leading-none text-[#1d8d57] dark:text-green-400">
               ${walletBalance.toLocaleString()}
             </span>
           </div>
         </div>
 
         <div className="mb-3">
-          <label className="mb-1.5 block text-[14px] font-semibold text-slate-800">
+          <label className="mb-1.5 block text-[14px] font-semibold text-slate-800 dark:text-slate-200">
             User ID *
           </label>
           <input
-            className="w-full rounded-full border border-[#dfe6ef] bg-[#edf1f5] px-3.5 py-2.5 text-[14px] text-slate-900 placeholder:text-slate-400 focus:border-[#6ea8ff] focus:outline-none focus:ring-2 focus:ring-[#b9d4ff]"
-            placeholder="Enter User ID (e.g. test@gmail.com)"
+            className="w-full rounded-full border border-[#dfe6ef] dark:border-slate-600 bg-[#edf1f5] dark:bg-slate-700 px-3.5 py-2.5 text-[14px] text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-[#6ea8ff] focus:outline-none focus:ring-2 focus:ring-[#b9d4ff] dark:focus:ring-blue-900/50"
+            placeholder="Enter User ID (e.g. JM000000)"
             value={uid}
             onChange={(e) => setUid(e.target.value)}
           />
           {!uid.trim() ? (
-            <div className="mt-1.5 text-[11px] font-medium text-red-500">
+            <div className="mt-1.5 text-[11px] font-medium text-red-500 dark:text-red-400">
               ⚠ Please enter User ID
             </div>
           ) : isFetchingUser ? (
-            <div className="mt-1.5 text-[11px] text-slate-500">⏳ Fetching user details...</div>
+            <div className="mt-1.5 text-[11px] text-slate-500 dark:text-slate-400">⏳ Fetching user details...</div>
           ) : uname ? (
-            <div className="mt-1.5 text-[11px] font-semibold text-green-600">
+            <div className="mt-1.5 text-[11px] font-semibold text-green-600 dark:text-green-400">
               ✓ {uname}
             </div>
           ) : uerr ? (
-            <div className="mt-1.5 text-[11px] font-medium text-red-500">⚠ {uerr}</div>
+            <div className="mt-1.5 text-[11px] font-medium text-red-500 dark:text-red-400">⚠ {uerr}</div>
           ) : null}
         </div>
 
         <div className="mb-3">
-          <label className="mb-1.5 block text-[14px] font-semibold text-slate-800">
+          <label className="mb-1.5 block text-[14px] font-semibold text-slate-800 dark:text-slate-200">
             Selected Bot
           </label>
-          <div className="flex items-center gap-3 rounded-full border border-[#dfe6ef] bg-[#edf1f5] px-3.5 py-2.5">
-            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#f7d983] text-sm shadow-sm">
+          <div className="flex items-center gap-3 rounded-full border border-[#dfe6ef] dark:border-slate-600 bg-[#edf1f5] dark:bg-slate-700 px-3.5 py-2.5">
+            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#f7d983] dark:bg-yellow-600 text-sm shadow-sm">
               {bot?.icon || "🤖"}
             </span>
-            <span className="text-[14px] font-bold uppercase tracking-[0.02em] text-slate-900">
+            <span className="text-[14px] font-bold uppercase tracking-[0.02em] text-slate-900 dark:text-slate-100">
               {bot?.name}
             </span>
           </div>
         </div>
 
         <div className="mb-3">
-          <label className="mb-1.5 block text-[14px] font-semibold text-slate-800">
+          <label className="mb-1.5 block text-[14px] font-semibold text-slate-800 dark:text-slate-200">
             Investment Amount (USD) *
           </label>
-          <p className="mb-1.5 text-[11px] text-slate-500">Min: $100 | No max limit</p>
+          <p className="mb-1.5 text-[11px] text-slate-500 dark:text-slate-400">Min: $100 | No max limit</p>
           <input
             type="number"
             step="1"
-            className={`w-full rounded-full border bg-[#edf1f5] px-3.5 py-2.5 text-[14px] text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 ${
+            className={`w-full rounded-full border bg-[#edf1f5] dark:bg-slate-700 px-3.5 py-2.5 text-[14px] text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 ${
               amountError
-                ? "border-red-400 focus:ring-red-200"
-                : "border-[#dfe6ef] focus:border-[#6ea8ff] focus:ring-[#b9d4ff]"
+                ? "border-red-400 dark:border-red-600 focus:ring-red-200 dark:focus:ring-red-900/50"
+                : "border-[#dfe6ef] dark:border-slate-600 focus:border-[#6ea8ff] focus:ring-[#b9d4ff] dark:focus:ring-blue-900/50"
             }`}
             placeholder="Enter amount between"
             value={customAmount}
             onChange={handleAmountChange}
           />
           {amountError ? (
-            <div className="mt-1.5 text-[11px] font-medium text-red-500">⚠ {amountError}</div>
+            <div className="mt-1.5 text-[11px] font-medium text-red-500 dark:text-red-400">⚠ {amountError}</div>
           ) : packageName &&
             !packageName.includes("Minimum") &&
             !packageName.includes("Maximum") ? (
-            <div className="mt-1.5 text-[11px] font-semibold text-blue-600">
+            <div className="mt-1.5 text-[11px] font-semibold text-blue-600 dark:text-blue-400">
               Package: <strong>{packageName}</strong>
             </div>
           ) : null}
@@ -1491,7 +1491,7 @@ export default function SonicScalper() {
         <div className="text-center">
           <div className="text-5xl mb-4 animate-sb-bounce">📊</div>
           <div className="text-lg font-semibold text-slate-900 dark:text-slate-100">
-            Loading Bot Strategy...
+            Loading Strategy...
           </div>
         </div>
       </div>
@@ -1510,7 +1510,7 @@ export default function SonicScalper() {
                 className="text-blue-600 dark:text-blue-400 shrink-0"
               />
               <h1 className="text-lg font-bold text-slate-900 dark:text-slate-100 m-0">
-                AI Trading Bots
+                Trade with AI-Assisted Risk Inteligence 
               </h1>
             </div>
             <p className="text-[11px] text-slate-400 m-0 mt-0.5">

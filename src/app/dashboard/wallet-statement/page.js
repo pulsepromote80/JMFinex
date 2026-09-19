@@ -33,7 +33,7 @@ const WalletStatement = () => {
   const reportTabByLabel = {
     USDT: "Deposit",
     Bonus: "Income",
-    Trading: "Trading",
+    Trade: "Trading",
     Withdrawal: "Withdrawal",
   };
   const reportTab = reportTabByLabel[activeTab] || activeTab;
@@ -139,7 +139,7 @@ const WalletStatement = () => {
     currentPage * itemsPerPage
   );
 
-  const tabs = ["USDT", "Bonus", "Trading", "Withdrawal"];
+  const tabs = ["USDT", "Bonus", "Trade", "Withdrawal"];
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);

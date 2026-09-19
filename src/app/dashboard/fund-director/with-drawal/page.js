@@ -50,7 +50,7 @@ const WithdrawalRequest = () => {
 
   const selectedWalletName =
     walletType === "income"
-      ? "Income Wallet Balance"
+      ? "Bonus Wallet Balance"
       : walletType === "trade"
         ? "Trade Wallet Balance"
         : "Selected Wallet";
@@ -270,7 +270,10 @@ const WithdrawalRequest = () => {
         const withdrawalSuccess = await fnSendWithdrawalRequest(values);
 
         if (withdrawalSuccess) {
+          // Preserve wallet address, only reset amount and otp
+          const preservedWalletAddress = values.walletAddress;
           resetForm();
+          formik.setFieldValue("walletAddress", preservedWalletAddress);
           setWalletType("Select Wallet");
           setPendingWithdrawalData(null);
         }
@@ -325,8 +328,8 @@ const WithdrawalRequest = () => {
                     <option value="Select Wallet" className="text-gray-400 dark:text-gray-500">
                       Select Wallet
                     </option>
-                    <option value="income">Income Wallet</option>
-                    <option value="trade">Trading Wallet</option>
+                    <option value="income">Bonus Fund </option>
+                    <option value="trade">Trade Fund</option>
                   </select>
                 </div>
               </div>

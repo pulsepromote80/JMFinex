@@ -75,7 +75,7 @@ const Reward = () => {
           <div className="flex justify-between items-start">
             <div>
               <p className="text-xs font-semibold text-gray-500 dark:text-[#9db4be] uppercase tracking-wider mb-1.5">
-                Biggest Leg Bus.
+                Strong Leg Bus.
               </p>
               <p className="text-lg sm:text-xl font-extrabold text-gray-900 dark:text-[#eaf5f7]">
                 {(salarystrongLegBusines || "—")}
@@ -124,7 +124,7 @@ const Reward = () => {
           <div className="flex justify-between items-start">
             <div>
               <p className="text-xs font-semibold text-gray-500 dark:text-[#9db4be] uppercase tracking-wider mb-1.5">
-                Biggest Leg Pending
+                Strong Leg Pending
               </p>
               <p className="text-lg sm:text-xl font-extrabold text-gray-900 dark:text-[#eaf5f7]">
                 {(salaryweakerLegBusines || "0")}
