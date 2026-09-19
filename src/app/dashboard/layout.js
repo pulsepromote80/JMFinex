@@ -119,14 +119,14 @@ export default function DashboardLayout({ children }) {
           {/* Mobile Overlay */}
           {isMobile && sidebarOpen && (
             <div 
-              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[45] lg:hidden"
               onClick={() => setSidebarOpen(false)}
             />
           )}
 
           {/* Sidebar */}
           <div
-            className={`fixed lg:relative inset-y-0 left-0 z-50 lg:z-auto flex-shrink-0 h-screen overflow-hidden transition-transform duration-300 ease-in-out ${
+            className={`fixed lg:relative inset-y-0 left-0 z-[150] lg:z-auto flex-shrink-0 h-screen overflow-hidden transition-transform duration-300 ease-in-out ${
               sidebarOpen ? 'translate-x-0' : '-translate-x-full'
             } lg:translate-x-0`}
             aria-hidden={sidebarOpen ? "false" : "true"}

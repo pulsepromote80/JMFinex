@@ -1,12 +1,11 @@
 
 
-
 // 'use client'
 
 // import React, { useState, useEffect, Suspense } from "react"
 // import { useRouter } from "next/navigation"
 // import Select from "react-select"
-// import { userRegistration, getAllCountry, getReferralDataByLoginId } from "@/app/redux/slices/authSlice"
+// import { userRegistration, getAllCountry, getReferralDataByLoginId, sendOtpForUserRegistration } from "@/app/redux/slices/authSlice"
 // import { Toaster, toast } from 'react-hot-toast'
 // import { useDispatch } from 'react-redux'
 // import { useSearchParams } from "next/navigation"
@@ -107,9 +106,14 @@
 //   const [referralError, setReferralError] = useState("")
 //   const [referralBlurCalled, setReferralBlurCalled] = useState(!!initialReferralId)
 
+//   // ✅ OTP STATES
+//   const [otpSent, setOtpSent] = useState(false)
+//   const [otpValue, setOtpValue] = useState("")
+//   const [otpLoading, setOtpLoading] = useState(false)
+
 //   const [errors, setErrors] = useState({
 //     firstName: "", lastName: "", email: "",
-//     password: "", phoneNo: "", countryId: "", captcha: "", referralId: "",
+//     password: "", phoneNo: "", countryId: "", captcha: "", referralId: "", otp: "",
 //   })
 
 //   useEffect(() => {
@@ -184,6 +188,8 @@
 //     setReferralBlurCalled(false)
 //     setReferralData(null)
 //     setReferralError("")
+//     setOtpSent(false)   // ✅ reset OTP when referral changes
+//     setOtpValue("")
 //     if (value.trim()) {
 //       setTypingTimer(
 //         setTimeout(() => {
@@ -194,6 +200,43 @@
 //     } else {
 //       setErrors(prev => ({ ...prev, referralId: "" }))
 //     }
+//   }
+
+//   // ✅ SEND OTP HANDLER
+//   const handleSendOtp = async () => {
+//     if (!referralData || referralError) {
+//       toast.error("Please enter a valid referral ID first")
+//       return
+//     }
+//     if (!formData.email?.trim()) {
+//       toast.error("Please enter your email first")
+//       return
+//     }
+
+//     setOtpLoading(true)
+//     try {
+//       const res = await dispatch(sendOtpForUserRegistration(formData.email)).unwrap()
+//       if (res?.statusCode === 200) {
+//         setOtpSent(true)
+//         setErrors(prev => ({ ...prev, otp: "" }))
+//         toast.success("OTP sent successfully!")
+//       } else {
+//         toast.error(res?.message || "Failed to send OTP")
+//       }
+//     } catch (err) {
+//       toast.error(err?.message || "Failed to send OTP")
+//     } finally {
+//       setOtpLoading(false)
+//     }
+//   }
+
+//   // ✅ OTP INPUT HANDLER
+//   const handleOtpChange = (e) => {
+//     const { value } = e.target
+//     if (!/^\d*$/.test(value)) return
+//     if (value.length > 6) return
+//     setOtpValue(value)
+//     if (errors.otp) setErrors(prev => ({ ...prev, otp: "" }))
 //   }
 
 //   const handleChange = (e) => {
@@ -221,7 +264,10 @@
 //   }
 
 //   const validateForm = () => {
-//     let newErrors = { firstName: "", lastName: "", email: "", password: "", phoneNo: "", countryId: "", captcha: "", referralId: "" }
+//     let newErrors = {
+//       firstName: "", lastName: "", email: "", password: "",
+//       phoneNo: "", countryId: "", captcha: "", referralId: "", otp: ""
+//     }
 //     if (!formData.firstName?.trim()) newErrors.firstName = "First name is required"
 //     else if (formData.firstName.trim().length < 2) newErrors.firstName = "At least 2 characters"
 //     if (!formData.lastName?.trim()) newErrors.lastName = "Last name is required"
@@ -236,6 +282,12 @@
 //     if (!formData.referralId?.trim()) newErrors.referralId = "Referral ID is required"
 //     else if (referralError) newErrors.referralId = referralError
 //     if (!captchaVerified) newErrors.captcha = "Please verify you are not a robot"
+
+//     // ✅ OTP VALIDATION
+//     if (!otpSent) newErrors.otp = "Please send OTP first"
+//     else if (!otpValue.trim()) newErrors.otp = "OTP is required"
+//     else if (otpValue.length < 6) newErrors.otp = "OTP must be 6 digits"
+
 //     setErrors(newErrors)
 //     return !Object.values(newErrors).some(error => error !== "")
 //   }
@@ -262,7 +314,7 @@
 //         countryId: parseInt(formData.countryId),
 //         address: "",
 //         introSide: formData.introSide || "L",
-//         otPregpage: ""
+//         otPregpage: otpValue || ""   
 //       }
 //       const res = await dispatch(userRegistration(payload)).unwrap()
 //       if (res?.statusCode !== 200) throw new Error(res?.message || "Signup failed")
@@ -280,6 +332,8 @@
 //       })
 //       setReferralData(null)
 //       setCaptchaVerified(false)
+//       setOtpSent(false)
+//       setOtpValue("")
 //       setTimeout(() => router.push("/user/welcome"), 1500)
 //     } catch (err) {
 //       toast.error(err.message || err || "Signup failed")
@@ -616,6 +670,7 @@
 //               </div>
 //             </div>
 
+//             {/* ✅ Referral + OTP row */}
 //             <div className="row g-3 mb-3">
 //               <div className="col-12 col-sm-6">
 //                 <label className="login-label" style={{ color: '#cbd5e1' }}>Referral ID</label>
@@ -660,6 +715,64 @@
 //                   </div>
 //                 )}
 //               </div>
+
+//               {/* ✅ OTP column */}
+//               <div className="col-12 col-sm-6">
+//                 <label className="login-label" style={{ color: '#cbd5e1' }}>OTP</label>
+//                 {!otpSent ? (
+//                   <button
+//                     type="button"
+//                     onClick={handleSendOtp}
+//                     disabled={otpLoading}
+//                     className="btn w-100 d-flex align-items-center justify-content-center gap-2 fw-bold text-uppercase"
+//                     style={{
+//                       height: "48px",
+//                       background: otpLoading
+//                         ? "rgba(140,180,200,0.2)"
+//                         : "linear-gradient(135deg, #F59E0B, #d97706)",
+//                       border: "1px solid rgba(245,158,11,0.25)",
+//                       color: "#0B1120",
+//                       borderRadius: "10px",
+//                       cursor: otpLoading ? "not-allowed" : "pointer",
+//                       opacity: otpLoading ? 0.5 : 1,
+//                       fontSize: "14px",
+//                       letterSpacing: "1px",
+//                     }}
+//                   >
+//                     {otpLoading ? (
+//                       <>
+//                         <span className="spinner-border spinner-border-sm" style={{ color: '#0B1120' }} />
+//                         Sending OTP...
+//                       </>
+//                     ) : (
+//                       "Send OTP"
+//                     )}
+//                   </button>
+//                 ) : (
+//                   <div className="position-relative">
+//                     <span style={iconStyle}><Lock size={15} /></span>
+//                     <input
+//                       type="text"
+//                       placeholder="Enter 6-digit OTP"
+//                       value={otpValue}
+//                       onChange={handleOtpChange}
+//                       className="form-control bg-transparent text-white pe-5 py-3"
+//                       style={{
+//                         borderRadius: '10px',
+//                         border: errors.otp ? '1px solid #ef4444' : '1px solid rgba(255,255,255,0.1)',
+//                         boxShadow: 'none',
+//                         color: '#fff',
+//                         paddingLeft: '2.25rem',
+//                         transition: 'border 0.2s ease',
+//                       }}
+//                       onFocus={handleFocus}
+//                       onBlur={(e) => handleBlurStyle(e, errors.otp)}
+//                       maxLength={6}
+//                     />
+//                   </div>
+//                 )}
+//                 {errors.otp && <div className="error-message" style={errorStyle}>{errors.otp}</div>}
+//               </div>
 //             </div>
 
 //             <div className="row g-3 mb-4">
@@ -674,7 +787,7 @@
 
 //             <button
 //               type="submit"
-//               disabled={loading}
+//               disabled={loading || !otpSent}
 //               className={`btn w-100 d-flex align-items-center justify-content-center gap-2 fw-bold text-uppercase mt-2 ${loading ? 'login-submit-loading' : ''}`}
 //               style={{
 //                 background: '#F59E0B',
@@ -683,7 +796,9 @@
 //                 fontSize: '14px',
 //                 letterSpacing: '1px',
 //                 padding: '12px',
-//                 border: 'none'
+//                 border: 'none',
+//                 opacity: (!otpSent || loading) ? 0.6 : 1,
+//                 cursor: (!otpSent || loading) ? 'not-allowed' : 'pointer',
 //               }}
 //             >
 //               {loading && (
@@ -887,7 +1002,7 @@
 
 'use client'
 
-import React, { useState, useEffect, Suspense } from "react"
+import React, { useState, useEffect, Suspense, useMemo } from "react"
 import { useRouter } from "next/navigation"
 import Select from "react-select"
 import { userRegistration, getAllCountry, getReferralDataByLoginId, sendOtpForUserRegistration } from "@/app/redux/slices/authSlice"
@@ -962,6 +1077,22 @@ const SimpleCaptcha = ({ onVerify, isVerified }) => {
   )
 }
 
+// ---------------------------------------------------------------------------
+// PASSWORD STRENGTH CHECKER
+// ---------------------------------------------------------------------------
+const passwordRules = (pwd = "") => ({
+  upper: /[A-Z]/.test(pwd),
+  lower: /[a-z]/.test(pwd),
+  number: /\d/.test(pwd),
+  special: /[^A-Za-z0-9]/.test(pwd),
+  length: pwd.length >= 8,
+})
+
+const isStrongPassword = (pwd = "") => {
+  const r = passwordRules(pwd)
+  return r.upper && r.lower && r.number && r.special && r.length
+}
+
 function SignupContent() {
   const router = useRouter()
   const dispatch = useDispatch()
@@ -1000,6 +1131,28 @@ function SignupContent() {
     firstName: "", lastName: "", email: "",
     password: "", phoneNo: "", countryId: "", captcha: "", referralId: "", otp: "",
   })
+
+  // ✅ Live password rule flags
+  const pwdRules = useMemo(() => passwordRules(formData.password), [formData.password])
+
+  // ✅ Check if all required fields are filled → enable Send OTP button
+  const isFormReadyForOtp = useMemo(() => {
+    const { firstName, lastName, countryId, email, phoneNo, password, referralId } = formData
+
+    const allFilled =
+      firstName?.trim().length >= 2 &&
+      lastName?.trim().length >= 2 &&
+      !!countryId &&
+      /^\S+@\S+\.\S+$/.test(email || "") &&
+      phoneNo?.length >= 8 &&
+      phoneNo?.length <= 13 &&
+      isStrongPassword(password) &&
+      referralId?.trim().length > 0
+
+    const referralValid = !!referralData && !referralError
+
+    return allFilled && referralValid
+  }, [formData, referralData, referralError])
 
   useEffect(() => {
     const timer = setTimeout(() => setPageLoading(false), 500)
@@ -1073,7 +1226,7 @@ function SignupContent() {
     setReferralBlurCalled(false)
     setReferralData(null)
     setReferralError("")
-    setOtpSent(false)   // ✅ reset OTP when referral changes
+    setOtpSent(false)
     setOtpValue("")
     if (value.trim()) {
       setTypingTimer(
@@ -1089,6 +1242,10 @@ function SignupContent() {
 
   // ✅ SEND OTP HANDLER
   const handleSendOtp = async () => {
+    if (!isFormReadyForOtp) {
+      toast.error("Please fill all fields correctly first")
+      return
+    }
     if (!referralData || referralError) {
       toast.error("Please enter a valid referral ID first")
       return
@@ -1155,17 +1312,36 @@ function SignupContent() {
     }
     if (!formData.firstName?.trim()) newErrors.firstName = "First name is required"
     else if (formData.firstName.trim().length < 2) newErrors.firstName = "At least 2 characters"
+
     if (!formData.lastName?.trim()) newErrors.lastName = "Last name is required"
     else if (formData.lastName.trim().length < 2) newErrors.lastName = "At least 2 characters"
+
     if (!formData.email?.trim()) newErrors.email = "Email is required"
     else if (!/^\S+@\S+\.\S+$/.test(formData.email)) newErrors.email = "Enter a valid email"
-    if (!formData.password) newErrors.password = "Password is required"
-    else if (formData.password.length < 6) newErrors.password = "Min 6 characters"
+
+    // ✅ Strong password validation
+    if (!formData.password) {
+      newErrors.password = "Password is required"
+    } else if (formData.password.length < 8) {
+      newErrors.password = "Min 8 characters"
+    } else if (!/[A-Z]/.test(formData.password)) {
+      newErrors.password = "Add at least 1 uppercase letter"
+    } else if (!/[a-z]/.test(formData.password)) {
+      newErrors.password = "Add at least 1 lowercase letter"
+    } else if (!/\d/.test(formData.password)) {
+      newErrors.password = "Add at least 1 number"
+    } else if (!/[^A-Za-z0-9]/.test(formData.password)) {
+      newErrors.password = "Add at least 1 special character"
+    }
+
     if (!formData.phoneNo) newErrors.phoneNo = "Mobile number is required"
     else if (formData.phoneNo.length < 8 || formData.phoneNo.length > 13) newErrors.phoneNo = "Phone number must be 8-13 digits"
+
     if (!formData.countryId) newErrors.countryId = "Please select a country"
+
     if (!formData.referralId?.trim()) newErrors.referralId = "Referral ID is required"
     else if (referralError) newErrors.referralId = referralError
+
     if (!captchaVerified) newErrors.captcha = "Please verify you are not a robot"
 
     // ✅ OTP VALIDATION
@@ -1199,7 +1375,7 @@ function SignupContent() {
         countryId: parseInt(formData.countryId),
         address: "",
         introSide: formData.introSide || "L",
-        otPregpage: otpValue || ""   // ✅ send actual OTP value
+        otPregpage: otpValue || ""
       }
       const res = await dispatch(userRegistration(payload)).unwrap()
       if (res?.statusCode !== 200) throw new Error(res?.message || "Signup failed")
@@ -1397,6 +1573,7 @@ function SignupContent() {
           </div>
 
           <form onSubmit={handleSubmit}>
+            {/* First + Last Name */}
             <div className="row g-3 mb-3">
               {[
                 { name: "firstName", label: "First Name", placeholder: "Enter First Name", error: errors.firstName },
@@ -1435,6 +1612,7 @@ function SignupContent() {
               ))}
             </div>
 
+            {/* Country + Email */}
             <div className="row g-3 mb-3">
               <div className="col-12 col-sm-6">
                 <label className="login-label" style={{ color: '#cbd5e1' }}>Country</label>
@@ -1482,6 +1660,7 @@ function SignupContent() {
               </div>
             </div>
 
+            {/* Mobile + Password */}
             <div className="row g-3 mb-3">
               <div className="col-12 col-sm-6">
                 <label className="login-label" style={{ color: '#cbd5e1' }}>Mobile Number</label>
@@ -1508,6 +1687,8 @@ function SignupContent() {
                 </div>
                 {errors.phoneNo && <div className="error-message" style={errorStyle}>{errors.phoneNo}</div>}
               </div>
+
+              {/* PASSWORD with strength hint */}
               <div className="col-12 col-sm-6">
                 <label className="login-label" style={{ color: '#cbd5e1' }}>Password</label>
                 <div className="position-relative">
@@ -1515,7 +1696,7 @@ function SignupContent() {
                   <input
                     type={showPassword ? "text" : "password"}
                     name="password"
-                    placeholder="Enter Password"
+                    placeholder="Enter Strong password"
                     value={formData.password}
                     onChange={handleChange}
                     className="form-control bg-transparent text-white pe-5 py-3"
@@ -1551,11 +1732,20 @@ function SignupContent() {
                     )}
                   </button>
                 </div>
+
+                {/* ✅ Strong password hint + live checklist */}
+                <div style={{ marginTop: '6px' }}>
+                  <div style={{ fontSize: '10.5px', color: '#94a3b8', marginBottom: '4px' }}>
+                    Must contain: uppercase, lowercase, number &amp; special character (min 8 chars)
+                  </div>
+                 
+                </div>
+
                 {errors.password && <div className="error-message" style={errorStyle}>{errors.password}</div>}
               </div>
             </div>
 
-            {/* ✅ Referral + OTP row */}
+            {/* Referral + OTP */}
             <div className="row g-3 mb-3">
               <div className="col-12 col-sm-6">
                 <label className="login-label" style={{ color: '#cbd5e1' }}>Referral ID</label>
@@ -1601,25 +1791,26 @@ function SignupContent() {
                 )}
               </div>
 
-              {/* ✅ OTP column */}
+              {/* OTP */}
               <div className="col-12 col-sm-6">
                 <label className="login-label" style={{ color: '#cbd5e1' }}>OTP</label>
                 {!otpSent ? (
                   <button
                     type="button"
                     onClick={handleSendOtp}
-                    disabled={otpLoading}
+                    disabled={otpLoading || !isFormReadyForOtp}
+                    title={!isFormReadyForOtp ? "Fill all fields correctly to enable" : "Send OTP"}
                     className="btn w-100 d-flex align-items-center justify-content-center gap-2 fw-bold text-uppercase"
                     style={{
                       height: "48px",
-                      background: otpLoading
+                      background: (otpLoading || !isFormReadyForOtp)
                         ? "rgba(140,180,200,0.2)"
                         : "linear-gradient(135deg, #F59E0B, #d97706)",
                       border: "1px solid rgba(245,158,11,0.25)",
                       color: "#0B1120",
                       borderRadius: "10px",
-                      cursor: otpLoading ? "not-allowed" : "pointer",
-                      opacity: otpLoading ? 0.5 : 1,
+                      cursor: (otpLoading || !isFormReadyForOtp) ? "not-allowed" : "pointer",
+                      opacity: (otpLoading || !isFormReadyForOtp) ? 0.5 : 1,
                       fontSize: "14px",
                       letterSpacing: "1px",
                     }}
@@ -1660,6 +1851,7 @@ function SignupContent() {
               </div>
             </div>
 
+            {/* Captcha */}
             <div className="row g-3 mb-4">
               <div className="col-12">
                 <SimpleCaptcha
@@ -1670,6 +1862,7 @@ function SignupContent() {
               </div>
             </div>
 
+            {/* Submit */}
             <button
               type="submit"
               disabled={loading || !otpSent}

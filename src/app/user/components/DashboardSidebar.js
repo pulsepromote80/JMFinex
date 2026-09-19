@@ -425,13 +425,13 @@ export default function DashboardHeader({ sidebarOpen, setSidebarOpen }) {
 
           {/* Deposit Button */}
           <Link href="/dashboard/fund-director">
-            <div className="px-3 py-1.5 rounded-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 text-xs font-bold text-amber-400 dark:text-amber-300 cursor-pointer">
+            <div className="px-3 py-1.5 rounded-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 text-xs font-bold text-[#0057D9] dark:text-[#38BDF8] cursor-pointer">
               + Deposit
             </div>
-          </Link>
+          </Link>   
 
           {/* Today Income */}
-          <div className="px-3 py-1.5 rounded-full bg-[#EAF3FF] dark:bg-[#0B2347]/60 border border-[#B8D5FF] dark:border-[#1D4F91] text-xs font-bold text-[#0057D9] dark:text-[#38BDF8]">
+          <div className="px-3 py-1.5 rounded-full bg-[#f7f8fa] dark:bg-[#0B2347]/60 border border-amber-300 dark:border-amber-300 text-xs font-bold text-amber-400 dark:text-amber-300">
             ▲ +${dashboardData?.[0]?.TodayIncome || "0"} today
           </div>
 
