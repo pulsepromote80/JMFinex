@@ -109,7 +109,7 @@ const TeamReferral = () => {
     };
 
     return (
-        <div className="mx-auto px-4 sm:px-6 py-6">
+        <div className="w-full px-4 sm:px-6 lg:px-8 py-6">
             {/* Tabs */}
             <div className="overflow-x-auto">
                 <div className="flex gap-1 bg-gray-100 dark:bg-[#142936] border border-gray-200 dark:border-[rgba(140,200,205,0.16)] rounded-xl p-1 mb-6 min-w-max">
@@ -267,8 +267,8 @@ const TeamReferral = () => {
             ) : (
                 <>
                     {/* Filter Card */}
-                    <div className="bg-white dark:bg-[#10222e] border border-gray-200 dark:border-[rgba(140,200,205,0.16)] rounded-2xl shadow-sm p-5 mb-4">
-                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                    <div className="w-full bg-white dark:bg-[#10222e] border border-gray-200 dark:border-[rgba(140,200,205,0.16)] rounded-2xl shadow-sm p-5 mb-4">
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 w-full">
                             <div className="text-sm font-semibold text-blue-600 dark:text-blue-400">
                                 Direct Referral Team
                             </div>
@@ -289,7 +289,7 @@ const TeamReferral = () => {
                     </div>
 
                     {/* Search Input */}
-                    <div className="mb-4">
+                    <div className="w-full mb-4">
                         <input
                             type="text"
                             placeholder="Search by Name, Login ID, Mobile, Email..."
