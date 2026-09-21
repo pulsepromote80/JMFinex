@@ -374,7 +374,7 @@ export default function DashboardHeader({ sidebarOpen, setSidebarOpen }) {
             {notificationsDropDown && (
               <div
                 onClick={(e) => e.stopPropagation()}
-                className="absolute left-0 sm:right-0 top-[calc(100%+10px)] w-72 max-w-[calc(100vw-20px)] bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-2xl z-[999] overflow-hidden"
+                className="absolute left-0 sm:right-0 sm:left-auto top-[calc(100%+10px)] w-72 max-w-[calc(100vw-20px)] bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-2xl z-[999] overflow-hidden"
               >
                 <div className="flex items-center justify-between px-4 py-3.5 border-b border-gray-100 dark:border-gray-800">
                   <div>
@@ -452,7 +452,7 @@ export default function DashboardHeader({ sidebarOpen, setSidebarOpen }) {
             </button>
 
             {showUserMenu && (
-              <div className="absolute left-0 sm:right-0 top-[calc(100%+10px)] w-48 max-w-[calc(100vw-20px)] bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-2xl z-[999] overflow-hidden py-1">
+              <div className="absolute left-0 sm:right-0 sm:left-auto top-[calc(100%+10px)] w-48 max-w-[calc(100vw-20px)] bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-2xl z-[999] overflow-hidden py-1">
                 <Link
                   href="/dashboard/profile"
                   className="flex items-center gap-2.5 px-4 py-3 text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
