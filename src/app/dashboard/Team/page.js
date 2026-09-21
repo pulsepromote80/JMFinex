@@ -303,7 +303,7 @@ const TeamReferral = () => {
                     </div>
 
                     {/* Team Members Table */}
-                        <div className="bg-white dark:bg-[#10222e] border border-gray-200 dark:border-[rgba(56,189,248,0.18)] rounded-2xl shadow-sm overflow-hidden">
+                        <div className="bg-white dark:bg-[#10222e] border border-gray-200 dark:border-[rgba(56,189,248,0.18)] rounded-2xl shadow-sm">
                         {loading && (
                             <div className="p-4 text-gray-500 dark:text-[#9db4be]">
                                 Loading team data...
@@ -323,18 +323,18 @@ const TeamReferral = () => {
                                           <>
                                     <div className="overflow-x-auto">
                                         <div className="inline-block min-w-full align-middle">
-                                            <table className="w-full text-sm border-collapse">
+                                            <table className="w-full text-sm border-collapse min-w-[800px]">
                                                 <thead className="bg-[#F1F7FD] dark:bg-[#10223F] border-b border-[#D6E5F5] dark:border-[rgba(56,189,248,0.16)]">
                                                     <tr>
                                                         <th className="px-4 py-3 text-center text-xs font-semibold text-gray-500 dark:text-[#9db4be] uppercase tracking-wider whitespace-nowrap">Sr No</th>
                                                         <th className="px-4 py-3 text-center text-xs font-semibold text-gray-500 dark:text-[#9db4be] uppercase tracking-wider whitespace-nowrap">Name</th>
                                                         <th className="px-4 py-3 text-center text-xs font-semibold text-gray-500 dark:text-[#9db4be] uppercase tracking-wider whitespace-nowrap">Login ID</th>
-                                                        <th className="px-4 py-3 text-center text-xs font-semibold text-gray-500 dark:text-[#9db4be] uppercase tracking-wider whitespace-nowrap hidden lg:table-cell">Mobile</th>
-                                                        <th className="px-4 py-3 text-center text-xs font-semibold text-gray-500 dark:text-[#9db4be] uppercase tracking-wider whitespace-nowrap hidden md:table-cell">Email</th>
-                                                        <th className="px-4 py-3 text-center text-xs font-semibold text-gray-500 dark:text-[#9db4be] uppercase tracking-wider whitespace-nowrap hidden md:table-cell">Reg. Date</th>
+                                                        <th className="px-4 py-3 text-center text-xs font-semibold text-gray-500 dark:text-[#9db4be] uppercase tracking-wider whitespace-nowrap">Mobile</th>
+                                                        <th className="px-4 py-3 text-center text-xs font-semibold text-gray-500 dark:text-[#9db4be] uppercase tracking-wider whitespace-nowrap">Email</th>
+                                                        <th className="px-4 py-3 text-center text-xs font-semibold text-gray-500 dark:text-[#9db4be] uppercase tracking-wider whitespace-nowrap">Reg. Date</th>
                                                         <th className="px-4 py-3 text-center text-xs font-semibold text-gray-500 dark:text-[#9db4be] uppercase tracking-wider whitespace-nowrap">Package</th>
-                                                        <th className="px-4 py-3 text-center text-xs font-semibold text-gray-500 dark:text-[#9db4be] uppercase tracking-wider whitespace-nowrap hidden md:table-cell">Topup Date</th>
-                                                        <th className="px-4 py-3 text-center text-xs font-semibold text-gray-500 dark:text-[#9db4be] uppercase tracking-wider whitespace-nowrap hidden md:table-cell">Team Business</th>
+                                                        <th className="px-4 py-3 text-center text-xs font-semibold text-gray-500 dark:text-[#9db4be] uppercase tracking-wider whitespace-nowrap">Topup Date</th>
+                                                        <th className="px-4 py-3 text-center text-xs font-semibold text-gray-500 dark:text-[#9db4be] uppercase tracking-wider whitespace-nowrap">Team Business</th>
 
                                                     </tr>
                                                 </thead>
@@ -358,22 +358,22 @@ const TeamReferral = () => {
                                                                 <td className="px-4 py-3 text-center text-gray-500 dark:text-[#9db4be] whitespace-nowrap">
                                                                     {member.loginid || member.id}
                                                                 </td>
-                                                                <td className="px-4 py-3 text-center text-gray-500 dark:text-[#9db4be] whitespace-nowrap hidden lg:table-cell">
+                                                                <td className="px-4 py-3 text-center text-gray-500 dark:text-[#9db4be] whitespace-nowrap">
                                                                     {member.mobile || "N/A"}
                                                                 </td>
-                                                                <td className="px-4 py-3 text-center text-gray-500 dark:text-[#9db4be] whitespace-nowrap hidden md:table-cell">
+                                                                <td className="px-4 py-3 text-center text-gray-500 dark:text-[#9db4be] whitespace-nowrap">
                                                                     {member.email || "N/A"}
                                                                 </td>
-                                                                <td className="px-4 py-3 text-center text-gray-500 dark:text-[#9db4be] whitespace-nowrap hidden md:table-cell">
+                                                                <td className="px-4 py-3 text-center text-gray-500 dark:text-[#9db4be] whitespace-nowrap">
                                                                     {member.regDate || "Null"}
                                                                 </td>
                                                                 <td className="px-4 py-3 text-center text-gray-500 dark:text-[#9db4be] whitespace-nowrap">
                                                                     ${member.package ? Number(member.package).toFixed(3) : "0.000"}
                                                                 </td>
-                                                                <td className="px-4 py-3 text-center text-gray-500 dark:text-[#9db4be] whitespace-nowrap hidden md:table-cell">
+                                                                <td className="px-4 py-3 text-center text-gray-500 dark:text-[#9db4be] whitespace-nowrap">
                                                                     {member.topupDate || "Null"}
                                                                 </td>
-                                                                <td className="px-4 py-3 text-center text-gray-500 dark:text-[#9db4be] whitespace-nowrap hidden md:table-cell">
+                                                                <td className="px-4 py-3 text-center text-gray-500 dark:text-[#9db4be] whitespace-nowrap">
                                                                     ${member.teambusiness || "0"}
                                                                 </td>
                                                                
