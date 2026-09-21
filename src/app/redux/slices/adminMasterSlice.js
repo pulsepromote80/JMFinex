@@ -11,7 +11,7 @@ import {
 } from "@/app/api/auth";
 
 const API_ENDPOINTS = {
-  CHANGE_ADMIN_PASSWORD: "/AdminMaster/chanegAdminPassword",
+  CHANGE_ADMIN_PASSWORD: "/Authentication/changePasswordAdminUser",
   USERNAME_BY_LOGINID: "/AdminMaster/userNameByLoginIdAdmin",
   BLOCK_USER_BY_ADMIN: "/AdminMaster/blockUserByAdmin",
   CHANGE_ADMIN_SPONSOR_ID: "/AdminMaster/chanegAdminSponsorID",
@@ -108,7 +108,7 @@ export const LvlOpen = createAsyncThunk(
   "adminMaster/LvlOpen",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await postRequestWithData(
+      const response = await postRequestWithToken(
         API_ENDPOINTS.UPDATE_ADMIN_LVL_OPEN,
         data,
       );
