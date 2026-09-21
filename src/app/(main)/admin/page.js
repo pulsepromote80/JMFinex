@@ -523,10 +523,10 @@ export default function AdminDashboard() {
                           <p className="text-sm font-bold text-slate-700 dark:text-slate-200 truncate leading-tight">
                             {activity.user}
                           </p>
-                          <p className="text-[11px] text-slate-400 truncate mt-0.5">{activity.action}</p>
+
                         </div>
-                        <span className="text-[10px] text-slate-400 bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded-lg font-semibold whitespace-nowrap flex-shrink-0">
-                          {activity.time}
+                        <span className="text-[10px] text-slate-400 bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded-lg font-bold whitespace-nowrap flex-shrink-0">
+                          {activity.action}
                         </span>
                       </div>
                     ))
@@ -549,7 +549,7 @@ export default function AdminDashboard() {
           </>
         )}
 
-     
+
 
       </div>
     </div>
