@@ -15,9 +15,9 @@ const ChangePassword = () => {
   const { loading, error, ChangePasswordData } = useSelector((state) => state.adminMaster);
 
   const [formData, setFormData] = useState({
-    username: '',
+    userId: '',
     oldPassword: '',
-    newPassword: ''
+    newPass: ''
   });
 
   const [errors, setErrors] = useState({});
@@ -27,10 +27,10 @@ const ChangePassword = () => {
   // Validate form fields
   const validateForm = () => {
     const newErrors = {};
-    if (!formData.username.trim()) {
-      newErrors.username = 'Username is required';
-    } else if (!/^[a-zA-Z0-9_]+$/.test(formData.username)) {
-      newErrors.username = 'Username can only contain letters, numbers, and underscores';
+    if (!formData.userId.trim()) {
+      newErrors.userId = 'User ID is required';
+    } else if (!/^[a-zA-Z0-9_]+$/.test(formData.userId)) {
+      newErrors.userId = 'User ID can only contain letters, numbers, and underscores';
     }
 
     const oldPasswordError = isValidPassword(formData.oldPassword);
@@ -38,11 +38,11 @@ const ChangePassword = () => {
       newErrors.oldPassword = oldPasswordError;
     }
 
-    const newPasswordError = isValidPassword(formData.newPassword);
+    const newPasswordError = isValidPassword(formData.newPass);
     if (newPasswordError) {
-      newErrors.newPassword = newPasswordError;
-    } else if (formData.newPassword === formData.oldPassword) {
-      newErrors.newPassword = 'New password must be different from old password';
+      newErrors.newPass = newPasswordError;
+    } else if (formData.newPass === formData.oldPassword) {
+      newErrors.newPass = 'New password must be different from old password';
     }
 
     setErrors(newErrors);
@@ -72,19 +72,27 @@ const ChangePassword = () => {
     }
 
     try {
-      const result = await dispatch(ChangePasswordAdminMaster(formData)).unwrap();
+      // Transform payload to match API expectations with PascalCase
+      const apiPayload = {
+        UserId: formData.userId,
+        OldPassword: formData.oldPassword,
+        NewPass: formData.newPass
+      };
+
+      const result = await dispatch(ChangePasswordAdminMaster(apiPayload)).unwrap();
       if (result && result.statusCode === 200) {
         toast.success(result.message || 'Password Updated Successfully');
         setFormData({
-          username: '',
+          userId: '',
           oldPassword: '',
-          newPassword: ''
+          newPass: ''
         });
       } else if (result.statusCode === 409) {
         toast.error(result.message);
       }
     } catch (error) {
       console.error('Password change failed:', error);
+      toast.error(error.message || 'Password change failed. Please try again.');
     }
   };
 
@@ -124,34 +132,34 @@ const ChangePassword = () => {
             )}
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              {/* Username Field */}
+              {/* User ID Field */}
               <div>
-                <label htmlFor="username" className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                <label htmlFor="userId" className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                   <FaUser className="inline mr-2 text-emerald-500" />
-                  Username <span className="text-red-500">*</span>
+                  User ID <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <FaUser className="h-5 w-5 text-gray-400" />
                   </div>
                   <input
-                    id="username"
-                    name="username"
+                    id="userId"
+                    name="userId"
                     type="text"
-                    value={formData.username}
+                    value={formData.userId}
                     onChange={handleChange}
-                    placeholder="Enter admin username"
+                    placeholder="Enter user ID"
                     className={`w-full pl-10 pr-4 py-2.5 rounded-xl border-2 bg-gray-50 dark:bg-gray-900/50 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all duration-200
-                      ${errors.username 
+                      ${errors.userId 
                         ? 'border-red-500 focus:border-red-500' 
                         : 'border-gray-200 dark:border-gray-700 focus:border-emerald-500'
                       }`}
                   />
                 </div>
-                {errors.username && (
+                {errors.userId && (
                   <p className="mt-2 text-sm text-red-500 flex items-center gap-1">
                     <FaCheckCircle className="text-xs" />
-                    {errors.username}
+                    {errors.userId}
                   </p>
                 )}
               </div>
@@ -199,7 +207,7 @@ const ChangePassword = () => {
 
             {/* New Password Field */}
             <div>
-              <label htmlFor="newPassword" className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+              <label htmlFor="newPass" className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                 <FaKey className="inline mr-2 text-emerald-500" />
                 New Password <span className="text-red-500">*</span>
               </label>
@@ -208,14 +216,14 @@ const ChangePassword = () => {
                   <FaKey className="h-5 w-5 text-gray-400" />
                 </div>
                 <input
-                  id="newPassword"
-                  name="newPassword"
+                  id="newPass"
+                  name="newPass"
                   type={showNewPassword ? 'text' : 'password'}
-                  value={formData.newPassword}
+                  value={formData.newPass}
                   onChange={handleChange}
                   placeholder="Enter new password"
                   className={`w-full pl-10 pr-10 py-2.5 rounded-xl border-2 bg-gray-50 dark:bg-gray-900/50 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all duration-200
-                    ${errors.newPassword 
+                    ${errors.newPass 
                       ? 'border-red-500 focus:border-red-500' 
                       : 'border-gray-200 dark:border-gray-700 focus:border-emerald-500'
                     }`}
@@ -232,8 +240,8 @@ const ChangePassword = () => {
                   )}
                 </button>
               </div>
-              {errors.newPassword && (
-                <p className="mt-2 text-sm text-red-500">{errors.newPassword}</p>
+              {errors.newPass && (
+                <p className="mt-2 text-sm text-red-500">{errors.newPass}</p>
               )}
             </div>
 
