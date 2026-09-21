@@ -271,7 +271,7 @@ export default function InstantTransfer() {
                     onChange={e => setWalletType(e.target.value)}
                   >
                     <option value="">Select Wallet</option>
-                    <option value="income">Income Wallet</option>
+                    <option value="income">Bonus Wallet</option>
                     <option value="trade">Trade Wallet</option>
                   </select>
                 </div>

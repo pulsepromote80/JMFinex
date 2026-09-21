@@ -60,10 +60,10 @@ export default function MeMenu() {
     window.location.replace('/ad-crm');
   }
 
-  const menuItems = [
-    { icon: RiAccountPinCircleLine, label: 'Profile', onClick: () => router.push('/admin/Admin-profile') },
+  // const menuItems = [
+  //   // { icon: RiAccountPinCircleLine, label: 'Profile', onClick: () => router.push('/admin/Admin-profile') },
 
-  ];
+  // ];
 
   return (
     <div className="relative" ref={menuRef}>
@@ -99,7 +99,7 @@ export default function MeMenu() {
           </div>
 
           {/* Menu Items */}
-          <div className="py-1">
+          {/* <div className="py-1">
             {menuItems.map((item, index) => (
               <button
                 key={index}
@@ -113,10 +113,10 @@ export default function MeMenu() {
                 {item.label}
               </button>
             ))}
-          </div>
+          </div> */}
 
           {/* Divider */}
-          <div className="border-t border-gray-200 dark:border-gray-700 my-1"></div>
+          {/* <div className="border-t border-gray-200 dark:border-gray-700 my-1"></div> */}
 
           {/* Logout */}
           <button

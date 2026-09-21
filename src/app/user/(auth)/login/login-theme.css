@@ -6,7 +6,7 @@
 .login-theme {
   @apply !text-[#eef3f8];
   background-color: #04060b !important;
-  background-image: linear-gradient(rgba(4, 6, 11, 0.86), rgba(4, 6, 11, 0.94)), url("/login-bg.png") !important;
+  background-image: linear-gradient(rgba(4, 6, 11, 0.86), rgba(4, 6, 11, 0.94)), url("/bg.jpg") !important;
   background-size: cover !important;
   background-position: center !important;
   background-repeat: no-repeat !important;

@@ -11,6 +11,7 @@ export default function AllSection() {
   const [aiSignalConfidence, setAiSignalConfidence] = useState(87.3);
   const [selectedSymbol, setSelectedSymbol] = useState("TVC:GOLD");
   const [selectedSymbolName, setSelectedSymbolName] = useState("GOLD / USD");
+  const [pageLoading, setPageLoading] = useState(true);
 
   const navItems = ["about", "services", "platform", "technology", "Education", "vision", "faq"];
 
@@ -60,9 +61,56 @@ export default function AllSection() {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setPageLoading(false);
+    }, 100);
+    return () => clearTimeout(timer);
+  }, []);
 
 
 
+
+
+  if (pageLoading) {
+    return (
+      <div className="fixed inset-0 z-[9999] m-0 p-0 flex items-center justify-center bg-[#040d22]">
+        <div className="text-center">
+          <div className="relative mx-auto mb-5 flex h-[90px] w-[90px] items-center justify-center">
+            <div className="absolute inset-0 rounded-full border border-[rgba(86,166,255,0.20)] shadow-[inset_0_0_14px_rgba(86,166,255,0.08)]" />
+
+            <div className="absolute inset-[8px] rounded-full border-[2px] border-transparent border-t-[#5dc8ff] border-r-[#7ea6ff] animate-[spin_1.6s_linear_infinite] shadow-[0_0_14px_rgba(93,200,255,0.22)]" />
+
+            <div className="absolute inset-[18px] rounded-full border-[2px] border-transparent border-b-[#d4a633] border-l-[#5aaef7] animate-[spinReverse_1.8s_linear_infinite] shadow-[0_0_12px_rgba(212,166,51,0.22)]" />
+
+            <div className="absolute left-1/2 top-[18px] h-[9px] w-[9px] -translate-x-1/2 rounded-full bg-[linear-gradient(135deg,#f8dc85_0%,#d4a633_100%)] shadow-[0_0_18px_rgba(248,220,133,0.85)]" />
+          </div>
+
+          <div className="text-[12px] font-bold tracking-[0.28rem] text-[#9ab7ff] uppercase drop-shadow-[0_0_12px_rgba(126,160,255,0.38)]">
+            LOADING
+          </div>
+
+          <div className="mt-3 flex justify-center gap-2">
+            <div className="h-2 w-2 animate-[dotPulse_1.2s_ease-in-out_0s_infinite] rounded-full bg-[#60c5ff] shadow-[0_0_10px_rgba(96,197,255,0.8)]"></div>
+            <div className="h-2 w-2 animate-[dotPulse_1.2s_ease-in-out_0.18s_infinite] rounded-full bg-[#7aaeff] shadow-[0_0_10px_rgba(122,174,255,0.8)]"></div>
+            <div className="h-2 w-2 animate-[dotPulse_1.2s_ease-in-out_0.36s_infinite] rounded-full bg-[#d4a633] shadow-[0_0_10px_rgba(212,166,51,0.8)]"></div>
+          </div>
+        </div>
+        <style jsx global>{`
+          @keyframes spin {
+            to { transform: rotate(360deg); }
+          }
+          @keyframes spinReverse {
+            to { transform: rotate(-360deg); }
+          }
+          @keyframes dotPulse {
+            0%, 100% { transform: translateY(0); opacity: 0.5; }
+            50% { transform: translateY(-4px); opacity: 1; }
+          }
+        `}</style>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -711,7 +759,10 @@ export default function AllSection() {
           </div>
           <div className="flex justify-between items-center flex-wrap gap-4 border-t border-[rgba(120,160,220,0.16)] pt-[26px] mt-[30px]">
             <p className="text-[0.78rem] text-[#5D6B85]">© 2026 JMFinex. All rights reserved.</p>
-            <p className="text-[0.78rem] text-[#5D6B85]">Designed as a technology & platform experience.</p>
+            <div className="flex gap-4">
+              <a href="/user/termcondition" className="text-[0.78rem] text-[#5D6B85] hover:text-[#F0B429] transition-colors duration-250">Terms & Conditions</a>
+              <a href="/user/privacy" className="text-[0.78rem] text-[#5D6B85] hover:text-[#F0B429] transition-colors duration-250">Privacy Policy</a>
+            </div>
           </div>
         </div>
       </footer>

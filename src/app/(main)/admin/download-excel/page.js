@@ -20,8 +20,8 @@ const DownloadExcel = () => {
     { value: 'AllMember', label: 'All Member', icon: FaUsers, color: 'emerald' },
     { value: 'ActiveIds', label: 'Active IDs', icon: FaChartBar, color: 'blue' },
     { value: 'WalletReport', label: 'Wallet Report', icon: FaWallet, color: 'purple' },
-    { value: 'IncomeWallet', label: 'Income Wallet', icon: FaMoneyBillWave, color: 'green' },
-    { value: 'DepositWallet', label: 'Deposit Wallet', icon: FaWallet, color: 'orange' },
+    { value: 'IncomeWallet', label: 'Bonus Wallet', icon: FaMoneyBillWave, color: 'green' },
+    { value: 'DepositWallet', label: 'USDT Wallet', icon: FaWallet, color: 'orange' },
     { value: 'Withdrawal', label: 'Withdrawal', icon: FaHistory, color: 'red' },
     { value: 'Deposit', label: 'Deposit', icon: FaMoneyBillWave, color: 'teal' },
   ];
