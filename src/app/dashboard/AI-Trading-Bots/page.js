@@ -385,7 +385,7 @@ function useLiveMarket() {
    BOT MAPPING CONFIG
 ========================= */
 const botConfig = {
-  "GOLD RUSH AI BOT": {
+  "STP-1": {
     subtitle: "Gold Trading Strategy",
     icon: "🪙",
     iconBg: "bg-yellow-100 dark:bg-[#422006]",
@@ -401,7 +401,7 @@ const botConfig = {
     market: "Commodities",
     myfxbookLink: "https://www.myfxbook.com/members/FXEAMASTER/gold-rush/9875023",
   },
-  "BEETLE EA BOT": {
+  "STP-2": {
     subtitle: "Scalping Strategy",
     icon: "🪲",
     iconBg: "bg-blue-100 dark:bg-[#1e3a5f]",
@@ -417,7 +417,7 @@ const botConfig = {
     market: "Forex",
     myfxbookLink: "https://www.myfxbook.com/members/SonicExperts/sonic-ai/12076857",
   },
-  "SEAGULL EA BOT": {
+  "STP-3": {
     subtitle: "Trend Following Strategy",
     icon: "🕊️",
     iconBg: "bg-purple-100 dark:bg-[#2e1065]",
@@ -433,125 +433,11 @@ const botConfig = {
     market: "Forex",
     myfxbookLink: "https://www.myfxbook.com/members/SonicExperts/sonic-ai/12076857",
   },
-  "EXPERTSCOPY BOT": {
-    subtitle: "Copy Trading Strategy",
-    icon: "📋",
-    iconBg: "bg-orange-100 dark:bg-[#431407]",
-    symbols: ["EUR/USD"],
-    chartColor: "#f97316",
-    rsi: "45.3",
-    macd: "Bearish",
-    trend: "Sideways",
-    signal: "BUY",
-    signalSymbol: "EUR/USD",
-    confidence: "64%",
-    timeframe: "1H",
-    market: "Forex",
-    myfxbookLink: "https://www.myfxbook.com/lv/members/pg_forexoffecial/phantom-bot/12073391",
-  },
-  "PIP SNIPER AI BOT": {
-    subtitle: "Breakout Strategy",
-    icon: "🎯",
-    iconBg: "bg-green-100 dark:bg-[#14532d]",
-    symbols: ["EUR/USD"],
-    chartColor: "#22c55e",
-    rsi: "65.1",
-    macd: "Bullish",
-    trend: "Uptrend",
-    signal: "BUY",
-    signalSymbol: "EUR/USD",
-    confidence: "79%",
-    timeframe: "15M",
-    market: "Forex",
-    risk: "Medium",
-    myfxbookLink: "https://www.myfxbook.com/members/MT4Sniper/pip-sniper/9468462",
-  },
-  // ===== Backup names =====
-  "SONIC SCALPER AI": {
-    subtitle: "Scalping Strategy",
-    icon: "🤖",
-    iconBg: "bg-blue-100 dark:bg-[#1e3a5f]",
-    symbols: ["EUR/USD"],
-    chartColor: "#2563eb",
-    rsi: "62.4",
-    macd: "Bullish",
-    trend: "Uptrend",
-    signal: "BUY",
-    signalSymbol: "EUR/USD",
-    confidence: "82%",
-    timeframe: "5M",
-    market: "Forex",
-    myfxbookLink: "https://www.myfxbook.com/members/SonicExperts/sonic-ai/12076857",
-  },
-  "Revolut AI": {
-    subtitle: "Trend Following Strategy",
-    icon: "🧠",
-    iconBg: "bg-purple-100 dark:bg-[#2e1065]",
-    symbols: ["USD/JPY"],
-    chartColor: "#9333ea",
-    rsi: "58.7",
-    macd: "Bullish",
-    trend: "Uptrend",
-    signal: "BUY",
-    signalSymbol: "USD/JPY",
-    confidence: "76%",
-    timeframe: "15M",
-    market: "Forex",
-    myfxbookLink: "https://www.myfxbook.com/members/SonicExperts/sonic-ai/12076857",
-  },
-  "Phantom Stealth AI": {
-    subtitle: "Grid Trading Strategy",
-    icon: "🥷",
-    iconBg: "bg-orange-100 dark:bg-[#431407]",
-    symbols: ["GBP/USD"],
-    chartColor: "#f97316",
-    rsi: "45.3",
-    macd: "Bearish",
-    trend: "Sideways",
-    signal: "BUY",
-    signalSymbol: "GBP/USD",
-    confidence: "64%",
-    timeframe: "1H",
-    market: "Forex",
-    myfxbookLink: "https://www.myfxbook.com/lv/members/pg_forexoffecial/phantom-bot/12073391",
-  },
-  "Pip Sniper AI": {
-    subtitle: "Breakout Strategy",
-    icon: "🎯",
-    iconBg: "bg-green-100 dark:bg-[#14532d]",
-    symbols: ["EUR/USD"],
-    chartColor: "#22c55e",
-    rsi: "65.1",
-    macd: "Bullish",
-    trend: "Uptrend",
-    signal: "BUY",
-    signalSymbol: "EUR/USD",
-    confidence: "79%",
-    timeframe: "15M",
-    market: "Forex",
-    risk: "Medium",
-    myfxbookLink: "https://www.myfxbook.com/members/MT4Sniper/pip-sniper/9468462",
-  },
-  "Gold Rush AI": {
-    subtitle: "Gold Trading Strategy",
-    icon: "🪙",
-    iconBg: "bg-yellow-100 dark:bg-[#422006]",
-    symbols: ["XAU/USD"],
-    chartColor: "#eab308",
-    rsi: "53.6",
-    macd: "Bearish",
-    trend: "Sideways",
-    signal: "BUY",
-    signalSymbol: "XAU/USD",
-    confidence: "68%",
-    timeframe: "15M",
-    market: "Commodities",
-    myfxbookLink: "https://www.myfxbook.com/members/FXEAMASTER/gold-rush/9875023",
-  },
+  
 };
 
 const defaultConfig = {
-  subtitle: "AI Trading Strategy",
+  subtitle: "SP-1",
   icon: "🤖",
   iconBg: "bg-blue-100 dark:bg-[#1e3a5f]",
   symbols: ["EUR/USD", "GBP/USD"],
@@ -584,8 +470,6 @@ const getBotConfig = (productName) => {
     const cleanKey = key.replace(/AI|BOT|STRATEGY|TRADING/gi, "").trim().toUpperCase();
     if (cleanName === cleanKey) return botConfig[key];
   }
-  console.log("❌ No match found for:", searchName);
-  console.log("Available keys:", Object.keys(botConfig));
   return defaultConfig;
 };
 
