@@ -92,9 +92,9 @@ export default function AdminDashboard() {
   const apiData = getAPIData();
   const fmt = (val) => Number(val ?? 0).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 3 });
   const recentActivity = [
-    { id: 1, user: 'Today ROI', action: `$${apiData?.todayROI}`, time: '2 min ago', type: 'conversation' },
-    { id: 2, user: 'Today Direct Income', action: `$${apiData?.TodayDirectIncome}`, time: '5 min ago', type: 'message' },
-    { id: 3, user: 'Today Tier Reward', action: `$${apiData?.TodayTierReward}`, time: '15 min ago', type: 'onboarding' },
+    { id: 1, user: 'Today Trade Profit', action: `$${apiData?.todayROI}`, time: '2 min ago', type: 'conversation' },
+    { id: 2, user: 'Today  Referral Bonus', action: `$${apiData?.TodayDirectIncome}`, time: '5 min ago', type: 'message' },
+    { id: 3, user: 'Today Level Bonus', action: `$${apiData?.TodayTierReward}`, time: '15 min ago', type: 'onboarding' },
     // { id: 4, user: 'Sarah Wilson', action: 'Updated profile', time: '1 hour ago', type: 'profile' },
     // { id: 5, user: 'Tom Brown', action: 'Changed settings', time: '2 hours ago', type: 'settings' },
   ];
@@ -180,14 +180,14 @@ export default function AdminDashboard() {
       label: 'Total Balance',
       value: `$${fmt(apiData?.totalROIWallet)}`,
       gradient: 'from-teal-400 via-cyan-500 to-sky-500',
-      chipText: 'ROI Trade Wallet',
+      chipText: 'Trade Wallet',
     },
   ];
 
   /* ── Bottom 5 stat cards ── */
   const bottomStats = [
-    { label: 'ROI Withdrawal', value: `$${fmt(apiData?.ROIWithdrawal)}`, pct: 62, barCol: 'bg-blue-500', dotCol: 'bg-blue-500', icon: RiBankLine },
-    { label: 'Total Working Withdrawal', value: `$${fmt(apiData?.TotalIncomeWithdrawal)}`, pct: 48, barCol: 'bg-amber-500', dotCol: 'bg-amber-500', icon: RiExchangeLine },
+    { label: 'Trade Withdrawal', value: `$${fmt(apiData?.ROIWithdrawal)}`, pct: 62, barCol: 'bg-blue-500', dotCol: 'bg-blue-500', icon: RiBankLine },
+    { label: 'Total Bonus Withdrawal', value: `$${fmt(apiData?.TotalIncomeWithdrawal)}`, pct: 48, barCol: 'bg-amber-500', dotCol: 'bg-amber-500', icon: RiExchangeLine },
     { label: 'USDT Deposit', value: `$${fmt(apiData?.USDTDeposit)}`, pct: 75, barCol: 'bg-violet-500', dotCol: 'bg-violet-500', icon: RiLineChartLine },
     { label: 'Fund Deposit By Admin', value: `$${fmt(apiData?.FundDepositBySystem)}`, pct: 55, barCol: 'bg-rose-500', dotCol: 'bg-rose-500', icon: RiMoneyDollarCircleLine },
     { label: 'FUND TRANSFER', value: `$${fmt(apiData?.FUNDTRANSFER)}`, pct: 68, barCol: 'bg-teal-500', dotCol: 'bg-teal-500', icon: RiBriefcaseLine },

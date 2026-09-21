@@ -320,8 +320,8 @@ const Statement = () => {
                   className="w-full px-4 py-2.5 rounded-xl border-2 border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50 text-gray-900 dark:text-white focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all duration-200 cursor-pointer"
                 >
                   <option value="">- Select Wallet -</option>
-                  <option value="1">Income Wallet</option>
-                  <option value="2">Deposit Wallet</option>
+                  <option value="1">Bonus Wallet</option>
+                  <option value="2">USDT Wallet</option>
                   <option value="3">Trading Wallet</option>
                   <option value="4">Transaction Wallet</option>
                 </select>

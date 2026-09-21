@@ -29,51 +29,41 @@ export default function WelcomePage() {
           href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         />
         <link rel="stylesheet" href="/assets/css/login.css" />
-        <style jsx>{`
-          .loader-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #060918 0%, #0a0f2a 100%);
-            z-index: 9999;
-          }
-          .loader-spinner {
-            width: 60px;
-            height: 60px;
-            border: 3px solid rgba(139, 92, 246, 0.2);
-            border-top: 3px solid #8b5cf6;
-            border-right: 3px solid #22d3ee;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-          }
-          @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-          }
-          .loader-text {
-            margin-top: 20px;
-            color: #8b5cf6;
-            font-family: monospace;
-            font-size: 14px;
-            letter-spacing: 2px;
-            animation: pulse 1.5s ease-in-out infinite;
-          }
-          @keyframes pulse {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
-          }
-        `}</style>
-        <div className="loader-container">
-          <div style={{ textAlign: "center" }}>
-            <div className="loader-spinner"></div>
-            <div className="loader-text">LOADING</div>
+        <div className="fixed inset-0 z-[9999] m-0 p-0 flex items-center justify-center bg-[#040d22]">
+          <div className="text-center">
+            <div className="relative mx-auto mb-5 flex h-[90px] w-[90px] items-center justify-center">
+              <div className="absolute inset-0 rounded-full border border-[rgba(86,166,255,0.20)] shadow-[inset_0_0_14px_rgba(86,166,255,0.08)]" />
+
+              <div className="absolute inset-[8px] rounded-full border-[2px] border-transparent border-t-[#5dc8ff] border-r-[#7ea6ff] animate-[spin_1.6s_linear_infinite] shadow-[0_0_14px_rgba(93,200,255,0.22)]" />
+
+              <div className="absolute inset-[18px] rounded-full border-[2px] border-transparent border-b-[#d4a633] border-l-[#5aaef7] animate-[spinReverse_1.8s_linear_infinite] shadow-[0_0_12px_rgba(212,166,51,0.22)]" />
+
+              <div className="absolute left-1/2 top-[18px] h-[9px] w-[9px] -translate-x-1/2 rounded-full bg-[linear-gradient(135deg,#f8dc85_0%,#d4a633_100%)] shadow-[0_0_18px_rgba(248,220,133,0.85)]" />
+            </div>
+
+            <div className="text-[12px] font-bold tracking-[0.28rem] text-[#9ab7ff] uppercase drop-shadow-[0_0_12px_rgba(126,160,255,0.38)]">
+              LOADING
+            </div>
+
+            <div className="mt-3 flex justify-center gap-2">
+              <div className="h-2 w-2 animate-[dotPulse_1.2s_ease-in-out_0s_infinite] rounded-full bg-[#60c5ff] shadow-[0_0_10px_rgba(96,197,255,0.8)]"></div>
+              <div className="h-2 w-2 animate-[dotPulse_1.2s_ease-in-out_0.18s_infinite] rounded-full bg-[#7aaeff] shadow-[0_0_10px_rgba(122,174,255,0.8)]"></div>
+              <div className="h-2 w-2 animate-[dotPulse_1.2s_ease-in-out_0.36s_infinite] rounded-full bg-[#d4a633] shadow-[0_0_10px_rgba(212,166,51,0.8)]"></div>
+            </div>
           </div>
         </div>
+        <style jsx global>{`
+          @keyframes spin {
+            to { transform: rotate(360deg); }
+          }
+          @keyframes spinReverse {
+            to { transform: rotate(-360deg); }
+          }
+          @keyframes dotPulse {
+            0%, 100% { transform: translateY(0); opacity: 0.5; }
+            50% { transform: translateY(-4px); opacity: 1; }
+          }
+        `}</style>
       </>
     );
   }

@@ -720,29 +720,7 @@ const EditUser = () => {
                   </div>
                 </div>
 
-                <div style={{ marginBottom: "24px" }}>
-                  <label style={{
-                    ...labelStyle,
-                    color: "#4a5568",
-                    fontSize: "12px",
-                    textTransform: "uppercase"
-                  }}>
-                    Auth Pass
-                  </label>
-                  <input
-                    type="text"
-                    readOnly
-                    style={{
-                      ...inputStyle,
-                      background: "#edf2f7",
-                      borderColor: "#e2e8f0",
-                      cursor: "not-allowed",
-                      color: "#4a5568"
-                    }}
-                    name="authPass"
-                    value={fields.authPass}
-                  />
-                </div>
+               
 
                 {/* Submit Button */}
                 <button

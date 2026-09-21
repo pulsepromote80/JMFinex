@@ -89,7 +89,7 @@ const ChangeSponser = () => {
 
     try {
       const result = await dispatch(
-        ChangeAdminSponser({ authLogin, sponsorAuthLogin, lvlopen }),
+        ChangeAdminSponser({ authLogin, sponsorAuthLogin }),
       )
       const payload = result.payload
       const statusCode =
@@ -230,25 +230,7 @@ const ChangeSponser = () => {
                   </div>
                 </div>
 
-                {/* Level Open Checkbox */}
-                <div className="mt-4 pt-3 border-t border-emerald-200 dark:border-gray-700">
-                  <label className="flex items-center gap-3 cursor-pointer group">
-                    <div className="relative">
-                      <input
-                        type="checkbox"
-                        checked={lvlopen === 1}
-                        onChange={(e) => setLvlopen(e.target.checked ? 1 : 0)}
-                        className="w-5 h-5 rounded border-2 border-gray-300 text-emerald-600 focus:ring-emerald-500 focus:ring-2 cursor-pointer"
-                      />
-                    </div>
-                    <span className="text-sm font-semibold text-gray-700 dark:text-gray-300 group-hover:text-emerald-600 transition-colors">
-                      Level Open
-                    </span>
-                    <span className="text-xs text-gray-500 dark:text-gray-400">
-                      (Enable this option to open sponsor level)
-                    </span>
-                  </label>
-                </div>
+               
               </div>
             )}
 
