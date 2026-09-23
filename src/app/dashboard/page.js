@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react"
 import { useTheme } from "next-themes"
 import {
-  Layers, Shield, Trophy, Rocket, Repeat, TrendingUp, UserPlus, Check, Crown, Gem, Moon, Sun, ArrowUpRight, CircleDollarSign,
+  Layers, Shield, Trophy, Rocket, Repeat, TrendingUp, UserPlus, Check, Crown, Gem, Moon, Sun, ArrowUpRight, CircleDollarSign, Clock,
 } from "lucide-react"
 import { Line } from "react-chartjs-2"
 import {
@@ -678,7 +678,7 @@ const visualPercent = Number(usedPercentage.toFixed(1));
         
 
           {/* ================= BOOSTER ================= */}
-          <Section title="Growth Booster" sub="Add up to 14% by hitting weekly direct targets in sequence." tagText="MAX +14% MONTHLY">
+          <Section title="Growth Booster" sub="Add up to 14% by hitting weekly direct targets in sequence." tagText={<><Clock size={16} className="inline mr-1" /><span className="text-sm">{`${data?.boosterleftDays} days left`}</span></>}>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               {dynamicBoosters.map((b) => {
                 const circ = 2 * Math.PI * 33
