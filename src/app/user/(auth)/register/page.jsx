@@ -127,10 +127,8 @@ function SignupContent() {
     password: "", phoneNo: "", countryId: "", captcha: "", referralId: "", otp: "", riskDisclosure: "",
   })
 
-  // ✅ Live password rule flags
   const pwdRules = useMemo(() => passwordRules(formData.password), [formData.password])
 
-  // ✅ Check if all required fields are filled → enable Send OTP button
   const isFormReadyForOtp = useMemo(() => {
     const { firstName, lastName, countryId, email, phoneNo, password, referralId } = formData
 
