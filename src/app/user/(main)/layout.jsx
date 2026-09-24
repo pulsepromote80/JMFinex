@@ -1,5 +1,7 @@
 import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./all-section.css";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -31,7 +33,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
       <body className="bg-void font-sans text-offwhite antialiased">
+        <Header />
         {children}
+        <Footer />
       </body>
     </html>
   );
