@@ -7,13 +7,10 @@ import TradingViewTicker from "./TradingViewTicker";
 import TradingViewHeatmap from "./TradingViewHeatMap";
 
 export default function AllSection() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [aiSignalConfidence, setAiSignalConfidence] = useState(87.3);
   const [selectedSymbol, setSelectedSymbol] = useState("TVC:GOLD");
   const [selectedSymbolName, setSelectedSymbolName] = useState("GOLD / USD");
   const [pageLoading, setPageLoading] = useState(true);
-
-  const navItems = ["about", "services", "platform", "technology", "Education", "vision", "faq"];
 
   const symbols = [
     { name: "GOLD / USD", symbol: "TVC:GOLD" },
@@ -37,18 +34,6 @@ export default function AllSection() {
     setSelectedSymbol(symbol);
     setSelectedSymbolName(name);
   };
-
-  useEffect(() => {
-    document.body.style.overflow = mobileMenuOpen ? "hidden" : "";
-    const closeOnEscape = (event) => {
-      if (event.key === "Escape") setMobileMenuOpen(false);
-    };
-    document.addEventListener("keydown", closeOnEscape);
-    return () => {
-      document.body.style.overflow = "";
-      document.removeEventListener("keydown", closeOnEscape);
-    };
-  }, [mobileMenuOpen]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -132,107 +117,6 @@ export default function AllSection() {
       <canvas id="particles" className="fixed inset-0 z-[1] pointer-events-none" />
 
       <div id="cursor-glow" className="fixed top-0 left-0 w-[520px] h-[520px] rounded-full pointer-events-none z-[2] opacity-0 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300 [background:radial-gradient(circle,rgba(59,158,255,0.12)_0%,rgba(59,158,255,0)_70%)]" />
-
-      {/* ============ HEADER ============ */}
-      <header id="siteHeader" className="fixed top-0 left-0 right-0 z-50 py-[18px] border-b border-transparent transition-[padding,background,border-color] duration-400">
-        <div className="max-w-[1240px] mx-auto px-8 max-[720px]:px-5 flex items-center justify-between">
-          <a href="#top" aria-label="JMFinex home" className="flex items-center gap-2.5 font-display text-[1.35rem] font-bold -tracking-[0.01em]">
-            <img src="/logo.png" alt="JMFinex Logo" className="w-[240px] max-w-full block" />
-          </a>
-
-          <nav className="hidden max-[900px]:!hidden [@media(min-width:901px)]:flex items-center gap-[38px]">
-            {navItems.map((id) => (
-              <a
-                key={id}
-                href={id.toLowerCase() === "education" ? "/user/course" : `#${id}`}
-                className="relative text-[0.88rem] font-medium text-[#8B98B0] transition-colors duration-250 hover:text-[#EEF2F8] after:content-[''] after:absolute after:left-0 after:-bottom-1.5 after:w-0 after:h-px after:[background:linear-gradient(90deg,#3B9EFF,#F0B429)] after:transition-[width] after:duration-350 hover:after:w-full capitalize"
-              >
-                {id === "faq" ? "FAQ" : id}
-              </a>
-            ))}
-          </nav>
-
-          <div className="hidden min-[901px]:flex items-center gap-3.5">
-            <a href="/user/register"
-              className="relative inline-flex items-center justify-center gap-2.5 rounded-full font-semibold text-[0.86rem] cursor-pointer border border-white/[0.22] bg-white/[0.02] overflow-hidden whitespace-nowrap py-[11px] px-6 text-[#EEF2F8] transition-transform duration-350 hover:border-[#F0B429] hover:bg-[#F0B429]/[0.14] hover:-translate-y-0.5"
-            >
-              <span className="relative z-[2]">Explore Platform</span>
-            </a>
-            <a href="/user/login"
-              className="group relative inline-flex items-center justify-center gap-2.5 rounded-full font-semibold text-[0.86rem] cursor-pointer border border-transparent overflow-hidden whitespace-nowrap py-[11px] px-6 text-[#0A0E1A] [background:linear-gradient(135deg,#F0B429_0%,#D4A017_100%)] transition-transform duration-350 hover:-translate-y-0.5 hover:[box-shadow:0_12px_32px_-8px_rgba(240,180,41,.55),0_0_24px_-4px_rgba(255,215,0,.4)] before:content-[''] before:absolute before:top-0 before:-left-[75%] before:w-1/2 before:h-full before:z-[1] before:[background:linear-gradient(115deg,transparent,rgba(255,240,200,0.6),transparent)] before:[transform:skewX(-20deg)] before:transition-[left] before:duration-700 hover:before:left-[130%]"
-            >
-              <span className="relative z-[2]">Get SignIn</span>
-            </a>
-          </div>
-
-          <div
-            className="min-[901px]:hidden flex flex-col gap-[5px] cursor-pointer z-[60] w-[26px]"
-            id="burger" aria-label="Open menu" aria-expanded={mobileMenuOpen} role="button" tabIndex={0}
-            onClick={() => setMobileMenuOpen((isOpen) => !isOpen)}
-            onKeyDown={(event) => {
-              if (event.key === "Enter" || event.key === " ") {
-                event.preventDefault();
-                setMobileMenuOpen((isOpen) => !isOpen);
-              }
-            }}
-          >
-            <span className={`h-0.5 w-full bg-[#EEF2F8] rounded-[2px] transition-transform duration-350 ${mobileMenuOpen ? "translate-y-[7px] rotate-45" : ""}`} />
-            <span className={`h-0.5 w-full bg-[#EEF2F8] rounded-[2px] transition-opacity duration-350 ${mobileMenuOpen ? "opacity-0" : "opacity-100"}`} />
-            <span className={`h-0.5 w-full bg-[#EEF2F8] rounded-[2px] transition-transform duration-350 ${mobileMenuOpen ? "-translate-y-[7px] -rotate-45" : ""}`} />
-          </div>
-        </div>
-      </header>
-
-      {/* ============ MOBILE MENU ============ */}
-      <div
-        className={`mobile-menu fixed inset-0 z-[55] flex flex-col items-center justify-center gap-[34px] [background:rgba(8,11,24,0.98)] backdrop-blur-[20px] transition-[opacity,transform,visibility] duration-400 ${mobileMenuOpen ? "opacity-100 visible translate-y-0" : "opacity-0 invisible -translate-y-3"}`}
-        id="mobileMenu"
-      >
-        <button
-          onClick={() => setMobileMenuOpen(false)}
-          className="absolute top-6 right-6 w-12 h-12 flex items-center justify-center text-white hover:text-[#F0B429] transition-colors duration-300 bg-white/5 rounded-full hover:bg-white/10"
-          aria-label="Close menu"
-          style={{ color: "#ffffff" }}
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
-
-        {/* {navItems.map((id) => (
-          <a
-            key={id}
-            href={`#${id}`}
-            onClick={() => setMobileMenuOpen(false)}
-            className={`mobile-menu-link font-display text-[1.6rem] transition-[opacity,transform] duration-500 capitalize ${mobileMenuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
-            style={{ color: "#ffffff" }}
-          >
-            {id === "faq" ? "FAQ" : id}
-          </a>
-        ))} */}
-        {navItems.map((id) => (
-          <a
-            key={id}
-            href={id.toLowerCase() === "academics" ? "/user/academic" : `#${id}`}
-            target={id.toLowerCase() === "academics" ? "_blank" : undefined}
-            rel={id.toLowerCase() === "academics" ? "noopener noreferrer" : undefined}
-            onClick={() => setMobileMenuOpen(false)}
-            className={`mobile-menu-link font-display text-[1.6rem] transition-[opacity,transform] duration-500 capitalize ${mobileMenuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
-            style={{ color: "#ffffff" }}
-          >
-            {id === "faq" ? "FAQ" : id}
-          </a>
-        ))}
-        <a
-          href="/user/login"
-          onClick={() => setMobileMenuOpen(false)}
-          className="mobile-menu-cta mt-2.5 relative inline-flex items-center justify-center gap-2.5 rounded-full font-semibold py-[15px] px-[30px] text-[0.94rem] [background:linear-gradient(135deg,#F0B429_0%,#D4A017_100%)]"
-          style={{ color: "#0A0E1A" }}
-        >
-          <span style={{ color: "#0A0E1A" }}>Get SignIn</span>
-        </a>
-      </div>
 
       {/* ============ MAIN ============ */}
       <main id="top">
@@ -708,64 +592,6 @@ export default function AllSection() {
 
        
       </main>
-
-      {/* FOOTER */}
-      <footer className="border-t border-[rgba(120,160,220,0.16)] py-[70px] pb-[30px] bg-[#070C17]">
-        <div className="max-w-[1240px] mx-auto px-8 max-[720px]:px-5">
-          <div className="grid gap-10 pb-[50px] [grid-template-columns:1.4fr_1fr_1fr_1fr] max-[820px]:!grid-cols-2 max-[520px]:!grid-cols-1">
-            <div>
-              <a href="#top" className="flex items-center gap-2.5 font-display text-[1.35rem] font-bold -tracking-[0.01em]">
-                <img src="/logo.png" alt="JMFinex Logo" className="w-[240px] max-w-full block" />
-              </a>
-              <p className="text-[#8B98B0] text-[0.86rem] leading-[1.6] mt-4 max-w-[280px]">
-                An AI-powered trading technology ecosystem for global forex and digital asset markets.
-              </p>
-              <div className="flex gap-3 mt-[22px]">
-                <a href="#" aria-label="X" className="w-9 h-9 rounded-full border border-[rgba(120,160,220,0.16)] flex items-center justify-center transition-[border-color,background] duration-300 hover:border-[#F0B429] hover:bg-[#F0B429]/[0.14]">
-                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-[15px] h-[15px] text-[#8B98B0]"><path d="M18.9 2H22l-7.6 8.7L23 22h-6.9l-5.4-6.9L4.5 22H1.4l8.2-9.4L1 2h7l4.9 6.4L18.9 2Z" /></svg>
-                </a>
-                <a href="#" aria-label="LinkedIn" className="w-9 h-9 rounded-full border border-[rgba(120,160,220,0.16)] flex items-center justify-center transition-[border-color,background] duration-300 hover:border-[#F0B429] hover:bg-[#F0B429]/[0.14]">
-                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-[15px] h-[15px] text-[#8B98B0]"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2 3.77-2 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.6c0-1.34-.02-3.06-1.87-3.06-1.87 0-2.16 1.46-2.16 2.96V21h-4V9Z" /></svg>
-                </a>
-                <a href="#" aria-label="Telegram" className="w-9 h-9 rounded-full border border-[rgba(120,160,220,0.16)] flex items-center justify-center transition-[border-color,background] duration-300 hover:border-[#F0B429] hover:bg-[#F0B429]/[0.14]">
-                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-[15px] h-[15px] text-[#8B98B0]"><path d="M21.9 3.5 2.6 11c-1 .4-1 1.7.1 2l4.7 1.5 1.8 5.6c.3.9 1.4 1.1 2 .4l2.6-2.7 4.8 3.6c.9.7 2.2.2 2.4-.9l3-16.4c.2-1.2-1-2.1-2.1-1.6Z" /></svg>
-                </a>
-              </div>
-            </div>
-            <div>
-              <h5 className="font-mono text-[0.72rem] tracking-[0.12em] uppercase text-[#5D6B85] mb-[18px]">Platform</h5>
-              {[["#why", "Why JMFinex"], ["#technology", "Technology"], ["#global", "Global Network"], ["#how", "How It Works"]].map(([href, label]) => (
-                <a key={label} href={href} className="block text-[#8B98B0] text-[0.88rem] mb-3 transition-colors duration-250 hover:text-[#F0B429]">{label}</a>
-              ))}
-            </div>
-            <div>
-              <h5 className="font-mono text-[0.72rem] tracking-[0.12em] uppercase text-[#5D6B85] mb-[18px]">Company</h5>
-              {[["#vision", "Vision"], ["#faq", "FAQ"], ["#", "Contact"], ["#", "Careers"]].map(([href, label], i) => (
-                <a key={label + i} href={href} className="block text-[#8B98B0] text-[0.88rem] mb-3 transition-colors duration-250 hover:text-[#F0B429]">{label}</a>
-              ))}
-            </div>
-            <div>
-              <h5 className="font-mono text-[0.72rem] tracking-[0.12em] uppercase text-[#5D6B85] mb-[18px]">Address</h5>
-              <p className="text-[#8B98B0] text-[0.88rem] leading-[1.6] mb-5">
-                <strong>Registered Office:</strong> 838, Castries, Rodney Court Building, Rodney Bay, St. Lucia
-              </p>
-              <p className="text-[#8B98B0] text-[0.88rem] leading-[1.6]">
-                <strong>Corporate Presence:</strong> United States &amp; St. Lucia
-              </p>
-            </div>
-          </div>
-          <div className="text-[0.78rem] text-[#5D6B85] leading-[1.6] max-w-[900px] mt-[26px] pt-[26px] border-t border-[rgba(120,160,220,0.16)]">
-            <strong className="text-[#8B98B0]">Risk Disclosure:</strong> Trading forex and digital assets involves substantial risk and may not be suitable for all users. Past performance is not indicative of future results, and no returns or outcomes are guaranteed. Figures and charts on this site are illustrative and for demonstration purposes only. Placeholder content — replace with verified regulatory and legal information before launch.
-          </div>
-          <div className="flex justify-between items-center flex-wrap gap-4 border-t border-[rgba(120,160,220,0.16)] pt-[26px] mt-[30px]">
-            <p className="text-[0.78rem] text-[#5D6B85]">© 2026 JMFinex. All rights reserved.</p>
-            <div className="flex gap-4">
-              <a href="/user/termcondition" className="text-[0.78rem] text-[#5D6B85] hover:text-[#F0B429] transition-colors duration-250">Terms & Conditions</a>
-              <a href="/user/privacy" className="text-[0.78rem] text-[#5D6B85] hover:text-[#F0B429] transition-colors duration-250">Privacy Policy</a>
-            </div>
-          </div>
-        </div>
-      </footer>
 
       <Script src="/script.js" strategy="afterInteractive" />
     </>
