@@ -3,6 +3,10 @@
 
 @source "../components/AllSection.jsx";
 
+#mxd-page-content {
+  padding-top: 120px;
+}
+
 #mxd-page-content .reveal {
   display: block;
   visibility: visible;
