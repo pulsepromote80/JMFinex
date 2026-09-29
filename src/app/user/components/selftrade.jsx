@@ -554,8 +554,41 @@ export default function SelfTradePage() {
         </div>
 
         <div className="relative p-4 pt-[16px] pb-[18px]">
-          <div className="relative h-[380px] overflow-hidden rounded-[14px] bg-[rgba(0,0,0,0.22)]">
+          <div className="relative h-[500px] overflow-hidden rounded-[14px] bg-[rgba(0,0,0,0.22)]">
             <TradingViewChart defaultSymbol="FX:USDCAD" interval="W" />
+          </div>
+          
+          {/* Forex Information Section */}
+          <div className="mt-6 rounded-[14px] border border-white/[0.07] bg-[#12141A] p-6">
+            <h3 className="mb-4 font-display text-xl font-semibold text-[#F2F3F6]">
+              Forex Trading Essentials
+            </h3>
+            <div className="grid gap-4 md:grid-cols-2">
+              <div className="rounded-lg bg-white/[0.03] p-4">
+                <h4 className="mb-2 font-semibold text-[#6FA0FF]">Major Currency Pairs</h4>
+                <p className="text-sm text-[#9BA3B0]">
+                  EUR/USD, GBP/USD, USD/JPY, and USD/CHF account for over 75% of all forex trading volume.
+                </p>
+              </div>
+              <div className="rounded-lg bg-white/[0.03] p-4">
+                <h4 className="mb-2 font-semibold text-[#6FA0FF]">Trading Sessions</h4>
+                <p className="text-sm text-[#9BA3B0]">
+                  London, New York, Tokyo, and Sydney sessions overlap to create the most active trading periods.
+                </p>
+              </div>
+              <div className="rounded-lg bg-white/[0.03] p-4">
+                <h4 className="mb-2 font-semibold text-[#6FA0FF]">Market Hours</h4>
+                <p className="text-sm text-[#9BA3B0]">
+                  Forex markets operate 24 hours a day, 5 days a week, from Sunday evening to Friday evening GMT.
+                </p>
+              </div>
+              <div className="rounded-lg bg-white/[0.03] p-4">
+                <h4 className="mb-2 font-semibold text-[#6FA0FF]">Leverage & Margin</h4>
+                <p className="text-sm text-[#9BA3B0]">
+                  Forex trading typically offers high leverage, allowing traders to control larger positions with smaller capital.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

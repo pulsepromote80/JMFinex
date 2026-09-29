@@ -1,16 +1,108 @@
 "use client";
 
-import Script from "next/script";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import TradingViewWidget from "./Tradeview";
 import TradingViewTicker from "./TradingViewTicker";
 import TradingViewHeatmap from "./TradingViewHeatMap";
 
+const card = "rounded-2xl border border-[rgba(120,160,220,0.16)] bg-[rgba(15,22,45,0.6)]";
+const grad = "bg-gradient-to-r from-[#3B9EFF] to-[#F0B429] bg-clip-text text-transparent";
+
+function useInView() {
+  const ref = useRef(null);
+  const [seen, setSeen] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) {
+        setSeen(true);
+        io.disconnect();
+      }
+    }, { threshold: 0.15 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  return [ref, seen];
+}
+
+// fade + slide up when scrolled into view
+function Reveal({ children, delay = 0, className = "" }) {
+  const [ref, seen] = useInView();
+  return (
+    <div ref={ref} style={{ transitionDelay: `${delay}ms` }} className={`rv transition-all duration-700 ease-out ${seen ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"} ${className}`}>
+      {children}
+    </div>
+  );
+}
+
+// number counts up when visible
+function Counter({ to, suffix = "", decimals = 0 }) {
+  const [ref, seen] = useInView();
+  const [val, setVal] = useState(0);
+  useEffect(() => {
+    if (!seen) return;
+    let raf;
+    const start = performance.now();
+    const tick = (now) => {
+      const p = Math.min((now - start) / 1600, 1);
+      setVal(to * (1 - Math.pow(1 - p, 3)));
+      if (p < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [seen, to]);
+  return <span ref={ref}>{val.toFixed(decimals)}{suffix}</span>;
+}
+
+// card with a spotlight that follows the mouse
+function Spot({ children, className = "" }) {
+  const onMove = (e) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    e.currentTarget.style.setProperty("--mx", `${e.clientX - r.left}px`);
+    e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`);
+  };
+  return (
+    <div onMouseMove={onMove} className={`group relative overflow-hidden ${className}`}>
+      <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 [background:radial-gradient(260px_circle_at_var(--mx,50%)_var(--my,50%),rgba(59,158,255,0.18),transparent_70%)]" />
+      <div className="relative">{children}</div>
+    </div>
+  );
+}
+
+function Heading({ kicker, title, text, center }) {
+  return (
+    <Reveal className={`mb-12 max-w-[640px] ${center ? "mx-auto text-center" : ""}`}>
+      <p className="mb-3 flex items-center gap-3 text-sm font-medium text-[#F0B429]">
+        <span className="h-px w-8 bg-gradient-to-r from-[#F0B429] to-transparent" />
+        {kicker}
+      </p>
+      <h2 className="text-[clamp(1.8rem,3.4vw,2.6rem)] font-semibold leading-[1.15] text-[#EEF2F8]">{title}</h2>
+      {text && <p className="mt-4 leading-[1.65] text-[#8B98B0]">{text}</p>}
+    </Reveal>
+  );
+}
+
 export default function AllSection() {
   const [aiSignalConfidence, setAiSignalConfidence] = useState(87.3);
   const [selectedSymbol, setSelectedSymbol] = useState("TVC:GOLD");
-  const [selectedSymbolName, setSelectedSymbolName] = useState("GOLD / USD");
   const [pageLoading, setPageLoading] = useState(true);
+  const [tab, setTab] = useState(0);
+  const [faqOpen, setFaqOpen] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const onScroll = () => {
+      setScrolled(window.scrollY > 20);
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      setProgress(h > 0 ? window.scrollY / h : 0);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const symbols = [
     { name: "GOLD / USD", symbol: "TVC:GOLD" },
@@ -30,570 +122,478 @@ export default function AllSection() {
     { name: "ATOM / USD", symbol: "BINANCE:ATOMUSDT" },
   ];
 
-  const handleSymbolChange = (symbol, name) => {
-    setSelectedSymbol(symbol);
-    setSelectedSymbolName(name);
-  };
-
   useEffect(() => {
     const interval = setInterval(() => {
       setAiSignalConfidence((prev) => {
-        const variation = (Math.random() - 0.5) * 2;
-        const newValue = Math.max(75, Math.min(95, prev + variation));
-        return Math.round(newValue * 10) / 10;
+        const v = Math.max(75, Math.min(95, prev + (Math.random() - 0.5) * 2));
+        return Math.round(v * 10) / 10;
       });
     }, 3000);
     return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setPageLoading(false);
-    }, 100);
-    return () => clearTimeout(timer);
+    const t = setTimeout(() => setPageLoading(false), 100);
+    return () => clearTimeout(t);
   }, []);
-
-
-
-
 
   if (pageLoading) {
     return (
-      <div className="fixed inset-0 z-[9999] m-0 p-0 flex items-center justify-center bg-[#040d22]">
+       <div className="fixed inset-0 z-[9999] m-0 p-0 flex items-center justify-center bg-[#040d22]">
         <div className="text-center">
-          <div className="relative mx-auto mb-5 flex h-[90px] w-[90px] items-center justify-center">
-            <div className="absolute inset-0 rounded-full border border-[rgba(86,166,255,0.20)] shadow-[inset_0_0_14px_rgba(86,166,255,0.08)]" />
+         <div className="relative mx-auto mb-5 flex h-[90px] w-[90px] items-center justify-center">
+           <div className="absolute inset-0 rounded-full border border-[rgba(86,166,255,0.20)] shadow-[inset_0_0_14px_rgba(86,166,255,0.08)]" />
 
-            <div className="absolute inset-[8px] rounded-full border-[2px] border-transparent border-t-[#5dc8ff] border-r-[#7ea6ff] animate-[spin_1.6s_linear_infinite] shadow-[0_0_14px_rgba(93,200,255,0.22)]" />
+           <div className="absolute inset-[8px] rounded-full border-[2px] border-transparent border-t-[#5dc8ff] border-r-[#7ea6ff] animate-[spin_1.6s_linear_infinite] shadow-[0_0_14px_rgba(93,200,255,0.22)]" />
 
-            <div className="absolute inset-[18px] rounded-full border-[2px] border-transparent border-b-[#d4a633] border-l-[#5aaef7] animate-[spinReverse_1.8s_linear_infinite] shadow-[0_0_12px_rgba(212,166,51,0.22)]" />
+           <div className="absolute inset-[18px] rounded-full border-[2px] border-transparent border-b-[#d4a633] border-l-[#5aaef7] animate-[spinReverse_1.8s_linear_infinite] shadow-[0_0_12px_rgba(212,166,51,0.22)]" />
 
-            <div className="absolute left-1/2 top-[18px] h-[9px] w-[9px] -translate-x-1/2 rounded-full bg-[linear-gradient(135deg,#f8dc85_0%,#d4a633_100%)] shadow-[0_0_18px_rgba(248,220,133,0.85)]" />
-          </div>
+           <div className="absolute left-1/2 top-[18px] h-[9px] w-[9px] -translate-x-1/2 rounded-full bg-[linear-gradient(135deg,#f8dc85_0%,#d4a633_100%)] shadow-[0_0_18px_rgba(248,220,133,0.85)]" />
+         </div>
 
-          <div className="text-[12px] font-bold tracking-[0.28rem] text-[#9ab7ff] uppercase drop-shadow-[0_0_12px_rgba(126,160,255,0.38)]">
-            LOADING
-          </div>
+         <div className="text-[12px] font-bold tracking-[0.28rem] text-[#9ab7ff] uppercase drop-shadow-[0_0_12px_rgba(126,160,255,0.38)]">
+           LOADING
+         </div>
 
-          <div className="mt-3 flex justify-center gap-2">
+         <div className="mt-3 flex justify-center gap-2">
             <div className="h-2 w-2 animate-[dotPulse_1.2s_ease-in-out_0s_infinite] rounded-full bg-[#60c5ff] shadow-[0_0_10px_rgba(96,197,255,0.8)]"></div>
             <div className="h-2 w-2 animate-[dotPulse_1.2s_ease-in-out_0.18s_infinite] rounded-full bg-[#7aaeff] shadow-[0_0_10px_rgba(122,174,255,0.8)]"></div>
             <div className="h-2 w-2 animate-[dotPulse_1.2s_ease-in-out_0.36s_infinite] rounded-full bg-[#d4a633] shadow-[0_0_10px_rgba(212,166,51,0.8)]"></div>
           </div>
         </div>
-        <style jsx global>{`
-          @keyframes spin {
-            to { transform: rotate(360deg); }
-          }
-          @keyframes spinReverse {
-            to { transform: rotate(-360deg); }
-          }
-          @keyframes dotPulse {
-            0%, 100% { transform: translateY(0); opacity: 0.5; }
-            50% { transform: translateY(-4px); opacity: 1; }
-          }
-        `}</style>
-      </div>
+       <style jsx global>{`
+           @keyframes spin {
+             to { transform: rotate(360deg); }
+           }
+           @keyframes spinReverse {
+             to { transform: rotate(-360deg); }
+           }
+           @keyframes dotPulse {
+             0%, 100% { transform: translateY(0); opacity: 0.5; }
+             50% { transform: translateY(-4px); opacity: 1; }
+           }
+         `}</style>
+       </div>
     );
-  }
+   }
+  const services = [
+    ["Forex Technology", "Insights across major, minor and selected exotic pairs.", "/2.png", "md:col-span-2 md:row-span-2"],
+    ["AI Market Intelligence", "AI-assisted signals, trend analysis and real-time pattern detection.", "/1main.png", ""],
+    ["Digital Asset Analytics", "Transparent pricing, market depth and consolidated data.", "/3main.png", ""],
+    ["Portfolio Monitoring", "Allocation, performance and activity on one dashboard.", "/4.png", ""],
+    ["Automated Execution", "Rules and workflows that act on market conditions consistently.", "/5.png", ""],
+    ["Secure Infrastructure", "Security layers for data, user access and platform operations.", "/6.png", "md:col-span-2"],
+  ];
+
+  const tabs = [
+    { name: "Analytics", title: "See the signals behind the movement.", desc: "Charting and AI-assisted intelligence turn complex price activity into clear insights.", list: ["AI trend and momentum detection", "Volatility and sentiment overlays", "Multi-asset market comparison"], img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1000&q=85" },
+    { name: "Automation", title: "Let your systems work consistently.", desc: "Set rules-based workflows that monitor markets and run predefined actions.", list: ["Custom strategy rules", "Automated alerts and monitoring", "Workflow-based execution logic"], img: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1000&q=85" },
+    { name: "Market Heatmap", title: "Visualize market movements at a glance.", desc: "Real-time percentage changes across major forex pairs show currency strength and weakness.", list: ["Real-time currency performance", "Strength and weakness indicators", "Multi-currency correlation view"], img: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1000&q=85" },
+    { name: "Security", title: "Designed with protection in mind.", desc: "Layered security protects account access, data pipelines and platform communication.", list: ["Encrypted data communication", "Protected account access", "Transparent system monitoring"], img: "https://images.unsplash.com/photo-1573166364518-8d9e8c090a0e?auto=format&fit=crop&w=1000&q=85" },
+  ];
+
+  const faqs = [
+    ["What is JMFinex?", "JMFinex is a technology platform that provides AI-assisted analytics, automation tooling and market data infrastructure for forex and digital asset markets."],
+    ["What markets does the platform cover?", "Major forex pairs and widely-traded digital assets, kept in sync through a global network of data nodes."],
+    ["How does the AI engine work?", "Models analyze historical and live price structure to find trend, momentum and volatility patterns, shown as indicators in the dashboard."],
+    ["How is my data and access secured?", "Encrypted data pipelines, segregated wallet architecture and standard account-security practices such as verified login and session monitoring."],
+    ["Can I use automation without AI signals?", "Yes. Automation rules work independently, with or without AI indicators layered on top."],
+    ["Is performance guaranteed?", "No. JMFinex provides technology and tools only. Trading involves risk and no return is guaranteed. See our Risk Disclosure."],
+  ];
+
+  const t = tabs[tab];
 
   return (
-    <>
-      {/* ============ BACKGROUND VIDEO ============ */}
-      <video
-        autoPlay muted loop playsInline id="bg-video"
-        className="fixed top-1/2 left-1/2 min-w-full min-h-full w-auto h-auto -z-[3] -translate-x-1/2 -translate-y-1/2 object-cover [filter:brightness(0.25)_contrast(1.2)_saturate(1.3)_hue-rotate(180deg)]"
-      >
-        <source src="https://videos.pexels.com/video-files/3129671/3129671-uhd_2560_1440_30fps.mp4" type="video/mp4" />
-      </video>
+    <div className="relative overflow-x-clip bg-[#040d22] text-[#EEF2F8]">
+      <style jsx global>{`
+        html { scroll-behavior: smooth; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+        @keyframes floaty { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+        @keyframes floatRot { 0%, 100% { transform: translateY(0) rotate(-8deg); } 50% { transform: translateY(-18px) rotate(8deg); } }
+        @keyframes draw { 0% { stroke-dashoffset: 260; } 60%, 100% { stroke-dashoffset: 0; } }
+        @keyframes shimmer { to { background-position: 200% center; } }
+        @keyframes blob { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(60px, 40px) scale(1.15); } }
+        @keyframes marquee { to { transform: translateX(-50%); } }
+        @keyframes ping2 { 0% { transform: scale(1); opacity: 0.7; } 100% { transform: scale(2.6); opacity: 0; } }
+        @keyframes glowPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(240,180,41,0.45); } 50% { box-shadow: 0 0 34px 6px rgba(240,180,41,0.28); } }
+        @media (prefers-reduced-motion: reduce) {
+          *, *::before, *::after { animation: none !important; transition: none !important; }
+          .hi, .rv { opacity: 1 !important; transform: none !important; }
+        }
+      `}</style>
 
-      {/* BACKGROUND OVERLAYS */}
-      <div className="fixed inset-0 -z-[2] pointer-events-none [background:radial-gradient(ellipse_at_top,rgba(59,158,255,0.10),transparent_55%),radial-gradient(ellipse_at_bottom_right,rgba(240,180,41,0.06),transparent_60%),linear-gradient(180deg,rgba(8,11,24,0.85),rgba(5,8,18,0.95))]" />
+      {/* drifting color blobs */}
+      <div className="pointer-events-none fixed -left-40 top-20 z-0 h-[520px] w-[520px] rounded-full bg-[#3B9EFF]/[0.14] blur-[110px] animate-[blob_16s_ease-in-out_infinite]" />
+      <div className="pointer-events-none fixed -right-40 top-[45%] z-0 h-[480px] w-[480px] rounded-full bg-[#F0B429]/[0.10] blur-[110px] animate-[blob_20s_ease-in-out_infinite_reverse]" />
 
-      <div className="fixed inset-0 -z-[1] pointer-events-none opacity-[0.035] [background-image:url('data:image/svg+xml,%3Csvg_xmlns=%27http://www.w3.org/2000/svg%27_width=%27120%27_height=%27120%27%3E%3Cfilter_id=%27n%27%3E%3CfeTurbulence_type=%27fractalNoise%27_baseFrequency=%270.9%27_numOctaves=%272%27_stitchTiles=%27stitch%27/%3E%3C/filter%3E%3Crect_width=%27100%25%27_height=%27100%25%27_filter=%27url(%23n)%27/%3E%3C/svg%3E')]" />
+      {/* background: static grid + two glows (no video) */}
+      <div className="pointer-events-none fixed inset-0 z-0 [background:radial-gradient(ellipse_at_top,rgba(59,158,255,0.12),transparent_55%),radial-gradient(ellipse_at_bottom_right,rgba(240,180,41,0.07),transparent_60%)]" />
+      <div className="pointer-events-none fixed inset-0 z-0 [background-image:linear-gradient(rgba(59,158,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(59,158,255,0.05)_1px,transparent_1px)] [background-size:64px_64px] [mask-image:radial-gradient(ellipse_80%_60%_at_50%_0%,black_20%,transparent_75%)]" />
 
-      <div className="fixed inset-0 z-0 pointer-events-none [background-image:linear-gradient(rgba(59,158,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(59,158,255,0.05)_1px,transparent_1px)] [background-size:64px_64px] [mask-image:radial-gradient(ellipse_80%_60%_at_50%_0%,black_20%,transparent_75%)]" />
+     
 
-      <canvas id="particles" className="fixed inset-0 z-[1] pointer-events-none" />
-
-      <div id="cursor-glow" className="fixed top-0 left-0 w-[520px] h-[520px] rounded-full pointer-events-none z-[2] opacity-0 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300 [background:radial-gradient(circle,rgba(59,158,255,0.12)_0%,rgba(59,158,255,0)_70%)]" />
-
-      {/* ============ MAIN ============ */}
-      <main id="top">
-        {/* HERO */}
-        <section className="relative py-[120px] max-[900px]:py-[84px] min-h-screen !flex items-center !pt-[120px] !pb-[60px] overflow-hidden">
-          <div id="heroGlow" className="absolute -top-[10%] -right-[12%] w-[900px] h-[900px] rounded-full pointer-events-none transition-transform duration-500 [background:radial-gradient(circle,rgba(59,158,255,0.18)_0%,rgba(59,158,255,0)_62%)] blur-[10px]" />
-          <div className="absolute -bottom-[14%] -left-[10%] w-[640px] h-[640px] rounded-full pointer-events-none [background:radial-gradient(circle,rgba(240,180,41,0.10)_0%,rgba(240,180,41,0)_65%)] blur-[10px]" />
-
-          <div className="max-w-[1240px] mx-auto px-8 max-[720px]:px-5 grid gap-10 items-center [grid-template-columns:1.05fr_1fr] max-[980px]:!grid-cols-1 relative">
-            <div className="hero-copy">
-              <span className="inline-flex items-center gap-2.5 font-mono text-[0.72rem] tracking-[0.22em] uppercase text-[#3B9EFF] mb-[18px] opacity-0 [animation:heroFadeUp_0.8s_var(--ease-brand)_0.1s_forwards] before:content-[''] before:w-[22px] before:h-px before:bg-[#3B9EFF] before:[box-shadow:0_0_8px_#3B9EFF]">
-                AI-Powered Trading Technology
+      <main id="top" className="relative z-10 scroll-smooth">
+        {/* HERO: centered headline, live chart directly underneath */}
+        <section className="relative mx-auto w-full px-5 pb-16 pt-[60px] md:px-8" style={{ backgroundImage: "url(/banner-img.jpg)", backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat" }}>
+          <div className="absolute inset-0 bg-[#040d22]/80 backdrop-blur-sm" />
+          <div className="relative z-10 mx-auto max-w-[820px] text-center" style={{ padding: "60px 40px" }}>
+            <p className="hi mb-5 inline-flex items-center gap-2.5 rounded-full border border-[rgba(240,180,41,0.35)] bg-[#F0B429]/[0.08] px-4 py-1.5 text-sm text-[#F0B429] opacity-0 animate-[fadeUp_0.8s_ease-out_0.1s_forwards]">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inset-0 rounded-full bg-[#F0B429] animate-[ping2_1.8s_ease-out_infinite]" />
+                <span className="relative h-2 w-2 rounded-full bg-[#F0B429]" />
               </span>
-              <h1 className="font-display font-semibold text-[#EEF2F8] -tracking-[0.02em] leading-[1.06] opacity-0 [font-size:clamp(2.5rem,5.4vw,4.3rem)] [animation:heroFadeUp_0.9s_var(--ease-brand)_0.25s_forwards]">
-                Learn. Trade.
-                <br />
-                Grow{" "}
-                <span className="inline-block bg-gradient-to-br from-[#3B9EFF] to-[#F0B429] bg-clip-text text-transparent">
-                  Smarter.
-                </span>
-              </h1>
-              <p className="mt-6 text-[1.15rem] text-[#8B98B0] max-w-[460px] leading-[1.6] opacity-0 [animation:heroFadeUp_0.9s_var(--ease-brand)_0.4s_forwards]">
-                JMFinex is a next-generation trading technology ecosystem — combining AI-driven analytics, automated infrastructure and real-time global market data into a single, secure platform.
-              </p>
-              <div className="flex gap-4 mt-[38px] flex-wrap opacity-0 [animation:heroFadeUp_0.9s_var(--ease-brand)_0.55s_forwards]">
-                <a href="/user/register" className="relative inline-flex items-center justify-center gap-2.5 rounded-full font-semibold py-[15px] px-[30px] text-[0.94rem] !text-[#0A0E1A] [background:linear-gradient(135deg,#F0B429_0%,#D4A017_100%)] transition-transform duration-350 hover:-translate-y-0.5 hover:[box-shadow:0_12px_32px_-8px_rgba(240,180,41,.55),0_0_24px_-4px_rgba(255,215,0,.4)]">
-                  <span className="transition-colors duration-300 hover:text-white">Explore Platform</span>
-                </a>
-                <a href="/user/login" className="relative inline-flex items-center justify-center gap-2.5 rounded-full font-semibold py-[15px] px-[30px] text-[0.94rem] text-[#EEF2F8] border border-white/[0.22] bg-white/[0.02] transition-transform duration-350 hover:border-[#F0B429] hover:bg-[#F0B429]/[0.14] hover:-translate-y-0.5">
-                  <span>Get SignIn</span>
-                </a>
-              </div>
-              <div className="flex gap-9 mt-14 flex-wrap opacity-0 [animation:heroFadeUp_0.9s_var(--ease-brand)_0.7s_forwards]">
-                <div>
-                  <b id="statMarkets" className="block font-display text-[1.7rem] text-[#EEF2F8]">0</b>
-                  <span className="text-[0.78rem] text-[#5D6B85] tracking-[0.03em]">Markets Tracked</span>
-                </div>
-                <div>
-                  <b id="statNodes" className="block font-display text-[1.7rem] text-[#EEF2F8]">0</b>
-                  <span className="text-[0.78rem] text-[#5D6B85] tracking-[0.03em]">Global Data Nodes</span>
-                </div>
-                <div>
-                  <b className="block font-display text-[1.7rem] text-[#EEF2F8]">24/7</b>
-                  <span className="text-[0.78rem] text-[#5D6B85] tracking-[0.03em]">Live Market Sync</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="relative h-[560px] max-[980px]:h-[400px] max-[980px]:mt-5 flex items-center justify-center transition-transform duration-300 [will-change:transform]">
-              <canvas id="globe-canvas" style={{ display: "none" }} className="w-full h-full max-w-[560px]" />
-              <img src="/banner-img.jpg" alt="JMFinex Platform" className="max-w-full max-h-full object-contain" />
-              <div className="absolute top-[6%] -left-[4%] max-[980px]:left-0 rounded-[14px] border border-[rgba(120,160,220,0.18)] [background:rgba(15,22,45,0.6)] backdrop-blur-[16px] font-mono text-[0.78rem] max-[420px]:text-[0.7rem] text-[#8B98B0] py-3.5 px-[18px] [box-shadow:0_20px_50px_-20px_rgba(0,0,0,.6)] animate-floaty [animation-delay:0.2s] transition-[border-color] hover:border-[rgba(240,180,41,0.5)]">
-                <b className="block font-display text-[#3B9EFF] text-base mb-0.5">BTC · ETH</b>
-                Digital asset feed live
-              </div>
-              <div className="absolute bottom-[12%] -right-[6%] max-[980px]:right-0 rounded-[14px] border border-[rgba(120,160,220,0.18)] [background:rgba(15,22,45,0.6)] backdrop-blur-[16px] font-mono text-[0.78rem] max-[420px]:text-[0.7rem] text-[#8B98B0] py-3.5 px-[18px] [box-shadow:0_20px_50px_-20px_rgba(0,0,0,.6)] animate-floaty [animation-delay:1.4s] transition-[border-color] hover:border-[rgba(240,180,41,0.5)]">
-                <b className="block font-display text-[#3B9EFF] text-base mb-0.5">AI Engine</b>
-                Pattern signals active
-              </div>
-              <div className="absolute bottom-0 left-[2%] max-[980px]:hidden rounded-[14px] border border-[rgba(120,160,220,0.18)] [background:rgba(15,22,45,0.6)] backdrop-blur-[16px] font-mono text-[0.78rem] text-[#8B98B0] py-3.5 px-[18px] [box-shadow:0_20px_50px_-20px_rgba(0,0,0,.6)] animate-floaty [animation-delay:0.8s] transition-[border-color] hover:border-[rgba(240,180,41,0.5)]">
-                <b className="block font-display text-[#3B9EFF] text-base mb-0.5">Uptime 99.9%</b>
-                Infrastructure status
-              </div>
+              AI-powered trading technology
+            </p>
+            <h1 className="hi text-[clamp(2.6rem,6vw,4.6rem)] font-semibold leading-[1.05] tracking-tight opacity-0 animate-[fadeUp_0.9s_ease-out_0.25s_forwards]">
+              Learn. Trade. Grow{" "}
+              <span className="bg-[linear-gradient(90deg,#3B9EFF,#F0B429,#3B9EFF)] bg-[length:200%_auto] bg-clip-text text-transparent animate-[shimmer_5s_linear_infinite]">Smarter.</span>
+            </h1>
+            <p className="hi mx-auto mt-6 max-w-[600px] text-lg leading-[1.6] text-[#8B98B0] opacity-0 animate-[fadeUp_0.9s_ease-out_0.4s_forwards]">
+              JMFinex brings AI analytics, automated infrastructure and real-time global market data into one secure platform.
+            </p>
+            <div className="hi mt-5 flex flex-wrap justify-center gap-2 opacity-0 animate-[fadeUp_0.9s_ease-out_0.55s_forwards]">
+              <a href="/user/register" className="animate-[glowPulse_2.6s_ease-in-out_infinite] rounded-xl bg-gradient-to-br from-[#F0B429] to-[#D4A017] px-8 py-3.5 font-semibold text-[#0A0E1A] transition hover:-translate-y-0.5 hover:shadow-[0_12px_32px_-8px_rgba(240,180,41,.55)]">
+                Explore Platform
+              </a>
+              <a href="/user/login" className="rounded-xl border border-white/[0.22] px-8 py-3.5 font-semibold transition hover:border-[#F0B429] hover:bg-[#F0B429]/[0.12]">
+                Sign in
+              </a>
             </div>
           </div>
 
-          <div className="absolute bottom-[26px] left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[#5D6B85] font-mono text-[0.68rem] tracking-[0.15em] uppercase transition-opacity duration-400">
-            <span>Scroll</span>
-            <div className="w-px h-[34px] [background:linear-gradient(#3B9EFF,transparent)] animate-[scrollLine_2s_ease-in-out_infinite]" />
+          <div className="mx-auto  grid max-w-[720px] grid-cols-3 divide-x divide-[rgba(120,160,220,0.16)] text-center">
+            {[[15, "+", 0, "Markets tracked"], [24, "/7", 0, "Live market sync"], [99.9, "%", 1, "Uptime"]].map(([n, s, d, l]) => (
+              <div key={l} className="px-3">
+                <p className="text-2xl font-semibold md:text-3xl"><Counter to={n} suffix={s} decimals={d} /></p>
+                <p className="mt-1 text-xs text-[#5D6B85] md:text-sm">{l}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Console */}
+          <div className="relative z-10">
+          <div className="pointer-events-none absolute -inset-x-10 -top-10 bottom-10 -z-10 [background:radial-gradient(ellipse_at_center,rgba(59,158,255,0.18),transparent_65%)]" />
+          {/* floating coins */}
+          {[
+            ["₿", "-left-9 top-[18%]", "6s", "0s", "from-[#F0B429] to-[#D4A017] text-[#0A0E1A]"],
+            ["$", "-right-9 top-[8%]", "7s", "0.8s", "from-[#3B9EFF] to-[#1d6fd1] text-white"],
+            ["€", "-left-7 bottom-[22%]", "8s", "1.6s", "from-[#3B9EFF] to-[#1d6fd1] text-white"],
+            ["Au", "-right-8 bottom-[14%]", "6.5s", "0.4s", "from-[#F0B429] to-[#D4A017] text-[#0A0E1A]"],
+          ].map(([sym, pos, dur, delay, tone]) => (
+            <div key={sym} style={{ animationDuration: dur, animationDelay: delay }} className={`absolute ${pos} z-20 hidden h-14 w-14 place-items-center rounded-full bg-gradient-to-br ${tone} text-xl font-bold shadow-[0_12px_30px_-6px_rgba(0,0,0,.6),inset_0_2px_6px_rgba(255,255,255,.35)] ring-2 ring-white/20 animate-[floatRot_6s_ease-in-out_infinite] xl:grid`}>
+              {sym}
+            </div>
+          ))}
+
+          {/* live sparkline card */}
+          <div className="absolute -bottom-8 left-16 z-20 hidden w-[210px] rounded-xl border border-[rgba(120,160,220,0.25)] bg-[#0A1428]/85 p-3.5 backdrop-blur-md animate-[floaty_7s_ease-in-out_0.6s_infinite] xl:block">
+            <div className="flex items-center justify-between text-xs">
+              <span className="font-semibold text-[#EEF2F8]">EUR / USD</span>
+              <span className="text-[#5D6B85]">Live</span>
+            </div>
+            <svg viewBox="0 0 200 56" className="mt-2 h-14 w-full" fill="none">
+              <defs>
+                <linearGradient id="spk" x1="0" x2="1">
+                  <stop offset="0%" stopColor="#3B9EFF" />
+                  <stop offset="100%" stopColor="#F0B429" />
+                </linearGradient>
+              </defs>
+              <path d="M0 44 L20 38 L40 42 L60 26 L80 32 L100 18 L120 26 L140 12 L160 20 L180 8 L200 14" stroke="url(#spk)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" strokeDasharray="260" className="animate-[draw_4s_ease-in-out_infinite]" />
+            </svg>
+          </div>
+
+          <div className="absolute -right-6 -top-6 z-20 hidden rounded-xl border border-[rgba(120,160,220,0.25)] bg-[#0A1428]/85 px-4 py-3 text-sm backdrop-blur-md animate-[floaty_7s_ease-in-out_1.2s_infinite] 2xl:block">
+            <p className="flex items-center gap-2 font-semibold text-[#F0B429]">
+              <span className="h-2 w-2 rounded-full bg-[#F0B429] animate-[ping2_1.8s_ease-out_infinite]" />
+              AI engine
+            </p>
+            <p className="text-xs text-[#8B98B0]">Pattern signals active</p>
+          </div>
+          <div className={`${card} relative overflow-hidden p-3 shadow-[0_60px_120px_-60px_rgba(0,0,0,.8)] before:absolute before:inset-x-0 before:top-0 before:h-0.5 before:bg-gradient-to-r before:from-transparent before:via-[#F0B429] before:to-transparent md:p-5`}>
+            <div className="grid gap-5 lg:grid-cols-[1fr_280px]">
+              <div className="overflow-hidden rounded-xl border border-[rgba(120,160,220,0.16)]">
+                <div className="flex flex-wrap gap-2 p-3">
+                  {symbols.map((s) => (
+                    <button key={s.symbol} onClick={() => setSelectedSymbol(s.symbol)} className={`rounded-full px-4 py-2 text-xs font-medium transition border ${selectedSymbol === s.symbol ? "bg-[#F0B429] text-[#0A0E1A] border-[#F0B429]" : "bg-transparent text-[#8B98B0] border-white/[0.15] hover:border-white/[0.25] hover:bg-white/[0.05]"}`}>
+                      {s.name}
+                    </button>
+                  ))}
+                </div>
+                <div className="h-[460px]">
+                  <TradingViewWidget defaultSymbol={selectedSymbol} />
+                </div>
+              </div>
+              <div className="flex flex-col gap-4">
+                <div className="rounded-xl border border-[rgba(120,160,220,0.16)] p-5">
+                  <p className="text-sm text-[#5D6B85]">AI signal confidence</p>
+                  <p className="mt-1 text-4xl font-semibold text-[#3B9EFF]">{aiSignalConfidence}<span className="text-lg text-[#5D6B85]">%</span></p>
+                </div>
+                <div className="rounded-xl border border-[rgba(120,160,220,0.16)] p-5">
+                  <p className="text-sm text-[#5D6B85]">Platform status</p>
+                  <p className="mt-1 text-2xl font-semibold">99.9% uptime</p>
+                  <p className="mt-1 text-sm text-[#8B98B0]">24/7 live market sync</p>
+                </div>
+                <div className="flex-1 rounded-xl border border-[rgba(120,160,220,0.16)] p-5">
+                  <p className="mb-3 text-sm text-[#5D6B85]">Allocation</p>
+                  {symbols.slice(0, 6).map((s, i) => (
+                    <div key={s.symbol} className="mt-2.5 flex items-center gap-2.5">
+                      <span className="w-10 text-xs text-[#5D6B85]">{s.name.split(" / ")[0]}</span>
+                      <div className="h-[5px] flex-1 overflow-hidden rounded bg-white/[0.06]">
+                        <div className="h-full rounded bg-gradient-to-r from-[#3B9EFF] to-[#F0B429]" style={{ width: `${[62, 41, 74, 29, 55, 38][i]}%` }} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <p className="mt-4 px-1 text-xs text-[#5D6B85]">Sample interface for illustration purposes. Figures shown are live trading data and results.</p>
+          </div>
           </div>
         </section>
 
-        {/* TICKER */}
         <TradingViewTicker />
 
-        {/* ABOUT */}
-        <section className="relative py-[120px] max-[900px]:py-[84px] border-t border-b border-[rgba(120,160,220,0.16)] [background:linear-gradient(180deg,rgba(12,20,42,.5),rgba(5,8,18,.7))]" id="about">
-          <div className="max-w-[1240px] mx-auto px-8 max-[720px]:px-5 grid gap-16 items-center [grid-template-columns:.95fr_1.05fr] max-[900px]:!grid-cols-1">
-            <div className="relative min-h-[460px] rounded-[18px] overflow-hidden border border-[rgba(120,160,220,0.16)] [background:url('/1.png')_center/cover] after:content-[''] after:absolute after:inset-0 after:[background:linear-gradient(180deg,transparent,rgba(5,8,18,.8))]">
-              <div className="absolute z-[2] bottom-[22px] left-[22px] py-3.5 px-[18px] rounded-xl [background:rgba(5,8,18,.85)] border border-[rgba(120,160,220,0.16)] font-mono text-[0.75rem] text-[#8B98B0]">
-                <strong className="block text-[#F0B429] text-[1.2rem] mb-1.5">Built For The Future</strong>
-                Intelligent. Secure. Scalable.
-              </div>
-            </div>
-            <div>
-              <span className="inline-flex items-center gap-2.5 font-mono text-[0.72rem] tracking-[0.22em] uppercase text-[#3B9EFF] mb-[18px] before:content-[''] before:w-[22px] before:h-px before:bg-[#3B9EFF] before:[box-shadow:0_0_8px_#3B9EFF]">
-                About JMFinex
+        <div className="overflow-hidden border-y border-[rgba(120,160,220,0.16)] bg-[#0A1428]/40 py-4">
+          <div className="flex w-max text-sm text-[#8B98B0] animate-[marquee_35s_linear_infinite]">
+            {[...Array(2)].flatMap(() => ["AI signals", "Forex", "Digital assets", "Automation", "Live heatmap", "Secure infrastructure", "Global data nodes"]).map((w, i) => (
+              <span key={i} className="flex items-center gap-10 whitespace-nowrap pr-10">
+                {w}
+                <span className="text-[#F0B429]">✦</span>
               </span>
-              <h2 className="font-display font-semibold text-[#EEF2F8] leading-[1.1] mb-5 [font-size:clamp(1.9rem,3.6vw,2.75rem)]">
-                Turning complex market data into{" "}
-                <span className="inline-block bg-gradient-to-br from-[#3B9EFF] to-[#F0B429] bg-clip-text text-transparent">
-                  clear opportunities.
-                </span>
-              </h2>
-              <p className="text-[#8B98B0] leading-[1.75] mb-[25px]">
-                JMFinex is a next-generation digital trading technology platform designed for modern market participants. Our ecosystem combines advanced data infrastructure, artificial intelligence and automation to simplify the way users understand and interact with global markets.
-              </p>
-              <p className="text-[#8B98B0] leading-[1.75] mb-[25px]">
-                We focus on building practical tools that provide clarity, speed and control without compromising security or transparency.
-              </p>
-              <div className="grid grid-cols-2 gap-[18px] max-[640px]:!grid-cols-1">
-                {[
-                  ["Data First", "Reliable market intelligence from multiple global sources."],
-                  ["AI Assisted", "Models designed to identify trends, momentum and volatility."],
-                  ["Built To Scale", "Infrastructure created for continuous growth and performance."],
-                  ["User Focused", "Simple interfaces designed for confident decision-making."],
-                ].map(([title, desc]) => (
-                  <div key={title} className="pl-[15px] border-l-2 border-[#3B9EFF]">
-                    <strong className="block font-display mb-1.5 text-[#EEF2F8]">{title}</strong>
-                    <span className="text-[#8B98B0] text-[0.85rem] leading-[1.5]">{desc}</span>
-                  </div>
-                ))}
-              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ABOUT: text left, stacked principles right */}
+        <section id="about" className="mx-auto grid max-w-[1240px] gap-14 px-5 py-24 md:px-8 lg:grid-cols-2">
+          <div>
+            <Heading kicker="About JMFinex" title={<>Turning complex market data into <span className={grad}>clear opportunities.</span></>} />
+            <p className="max-w-[540px] leading-[1.75] text-[#8B98B0]">
+              JMFinex is a digital trading technology platform for modern market participants. It combines data infrastructure, AI and automation to simplify how people understand and use global markets, with clarity, speed and control.
+            </p>
+            <div className="relative mt-8 h-[260px] overflow-hidden rounded-2xl border border-[rgba(120,160,220,0.16)] bg-cover bg-center" style={{ backgroundImage: "url(/1.png)" }}>
+              <div className="absolute inset-0 bg-gradient-to-t from-[#040d22]/90 to-transparent" />
+              <p className="absolute bottom-5 left-5 font-semibold text-[#F0B429]">Built for the future. Intelligent, secure, scalable.</p>
             </div>
+          </div>
+          <div className="flex flex-col justify-center divide-y divide-[rgba(120,160,220,0.16)]">
+            {[
+              ["Data first", "Reliable market intelligence from multiple global sources."],
+              ["AI assisted", "Models built to spot trends, momentum and volatility."],
+              ["Built to scale", "Infrastructure made for continuous growth and performance."],
+              ["User focused", "Simple interfaces for confident decisions."],
+            ].map(([title, desc], i) => (
+              <Reveal key={title} delay={i * 110} className="group flex gap-5 py-6">
+                <span className="mt-1 h-2.5 w-2.5 shrink-0 rounded-full bg-[#3B9EFF] shadow-[0_0_10px_#3B9EFF] transition-transform duration-300 group-hover:scale-150 group-hover:bg-[#F0B429]" />
+                <div>
+                  <h3 className="text-lg font-semibold">{title}</h3>
+                  <p className="mt-1 text-[#8B98B0]">{desc}</p>
+                </div>
+              </Reveal>
+            ))}
           </div>
         </section>
 
-        {/* SERVICES */}
-        <section className="relative py-[120px] max-[900px]:py-[84px]" id="services">
-          <div className="max-w-[1240px] mx-auto px-8 max-[720px]:px-5">
-            <div className="reveal max-w-[640px] mb-14">
-              <span className="inline-flex items-center gap-2.5 font-mono text-[0.72rem] tracking-[0.22em] uppercase text-[#3B9EFF] mb-[18px] before:content-[''] before:w-[22px] before:h-px before:bg-[#3B9EFF] before:[box-shadow:0_0_8px_#3B9EFF]">
-                Our Services
-              </span>
-              <h2 className="font-display font-semibold text-[#EEF2F8] leading-[1.1] [font-size:clamp(1.9rem,3.6vw,2.75rem)]">
-                Everything you need to operate in modern markets.
-              </h2>
-              <p className="text-[#8B98B0] text-[1.02rem] leading-[1.65] mt-4">
-                From market intelligence to automated systems, JMFinex provides a complete set of technology services for a smarter digital trading experience.
-              </p>
-            </div>
-            <div className="reveal-stagger grid grid-cols-3 gap-[22px] max-[980px]:!grid-cols-2 max-[640px]:!grid-cols-1">
-              {[
-                ["◈", "AI Market Intelligence", "Understand market structure through AI-assisted signals, trend analysis and real-time pattern detection.", "/1main.png"],
-                ["◎", "Forex Technology", "Access organized insights across major, minor and selected exotic currency markets.", "/2.png"],
-                ["₿", "Digital Asset Analytics", "Monitor digital asset activity with transparent pricing, market depth and consolidated data.", "/3main.png"],
-                ["⌁", "Portfolio Monitoring", "Track asset allocation, performance indicators and portfolio activity from one dashboard.", "/4.png"],
-                ["↗", "Automated Execution", "Configure systematic rules and workflows that help you monitor market conditions and execute predefined actions more consistently.", "/5.png"],
-                ["◉", "Secure Infrastructure", "Modern security layers help protect data, user access and platform operations.", "/6.png"],
-              ].map(([icon, title, desc, img]) => (
-                <article key={title} className="relative overflow-hidden rounded-[18px] border border-[rgba(120,160,220,0.16)] [background:rgba(15,22,45,0.6)] min-h-[300px] transition-transform duration-[400ms] hover:-translate-y-2.5 hover:border-[rgba(59,158,255,0.55)] hover:[box-shadow:0_25px_55px_rgba(59,158,255,0.12)]">
-                  <div className="relative h-[145px] bg-cover bg-center after:content-[''] after:absolute after:inset-0 after:[background:linear-gradient(180deg,transparent,rgba(15,22,45,0.55))]" style={{ backgroundImage: `url(${img})` }} />
-                  <div className="relative z-[2] -mt-[23px] px-[23px] pb-[25px]">
-                    <div className="w-12 h-12 rounded-[14px] grid place-items-center bg-[#0B1428] text-[#3B9EFF] border border-[rgba(59,158,255,0.28)] mb-[17px] text-[1.3rem]">{icon}</div>
-                    <h3 className="mb-2.5 text-[1.17rem] font-display font-semibold text-[#EEF2F8]">{title}</h3>
-                    <p className="text-[#8B98B0] text-[0.88rem] leading-[1.6]">{desc}</p>
-                  </div>
-                </article>
-              ))}
-            </div>
+        {/* SERVICES: bento grid */}
+        <section id="services" className="mx-auto max-w-[1240px] px-5 py-24 md:px-8">
+          <Heading kicker="Our services" title="Everything you need to operate in modern markets." text="From market intelligence to automated systems, one set of tools for a smarter trading experience." />
+          <div className="grid auto-rows-[220px] gap-5 md:grid-cols-4">
+            {services.map(([title, desc, img, span], i) => (
+              <Reveal key={title} delay={i * 90} className={span}>
+              <article className="group relative h-full overflow-hidden rounded-2xl border border-[rgba(120,160,220,0.16)] bg-cover bg-center transition duration-500 hover:border-[rgba(240,180,41,0.45)] hover:shadow-[0_25px_55px_rgba(59,158,255,0.15)]" style={{ backgroundImage: `url(${img})` }}>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#040d22] via-[#040d22]/75 to-[#040d22]/30 transition group-hover:from-[#040d22]/90" />
+                <div className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-gradient-to-r from-[#3B9EFF] to-[#F0B429] transition-transform duration-500 group-hover:scale-x-100" />
+                <div className="absolute bottom-0 p-6 transition-transform duration-500 group-hover:-translate-y-1">
+                  <h3 className="text-lg font-semibold">{title}</h3>
+                  <p className="mt-1.5 text-sm leading-[1.55] text-[#8B98B0]">{desc}</p>
+                </div>
+              </article>
+              </Reveal>
+            ))}
           </div>
         </section>
 
-        {/* PLATFORM TABS */}
-        <section className="relative py-[120px] max-[900px]:py-[84px] border-t border-b border-[rgba(120,160,220,0.16)] [background:linear-gradient(180deg,rgba(8,14,28,.35),rgba(12,20,42,.65))]" id="platform">
-          <div className="max-w-[1240px] mx-auto px-8 max-[720px]:px-5">
-            <div className="reveal max-w-[640px] mb-14">
-              <span className="inline-flex items-center gap-2.5 font-mono text-[0.72rem] tracking-[0.22em] uppercase text-[#3B9EFF] mb-[18px] before:content-[''] before:w-[22px] before:h-px before:bg-[#3B9EFF] before:[box-shadow:0_0_8px_#3B9EFF]">
-                Explore The Platform
-              </span>
-              <h2 className="font-display font-semibold text-[#EEF2F8] leading-[1.1] [font-size:clamp(1.9rem,3.6vw,2.75rem)]">
-                One ecosystem. Multiple intelligent capabilities.
-              </h2>
-              <p className="text-[#8B98B0] text-[1.02rem] leading-[1.65] mt-4">
-                Explore the core platform modules built to help you analyze, automate and monitor market activity.
-              </p>
-            </div>
-            <div className="reveal border border-[rgba(120,160,220,0.16)] rounded-3xl p-2.5 [background:rgba(15,22,45,.6)]">
-              <div className="flex flex-wrap gap-2 p-[7px] border-b border-[rgba(120,160,220,0.16)]">
-                {["Analytics", "Automation", "Market Heatmap", "Security"].map((t, i) => (
-                  <button key={t} className={`tab-button cursor-pointer border rounded-[10px] text-[0.87rem] py-[13px] px-[18px] transition-[color,background,border-color] duration-300 ${i === 0 ? "text-[#F0B429] bg-[#F0B429]/[0.09] border-[rgba(240,180,41,0.25)]" : "text-[#8B98B0] bg-transparent border-transparent hover:text-[#F0B429] hover:bg-[#F0B429]/[0.09] hover:border-[rgba(240,180,41,0.25)]"}`} data-tab={t.toLowerCase().replace(" ", "").replace("market", "global")}>
-                    {t}
-                  </button>
-                ))}
-              </div>
-              {[
-                { id: "analytics", label: "01 / Analytics", title: "See the signals behind the movement.", desc: "Powerful charting and AI-assisted market intelligence help transform complex price activity into easier-to-understand insights.", list: ["AI trend and momentum detection", "Volatility and sentiment overlays", "Multi-asset market comparison"], active: true, img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1000&q=85" },
-                { id: "automation", label: "02 / Automation", title: "Let your systems work consistently.", desc: "Configure rules-based workflows that help you monitor market conditions and execute predefined actions more consistently.", list: ["Custom strategy rules", "Automated alerts and monitoring", "Workflow-based execution logic"], active: false, img: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1000&q=85" },
-                { id: "global", label: "03 / Market Heatmap", title: "Visualize market movements at a glance.", desc: "Interactive heatmap showing real-time percentage changes across major forex pairs, helping you quickly identify currency strength and weakness.", list: ["Real-time currency performance", "Visual strength/weakness indicators", "Multi-currency correlation view"], active: false, img: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1000&q=85" },
-                { id: "security", label: "04 / Security", title: "Designed with protection in mind.", desc: "JMFinex uses layered security principles to help protect account access, data pipelines and platform communication.", list: ["Encrypted data communication", "Protected account access", "Transparent system monitoring"], active: false, img: "https://images.unsplash.com/photo-1573166364518-8d9e8c090a0e?auto=format&fit=crop&w=1000&q=85" },
-              ].map((p) => (
-                <div key={p.id} id={p.id} className={`${p.active ? "grid animate-tab-fade" : "hidden"} grid-cols-2 max-[900px]:!grid-cols-1 gap-10 items-center py-[42px] px-7 pb-[30px]`}>
-                  <div>
-                    <span className="inline-flex items-center gap-2.5 font-mono text-[0.72rem] tracking-[0.22em] uppercase text-[#3B9EFF] mb-[18px] before:content-[''] before:w-[22px] before:h-px before:bg-[#3B9EFF] before:[box-shadow:0_0_8px_#3B9EFF]">
-                      {p.label}
-                    </span>
-                    <h3 className="text-2xl mb-3.5 font-display font-semibold text-[#EEF2F8]">{p.title}</h3>
-                    <p className="text-[#8B98B0] leading-[1.7] mb-[22px]">{p.desc}</p>
-                    <ul className="grid gap-3">
-                      {p.list.map((item) => (
-                        <li key={item} className="flex items-center gap-2.5 text-[#8B98B0] text-[0.9rem] before:content-['✓'] before:w-[21px] before:h-[21px] before:grid before:place-items-center before:rounded-full before:bg-[#3B9EFF]/[0.12] before:text-[#3B9EFF] before:text-[0.75rem]">
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="relative min-h-[300px] rounded-2xl border border-[rgba(120,160,220,0.16)] overflow-hidden after:content-[''] after:absolute after:inset-0 after:[background:linear-gradient(135deg,rgba(5,8,18,.05),rgba(5,8,18,.7))]" style={{ backgroundImage: `linear-gradient(135deg, rgba(59,158,255,.18), transparent 45%), linear-gradient(315deg, rgba(240,180,41,.22), transparent 55%), url(${p.img})`, backgroundPosition: "center", backgroundSize: "cover" }} />
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        {/* PLATFORM: vertical tabs */}
+        <section id="platform" className="relative py-[120px] max-[900px]:py-[84px] border-t border-b border-[rgba(120,160,220,0.16)] [background:linear-gradient(180deg,rgba(8,14,28,.35),rgba(12,20,42,.65))]">
+  <div className="max-w-[1240px] mx-auto px-8 max-[720px]:px-5">
+    <div className="reveal max-w-[640px] mb-14">
+      <span className="inline-flex items-center gap-2.5 font-mono text-[0.72rem] tracking-[0.22em] uppercase text-[#3B9EFF] mb-[18px] before:content-[''] before:w-[22px] before:h-px before:bg-[#3B9EFF] before:[box-shadow:0_0_8px_#3B9EFF]">
+        Explore The Platform
+      </span>
+      <h2 className="font-display font-semibold text-[#EEF2F8] leading-[1.1] [font-size:clamp(1.9rem,3.6vw,2.75rem)]">
+        One ecosystem. Multiple intelligent capabilities.
+      </h2>
+      <p className="text-[#8B98B0] text-[1.02rem] leading-[1.65] mt-4">
+        Explore the core platform modules built to help you analyze, automate and monitor market activity.
+      </p>
+    </div>
 
-        {/* WHY / FEATURES */}
-        <section className="relative py-[120px] max-[900px]:py-[84px]" id="why">
-          <div className="max-w-[1240px] mx-auto px-8 max-[720px]:px-5">
-            <div className="reveal max-w-[640px] mb-14">
-              <span className="inline-flex items-center gap-2.5 font-mono text-[0.72rem] tracking-[0.22em] uppercase text-[#3B9EFF] mb-[18px] before:content-[''] before:w-[22px] before:h-px before:bg-[#3B9EFF] before:[box-shadow:0_0_8px_#3B9EFF]">
-                Why JMFinex
-              </span>
-              <h2 className="font-display font-semibold text-[#EEF2F8] leading-[1.1] [font-size:clamp(1.9rem,3.6vw,2.75rem)]">
-                Infrastructure built for how modern markets actually move.
-              </h2>
-              <p className="text-[#8B98B0] text-[1.02rem] leading-[1.65] mt-4">
-                Every layer of the platform — from data ingestion to execution — is engineered around speed, clarity and resilience.
-              </p>
-            </div>
-            <div className="reveal-stagger grid grid-cols-3 gap-[22px] max-[980px]:!grid-cols-2 max-[640px]:!grid-cols-1">
-              {[
-                ["01", "AI Trading Technology", "Machine-learning models continuously read market structure to surface patterns across timeframes.", <path key="1" d="M12 2a5 5 0 0 1 5 5v3a5 5 0 0 1-10 0V7a5 5 0 0 1 5-5Z M8 12a4 4 0 0 0 8 0M4 21h16M12 16v5" />],
-                ["02", "Global Forex Markets", "Deep liquidity access across major, minor and exotic currency pairs, synced in real time.", <><circle key="c" cx="12" cy="12" r="9" /><path d="M3 12h18M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18Z" /></>],
-                ["03", "Digital Asset Markets", "Unified access to major digital assets with transparent pricing and consolidated order books.", <path key="3" d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />],
-                ["04", "Automated Execution", "Rules-based automation handles routine execution so strategies run consistently, around the clock.", <><path key="4a" d="M4 4h16v16H4z" /><path d="M4 9h16M9 20V9" /></>],
-                ["05", "Advanced Analytics", "Layered charting, volatility mapping and sentiment overlays built for fast, informed decisions.", <><path key="5a" d="M3 3v18h18" /><path d="M7 15l4-5 3 3 5-7" /></>],
-                ["06", "Secure Infrastructure", "Encrypted data pipelines and segregated wallet architecture protect every layer of the stack.", <><path key="6a" d="M12 2l8 4v6c0 5-3.4 8.4-8 10-4.6-1.6-8-5-8-10V6l8-4Z" /><path d="M9 12l2 2 4-4" /></>],
-              ].map(([num, title, desc, svgPath]) => (
-                <div key={title} className="group relative overflow-hidden border border-[rgba(120,160,220,0.16)] rounded-[18px] py-8 px-[26px] [background:rgba(15,22,45,0.6)] transition-[transform,border-color,box-shadow,background-color] duration-[450ms] hover:-translate-y-2 hover:border-[rgba(240,180,41,0.4)] hover:bg-[rgba(15,22,45,0.75)] hover:[box-shadow:0_30px_60px_-30px_rgba(59,158,255,.3),0_0_0_1px_rgba(240,180,41,0.08)] before:content-[''] before:absolute before:inset-0 before:z-0 before:rounded-[inherit] before:p-px before:[background:linear-gradient(135deg,#F0B429_0%,#3B9EFF_45%,transparent_70%)] before:[mask:linear-gradient(#000_0_0)_content-box,linear-gradient(#000_0_0)] before:[mask-composite:exclude] before:opacity-0 before:transition-opacity before:duration-[450ms] hover:before:opacity-20">
-                  <span className="relative z-[1] absolute top-5 right-6 font-mono text-[0.72rem] text-[#5D6B85]">{num}</span>
-                  <div className="relative w-[52px] h-[52px] rounded-[14px] flex items-center justify-center bg-[#0A1428] text-[#3B9EFF] mb-[22px] z-[1] transition-[color,transform] duration-500 group-hover:text-[#FFD666] group-hover:-translate-y-0.5 before:content-[''] before:absolute before:-inset-1.5 before:rounded-2xl before:-z-10 before:[background:conic-gradient(from_0deg,transparent_0%,#F0B429_14%,transparent_34%,#3B9EFF_60%,transparent_82%)] before:opacity-40 before:animate-iconspin group-hover:before:opacity-100 group-hover:before:animate-iconspin-fast after:content-[''] after:absolute after:inset-0 after:rounded-[14px] after:bg-[#0A1428] after:-z-10">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="w-6 h-6 relative z-[2] transition-transform duration-500 group-hover:scale-[1.12] group-hover:-rotate-6">
-                      {svgPath}
-                    </svg>
-                  </div>
-                  <h3 className="relative z-[1] text-[1.15rem] text-[#EEF2F8] mb-2.5 font-semibold">{title}</h3>
-                  <p className="relative z-[1] text-[#8B98B0] text-[0.92rem] leading-[1.6]">{desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+    <div className="reveal border border-[rgba(120,160,220,0.16)] rounded-3xl p-2.5 [background:rgba(15,22,45,.6)]">
+      {/* Horizontal tabs */}
+      <div className="flex flex-wrap gap-2 p-[7px] border-b border-[rgba(120,160,220,0.16)]">
+        {tabs.map((x, i) => (
+          <button
+            key={x.name}
+            onClick={() => setTab(i)}
+            className={`tab-button cursor-pointer border rounded-[10px] text-[0.87rem] py-[13px] px-[18px] transition-[color,background,border-color] duration-300 ${
+              tab === i
+                ? "text-[#F0B429] bg-[#F0B429]/[0.09] border-[rgba(240,180,41,0.25)]"
+                : "text-[#8B98B0] bg-transparent border-transparent hover:text-[#F0B429] hover:bg-[#F0B429]/[0.09] hover:border-[rgba(240,180,41,0.25)]"
+            }`}
+          >
+            {x.name}
+          </button>
+        ))}
+      </div>
 
-        {/* TECHNOLOGY / DASHBOARD (DYNAMIC) */}
-        <section className="relative py-[120px] max-[900px]:py-[84px]" id="technology">
-          <div className="max-w-[1240px] mx-auto px-8 max-[720px]:px-5">
-            <div className="reveal max-w-[640px] mb-14">
-              <span className="inline-flex items-center gap-2.5 font-mono text-[0.72rem] tracking-[0.22em] uppercase text-[#3B9EFF] mb-[18px] before:content-[''] before:w-[22px] before:h-px before:bg-[#3B9EFF] before:[box-shadow:0_0_8px_#3B9EFF]">
-                AI Trading Ecosystem
-              </span>
-              <h2 className="font-display font-semibold text-[#EEF2F8] leading-[1.1] [font-size:clamp(1.9rem,3.6vw,2.75rem)]">
-                One dashboard. Every signal that matters.
-              </h2>
-              <p className="text-[#8B98B0] text-[1.02rem] leading-[1.65] mt-4">
-                A unified view of price action, AI-generated indicators and portfolio composition — designed for clarity under pressure.
-              </p>
-            </div>
-            <div className="reveal relative overflow-hidden rounded-[22px] border border-[rgba(120,160,220,0.16)] [background:linear-gradient(160deg,rgba(15,22,45,0.75),rgba(8,12,26,0.85))] backdrop-blur-[20px] p-7 [box-shadow:0_60px_120px_-60px_rgba(0,0,0,.7)] transition-transform duration-250 [will-change:transform] before:content-[''] before:absolute before:-top-[40%] before:left-[20%] before:w-[60%] before:h-[80%] before:[background:radial-gradient(ellipse,rgba(59,158,255,0.10),transparent_65%)] before:pointer-events-none after:content-[''] after:absolute after:top-0 after:left-0 after:right-0 after:h-0.5 after:[background:linear-gradient(90deg,transparent,#F0B429,#3B9EFF,transparent)] after:[background-size:200%_100%] after:animate-scanline">
-              <div className="flex justify-between items-center mb-[22px] flex-wrap gap-3.5">
-                <div className="flex gap-[7px]">
-                  <span className="w-[9px] h-[9px] rounded-full bg-[#E8836B]" />
-                  <span className="w-[9px] h-[9px] rounded-full bg-[#F0B429]" />
-                  <span className="w-[9px] h-[9px] rounded-full bg-[#3B9EFF]" />
-                </div>
-                <span className="font-mono text-[0.72rem] text-[#5D6B85] tracking-[0.1em] uppercase">JMFinex Console — Live Preview</span>
-                <div className="flex items-center gap-3">
-                  <span className="w-[9px] h-[9px] rounded-full bg-[#3B9EFF] animate-pulse-dot" />
-                  <span className="font-mono text-[0.72rem] text-[#8B98B0] normal-case tracking-normal">AI engine processing market data</span>
-                </div>
-              </div>
-              <div className="grid gap-5 [grid-template-columns:2fr_1fr] max-[900px]:!grid-cols-1">
-                <div className="border border-[rgba(120,160,220,0.16)] rounded-2xl bg-white/[0.015] overflow-hidden">
-                  <div className="p-5">
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {symbols.map((item) => (
-                        <button key={item.symbol} onClick={() => handleSymbolChange(item.symbol, item.name)} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${selectedSymbol === item.symbol ? "bg-[#F0B429] text-[#0A0E1A]" : "bg-white/[0.05] text-[#8B98B0] hover:bg-white/[0.1]"}`}>
-                          {item.name}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="h-[500px]">
-                    <TradingViewWidget defaultSymbol={selectedSymbol} />
-                  </div>
-                </div>
-                <div className="flex flex-col gap-4">
-                  <div className="border border-[rgba(120,160,220,0.16)] rounded-2xl py-[18px] px-5 bg-white/[0.015]">
-                    <div className="flex justify-between items-center mb-2.5">
-                      <span className="text-[0.76rem] text-[#5D6B85]">Portfolio Allocation</span>
-                    </div>
-                    {symbols.map((item, index) => {
-                      const widths = [62, 41, 74, 29, 55, 38, 45, 67, 33, 58, 52, 48, 63, 39, 57];
-                      const width = widths[index % widths.length];
-                      const label = item.name.split(" / ")[0];
-                      return (
-                        <div key={item.symbol} className="flex items-center gap-2.5 mt-2">
-                          <span className="w-11 font-mono text-[0.68rem] text-[#5D6B85]">{label}</span>
-                          <div className="flex-1 h-[5px] rounded bg-white/[0.06] overflow-hidden">
-                            <div className="h-full rounded [background:linear-gradient(90deg,#3B9EFF,#F0B429)] transition-[width] duration-[1400ms]" style={{ width: `${width}%` }} />
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                  <div className="border border-[rgba(120,160,220,0.16)] rounded-2xl py-[18px] px-5 bg-white/[0.015]">
-                    <div className="flex justify-between items-center mb-2.5">
-                      <span className="text-[0.76rem] text-[#5D6B85]">AI Signal Confidence</span>
-                    </div>
-                    <div className="font-display text-2xl text-[#EEF2F8]">
-                      {aiSignalConfidence}<span className="text-base text-[#5D6B85]"> %</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="mt-[18px] flex items-center gap-2 font-mono text-[0.68rem] text-[#5D6B85] before:content-[''] before:w-1.5 before:h-1.5 before:border before:border-[#5D6B85] before:rounded-sm before:flex-shrink-0">
-                Sample interface for illustration purposes. Figures shown are live trading data and results.
-              </div>
-            </div>
-            <div className="grid gap-[18px] mt-[60px] relative [grid-template-columns:repeat(4,1fr)] max-[900px]:!grid-cols-2 max-[560px]:!grid-cols-1">
-              {[
-                ["DATA", "Market Ingestion", "Continuous feeds from global forex and digital asset venues, normalized in real time."],
-                ["MODEL", "AI Analysis", "Pattern-recognition models score structure, momentum and volatility across assets."],
-                ["EXECUTE", "Automated Routing", "Execution logic routes orders through optimized, low-latency infrastructure."],
-                ["MONITOR", "Live Oversight", "Every position and signal stays visible on a single, unified console."],
-              ].map(([num, title, desc]) => (
-                <div key={title} className="reveal relative text-left border border-[rgba(120,160,220,0.16)] rounded-2xl py-6 px-5 [background:rgba(15,22,45,0.6)] transition-[transform,border-color,background] duration-[450ms] hover:-translate-y-1.5 hover:border-[rgba(240,180,41,0.45)] hover:bg-[#F0B429]/[0.05]">
-                  <span className="font-mono text-[0.75rem] tracking-[0.1em] text-[#F0B429] animate-fnum-glow">{num}</span>
-                  <h4 className="mt-3 text-base text-[#EEF2F8]">{title}</h4>
-                  <p className="mt-2 text-[#8B98B0] text-[0.85rem] leading-[1.55]">{desc}</p>
-                </div>
-              ))}
-            </div>
+      {/* Tab content */}
+      <div className="grid animate-tab-fade grid-cols-2 max-[900px]:!grid-cols-1 gap-10 items-center py-[42px] px-7 pb-[30px]">
+        <div>
+          <span className="inline-flex items-center gap-2.5 font-mono text-[0.72rem] tracking-[0.22em] uppercase text-[#3B9EFF] mb-[18px] before:content-[''] before:w-[22px] before:h-px before:bg-[#3B9EFF] before:[box-shadow:0_0_8px_#3B9EFF]">
+            {String(tab + 1).padStart(2, "0")} / {t.name}
+          </span>
+          <h3 className="text-2xl mb-3.5 font-display font-semibold text-[#EEF2F8]">{t.title}</h3>
+          <p className="text-[#8B98B0] leading-[1.7] mb-[22px]">{t.desc}</p>
+          <ul className="grid gap-3">
+            {t.list.map((item) => (
+              <li
+                key={item}
+                className="flex items-center gap-2.5 text-[#8B98B0] text-[0.9rem] before:content-['✓'] before:w-[21px] before:h-[21px] before:grid before:place-items-center before:rounded-full before:bg-[#3B9EFF]/[0.12] before:text-[#3B9EFF] before:text-[0.75rem]"
+              >
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div
+          className="relative min-h-[300px] rounded-2xl border border-[rgba(120,160,220,0.16)] overflow-hidden after:content-[''] after:absolute after:inset-0 after:[background:linear-gradient(135deg,rgba(5,8,18,.05),rgba(5,8,18,.7))]"
+          style={{
+            backgroundImage: `linear-gradient(135deg, rgba(59,158,255,.18), transparent 45%), linear-gradient(315deg, rgba(240,180,41,.22), transparent 55%), url(${t.img})`,
+            backgroundPosition: "center",
+            backgroundSize: "cover",
+          }}
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+        {/* WHY: two-column, sticky heading */}
+        <section id="why" className="mx-auto grid max-w-[1240px] gap-12 px-5 py-24 md:px-8 lg:grid-cols-[1fr_1.4fr]">
+          <div className="lg:sticky lg:top-28 lg:self-start">
+            <Heading kicker="Why JMFinex" title="Infrastructure built for how modern markets actually move." text="Every layer, from data ingestion to execution, is engineered for speed, clarity and resilience." />
+          </div>
+          <div className="grid gap-5 sm:grid-cols-2">
+            {[
+              ["AI trading technology", "Machine-learning models read market structure and surface patterns across timeframes."],
+              ["Global forex markets", "Deep liquidity across major, minor and exotic pairs, synced in real time."],
+              ["Digital asset markets", "Unified access to major digital assets with transparent pricing."],
+              ["Automated execution", "Rules-based automation keeps strategies running around the clock."],
+              ["Advanced analytics", "Layered charting, volatility mapping and sentiment overlays."],
+              ["Secure infrastructure", "Encrypted pipelines and segregated wallet architecture protect every layer."],
+            ].map(([title, desc], i) => (
+              <Reveal key={title} delay={(i % 2) * 120} className={i % 2 ? "sm:mt-8" : ""}>
+                <Spot className={`${card} h-full p-6 transition duration-300 hover:-translate-y-1.5 hover:border-[rgba(240,180,41,0.4)]`}>
+                  <div className="mb-4 h-1 w-10 rounded bg-gradient-to-r from-[#3B9EFF] to-[#F0B429] transition-all duration-500 group-hover:w-20" />
+                  <h3 className="text-lg font-semibold">{title}</h3>
+                  <p className="mt-2 text-[0.92rem] leading-[1.6] text-[#8B98B0]">{desc}</p>
+                </Spot>
+              </Reveal>
+            ))}
           </div>
         </section>
 
         {/* HEATMAP */}
-        <section className="relative py-[120px] max-[900px]:py-[84px]" id="heatmap">
-          <div className="max-w-[1240px] mx-auto px-8 max-[720px]:px-5">
-            <div className="reveal max-w-[640px] mb-14">
-              <span className="inline-flex items-center gap-2.5 font-mono text-[0.72rem] tracking-[0.22em] uppercase text-[#F0B429] mb-[18px] before:content-[''] before:w-[22px] before:h-px before:bg-[#F0B429] before:[box-shadow:0_0_8px_#F0B429]">
-                Market Heatmap
-              </span>
-              <h2 className="font-display font-semibold text-[#EEF2F8] leading-[1.1] [font-size:clamp(1.9rem,3.6vw,2.75rem)]">
-                Real-time currency performance visualization.
-              </h2>
-              <p className="text-[#8B98B0] text-[1.02rem] leading-[1.65] mt-4">
-                Track percentage changes across major forex pairs with our interactive TradingView heatmap. Green indicates gains, red shows losses.
-              </p>
-            </div>
-            <div className="reveal relative overflow-hidden rounded-[22px] border border-[rgba(120,160,220,0.16)] [background:radial-gradient(ellipse_at_50%_30%,rgba(240,180,41,0.07),transparent_60%),#0A1428] before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:h-0.5 before:z-[2] before:[background:linear-gradient(90deg,transparent,#F0B429,#3B9EFF,transparent)] before:[background-size:200%_100%] before:animate-scanline-slow">
-              <div className="w-full h-[500px] max-[640px]:!h-[400px]">
+        <section id="heatmap" className="mx-auto max-w-[1240px] px-5 pb-24 pt-12 md:px-8">
+          <Heading kicker="Market heatmap" title="Real-time currency performance." text="Percentage changes across major forex pairs. Green shows gains, red shows losses." />
+          <Reveal>
+            <div className="overflow-hidden rounded-[22px] border border-[rgba(120,160,220,0.16)] bg-[#0A1428]">
+              <div className="h-[500px] w-full max-[640px]:h-[400px]">
                 <TradingViewHeatmap />
               </div>
             </div>
-          </div>
+          </Reveal>
         </section>
 
-        {/* VISION */}
-        <section className="relative py-[120px] max-[900px]:py-[84px]" id="vision">
-          <div className="max-w-[1240px] mx-auto px-8 max-[720px]:px-5">
-            <div className="reveal relative overflow-hidden text-center border border-[rgba(120,160,220,0.16)] rounded-[26px] py-20 px-[60px] max-[640px]:!px-[18px] max-[640px]:!py-14 [background:linear-gradient(180deg,rgba(15,22,45,0.65),rgba(6,9,20,0.9))] before:content-[''] before:absolute before:-top-[30%] before:left-1/2 before:-translate-x-1/2 before:w-[900px] before:h-[500px] before:[background:radial-gradient(ellipse,rgba(240,180,41,0.12),transparent_65%)] before:pointer-events-none">
-              <span className="relative inline-flex items-center justify-center gap-2.5 font-mono text-[0.72rem] tracking-[0.22em] uppercase text-[#3B9EFF] mb-[18px] before:content-[''] before:w-[22px] before:h-px before:bg-[#3B9EFF] before:[box-shadow:0_0_8px_#3B9EFF]">
-                Our Vision
-              </span>
-              <h2 className="relative font-display font-semibold leading-[1.15] max-w-[760px] mx-auto text-[#EEF2F8] [font-size:clamp(2rem,4.2vw,3.2rem)]">
-                Smart Vision.{" "}
-                <span className="inline-block bg-gradient-to-br from-[#3B9EFF] to-[#F0B429] bg-clip-text text-transparent">
-                  Stronger Future.
-                </span>
-              </h2>
-              <div className="reveal-stagger relative grid gap-px mt-14 rounded-2xl overflow-hidden border border-[rgba(120,160,220,0.16)] bg-[rgba(120,160,220,0.16)] [grid-template-columns:repeat(4,1fr)] max-[820px]:!grid-cols-2">
-                {[
-                  ["Innovation", "New models and tooling are shipped continuously as markets and technology evolve.", <path key="i" d="M9 18h6M10 22h4M12 2a6 6 0 0 0-4 10.5c.6.6 1 1.4 1 2.5h6c0-1.1.4-1.9 1-2.5A6 6 0 0 0 12 2Z" />],
-                  ["Technology", "A modern engineering stack built for speed, uptime and precise execution.", <><rect key="t" x="4" y="9" width="16" height="11" rx="2" /><path d="M8 9V6a4 4 0 0 1 8 0v3" /></>],
-                  ["Transparency", "Clear reporting and visible system status, so users always know what's happening.", <><path key="tr" d="M12 2 3 6v6c0 5 3.8 8.7 9 10 5.2-1.3 9-5 9-10V6l-9-4Z" /><path d="M9 12l2 2 4-4" /></>],
-                  ["Sustainable Growth", "Infrastructure decisions are made for long-term stability, not short-term shortcuts.", <path key="g" d="M12 22c5-2 8-6 8-11V5l-8-3-8 3v6c0 5 3 9 8 11Z" />],
-                ].map(([title, desc, svgPath]) => (
-                  <div key={title} className="group text-left bg-[#0A1428] py-[30px] px-[22px] transition-colors duration-400 hover:bg-[#0F1A30]">
-                    <div className="relative w-14 h-14 rounded-full flex items-center justify-center mb-[18px] bg-[#0A1428] z-[1] before:content-[''] before:absolute before:-inset-[5px] before:rounded-full before:-z-10 before:[background:conic-gradient(from_0deg,transparent_0%,#F0B429_18%,transparent_40%,#3B9EFF_65%,transparent_88%)] before:opacity-45 before:animate-iconspin-slow group-hover:before:opacity-90 group-hover:before:animate-iconspin-fast after:content-[''] after:absolute after:inset-0 after:rounded-full after:bg-[#0A1428] after:-z-10">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="relative w-6 h-6 text-[#3B9EFF] z-[2] transition-transform duration-400 group-hover:scale-110 group-hover:text-[#FFD666]">
-                        {svgPath}
-                      </svg>
-                    </div>
-                    <h4 className="text-[0.98rem] text-[#EEF2F8] mb-2">{title}</h4>
-                    <p className="text-[#8B98B0] text-[0.82rem] leading-[1.55]">{desc}</p>
-                  </div>
-                ))}
+        {/* HOW IT WORKS: real sequence, horizontal steps on a line */}
+        <section id="how" className="mx-auto max-w-[1240px] px-5 py-24 md:px-8">
+          <Heading kicker="How it works" title="From account to active dashboard, in four steps." />
+          <div className="relative grid gap-8 md:grid-cols-4">
+            <div className="absolute left-0 right-0 top-[19px] hidden h-px bg-gradient-to-r from-[#3B9EFF] to-[#F0B429] md:block" />
+            {[
+              ["Create account", "Set up a secure account with verified credentials."],
+              ["Explore platform", "Get oriented with the console, market feeds and analytics."],
+              ["Set up trading tools", "Configure charts, automation rules and AI indicators."],
+              ["Monitor activity", "Track positions, signals and status from one dashboard."],
+            ].map(([title, desc], i) => (
+              <div key={title} className="relative">
+                <Reveal delay={i * 150}>
+                  <h4 className="mt-5 text-lg font-semibold">{title}</h4>
+                  <p className="mt-2 text-sm leading-[1.6] text-[#8B98B0]">{desc}</p>
+                </Reveal>
               </div>
-            </div>
+            ))}
           </div>
         </section>
 
-        {/* HOW IT WORKS */}
-        <section className="relative py-[120px] max-[900px]:py-[84px]" id="how">
-          <div className="max-w-[1240px] mx-auto px-8 max-[720px]:px-5">
-            <div className="reveal max-w-[640px] mb-14">
-              <span className="inline-flex items-center gap-2.5 font-mono text-[0.72rem] tracking-[0.22em] uppercase text-[#3B9EFF] mb-[18px] before:content-[''] before:w-[22px] before:h-px before:bg-[#3B9EFF] before:[box-shadow:0_0_8px_#3B9EFF]">
-                How It Works
-              </span>
-              <h2 className="font-display font-semibold text-[#EEF2F8] leading-[1.1] [font-size:clamp(1.9rem,3.6vw,2.75rem)]">
-                From account to active dashboard, in four steps.
-              </h2>
-            </div>
-            <div className="reveal-stagger grid gap-[22px] [grid-template-columns:repeat(4,1fr)] max-[900px]:!grid-cols-2 max-[560px]:!grid-cols-1">
-              {[
-                ["01", "Create Account", "Set up a secure JMFinex account with verified access credentials."],
-                ["02", "Explore Platform", "Get oriented with the console, market feeds and analytics tools."],
-                ["03", "Access Trading Tools", "Configure charting, automation rules and AI-assisted indicators."],
-                ["04", "Monitor Market Activity", "Track positions, signals and system status from a single dashboard."],
-              ].map(([num, title, desc]) => (
-                <div key={title} className="relative border border-[rgba(120,160,220,0.16)] rounded-2xl py-[30px] px-6 [background:rgba(15,22,45,0.6)] transition-[transform,border-color] duration-[450ms] hover:-translate-y-1.5 hover:border-[rgba(240,180,41,0.4)]">
-                  <div className="font-display text-[2.4rem] text-transparent opacity-60 mb-[18px] [-webkit-text-stroke:1px_#3B9EFF] animate-sn-glow">{num}</div>
-                  <h4 className="text-[1.02rem] text-[#EEF2F8] mb-2.5">{title}</h4>
-                  <p className="text-[#8B98B0] text-[0.86rem] leading-[1.55]">{desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
+        {/* FAQ: heading left, accordion right */}
         {/* FAQ */}
-        <section className="relative py-[120px] max-[900px]:py-[84px]" id="faq">
-          <div className="max-w-[1240px] mx-auto px-8 max-[720px]:px-5">
-            <div className="reveal mx-auto text-center max-w-[640px] mb-14">
-              <span className="relative inline-flex items-center justify-center gap-2.5 font-mono text-[0.72rem] tracking-[0.22em] uppercase text-[#3B9EFF] mb-[18px] before:content-[''] before:w-[22px] before:h-px before:bg-[#3B9EFF] before:[box-shadow:0_0_8px_#3B9EFF]">
-                FAQ
-              </span>
-              <h2 className="font-display font-semibold text-[#EEF2F8] leading-[1.1] [font-size:clamp(1.9rem,3.6vw,2.75rem)]">
-                Common questions
-              </h2>
-            </div>
-            <div className="reveal max-w-[800px] mx-auto">
-              {[
-                ["What is JMFinex?", "JMFinex is a technology platform that provides AI-assisted analytics, automation tooling and market data infrastructure for forex and digital asset markets.", true],
-                ["What markets does the platform cover?", "The platform aggregates data and access across major forex pairs and widely-traded digital assets, kept in sync through a global network of data nodes.", false],
-                ["How does the AI engine work?", "Models analyze historical and live price structure to identify trend, momentum and volatility patterns, which are surfaced as indicators inside the dashboard.", false],
-                ["How is my data and access secured?", "The platform uses encrypted data pipelines, segregated wallet architecture and standard account-security practices such as verified login and session monitoring.", false],
-                ["Can I use the automation tools without AI signals?", "Yes. Automation rules can be configured independently, with or without AI-generated indicators layered on top.", false],
-                ["Is trading activity or performance guaranteed?", "No. JMFinex provides technology and tools only. Trading involves risk, and no outcome or return is guaranteed. See our Risk Disclosure for details.", false],
-              ].map(([q, a, open]) => (
-                <div key={q} className={`faq-item border-b border-[rgba(120,160,220,0.16)] ${open ? "open" : ""}`}>
-                  <div className="flex items-center justify-between gap-5 cursor-pointer py-[26px] px-1">
-                    <h4 className="text-[1.02rem] font-medium text-[#EEF2F8]">{q}</h4>
-                    <div className={`relative flex-shrink-0 w-[30px] h-[30px] rounded-full border flex items-center justify-center transition-[border-color,background] duration-300 before:content-[''] before:absolute before:w-[10px] before:h-px after:content-[''] after:absolute after:w-px after:h-[10px] before:transition-transform after:transition-transform before:duration-350 after:duration-350 ${open ? "border-[#3B9EFF] bg-[#3B9EFF]/[0.14] before:bg-[#3B9EFF] after:bg-[#3B9EFF] after:scale-y-0" : "border-[rgba(120,160,220,0.16)] before:bg-[#8B98B0] after:bg-[#8B98B0]"}`} />
-                  </div>
-                  <div className={`overflow-hidden transition-[max-height] duration-500 ${open ? "max-h-[300px]" : "max-h-0"}`}>
-                    <p className="text-[#8B98B0] text-[0.92rem] leading-[1.65] max-w-[680px] px-1 pb-[26px]">{a}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+<section className="relative py-[120px] max-[900px]:py-[84px]" id="faq">
+  <div className="max-w-[1240px] mx-auto px-8 max-[720px]:px-5">
+    <div className="reveal mx-auto text-center max-w-[640px] mb-14">
+      <span className="relative inline-flex items-center justify-center gap-2.5 font-mono text-[0.72rem] tracking-[0.22em] uppercase text-[#3B9EFF] mb-[18px] before:content-[''] before:w-[22px] before:h-px before:bg-[#3B9EFF] before:[box-shadow:0_0_8px_#3B9EFF]">
+        FAQ
+      </span>
+      <h2 className="font-display font-semibold text-[#EEF2F8] leading-[1.1] [font-size:clamp(1.9rem,3.6vw,2.75rem)]">
+        Common questions
+      </h2>
+    </div>
+    <div className="reveal max-w-[800px] mx-auto">
+      {[
+        ["What is JMFinex?", "JMFinex is a technology platform that provides AI-assisted analytics, automation tooling and market data infrastructure for forex and digital asset markets.", true],
+        ["What markets does the platform cover?", "The platform aggregates data and access across major forex pairs and widely-traded digital assets, kept in sync through a global network of data nodes.", false],
+        ["How does the AI engine work?", "Models analyze historical and live price structure to identify trend, momentum and volatility patterns, which are surfaced as indicators inside the dashboard.", false],
+        ["How is my data and access secured?", "The platform uses encrypted data pipelines, segregated wallet architecture and standard account-security practices such as verified login and session monitoring.", false],
+        ["Can I use the automation tools without AI signals?", "Yes. Automation rules can be configured independently, with or without AI-generated indicators layered on top.", false],
+        ["Is trading activity or performance guaranteed?", "No. JMFinex provides technology and tools only. Trading involves risk, and no outcome or return is guaranteed. See our Risk Disclosure for details.", false],
+      ].map(([q, a, open]) => (
+        <div key={q} className={`faq-item border-b border-[rgba(120,160,220,0.16)] ${open ? "open" : ""}`}>
+          <div className="flex items-center justify-between gap-5 cursor-pointer py-[26px] px-1">
+            <h4 className="text-[1.02rem] font-medium text-[#EEF2F8]">{q}</h4>
+            <div className={`relative flex-shrink-0 w-[30px] h-[30px] rounded-full border flex items-center justify-center transition-[border-color,background] duration-300 before:content-[''] before:absolute before:w-[10px] before:h-px after:content-[''] after:absolute after:w-px after:h-[10px] before:transition-transform after:transition-transform before:duration-350 after:duration-350 ${open ? "border-[#3B9EFF] bg-[#3B9EFF]/[0.14] before:bg-[#3B9EFF] after:bg-[#3B9EFF] after:scale-y-0" : "border-[rgba(120,160,220,0.16)] before:bg-[#8B98B0] after:bg-[#8B98B0]"}`} />
           </div>
-        </section>
+          <div className={`overflow-hidden transition-[max-height] duration-500 ${open ? "max-h-[300px]" : "max-h-0"}`}>
+            <p className="text-[#8B98B0] text-[0.92rem] leading-[1.65] max-w-[680px] px-1 pb-[26px]">{a}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
 
-        {/* FINAL CTA */}
-        <section className="relative py-[120px] max-[900px]:py-[84px]" id="cta">
+        {/* CTA */}
+          <section className="relative py-[120px] max-[900px]:py-[84px]" id="cta">
           <div className="max-w-[1240px] mx-auto px-8 max-[720px]:px-5">
             <div className="reveal relative overflow-hidden text-center rounded-[26px] py-[90px] px-10 max-[640px]:!px-[22px] max-[640px]:!py-16 bg-[#0A1428] border border-[rgba(120,160,220,0.16)]">
-              <canvas id="ctaParticles" className="absolute inset-0 w-full h-full opacity-50" />
-              <div className="relative z-[2]">
-                <span className="relative inline-flex items-center justify-center gap-2.5 font-mono text-[0.72rem] tracking-[0.22em] uppercase text-[#3B9EFF] mb-[18px] before:content-[''] before:w-[22px] before:h-px before:bg-[#3B9EFF] before:[box-shadow:0_0_8px_#3B9EFF]">
-                  Get Signup
-                </span>
-                <h2 className="font-display font-semibold leading-[1.15] max-w-[680px] mx-auto mb-[34px] text-[#EEF2F8] [font-size:clamp(1.9rem,4vw,3rem)]">
-                  Explore the future of digital trading technology.
-                </h2>
+               <canvas id="ctaParticles" className="absolute inset-0 w-full h-full opacity-50" />
+               <div className="relative z-[2]">
+                 <span className="relative inline-flex items-center justify-center gap-2.5 font-mono text-[0.72rem] tracking-[0.22em] uppercase text-[#3B9EFF] mb-[18px] before:content-[''] before:w-[22px] before:h-px before:bg-[#3B9EFF] before:[box-shadow:0_0_8px_#3B9EFF]">
+                   Get Signup
+                 </span>
+                 <h2 className="font-display font-semibold leading-[1.15] max-w-[680px] mx-auto mb-[34px] text-[#EEF2F8] [font-size:clamp(1.9rem,4vw,3rem)]">
+                   Explore the future of digital trading technology.
+                 </h2>
                 <a href="/user/register" className="relative inline-flex items-center justify-center gap-2.5 rounded-full font-semibold text-base py-[18px] px-10 text-[#0A0E1A] [background:linear-gradient(135deg,#F0B429_0%,#D4A017_100%)] transition-transform duration-350 hover:-translate-y-0.5 hover:[box-shadow:0_12px_32px_-8px_rgba(240,180,41,.55),0_0_24px_-4px_rgba(255,215,0,.4)]">
                   <span>Get Signup with JMFinex</span>
-                </a>
+                 </a>
              
-              </div>
-            </div>
-          </div>
-        </section>
-
-       
+               </div>
+             </div>
+           </div>
+         </section>
       </main>
 
-      <Script src="/script.js" strategy="afterInteractive" />
-    </>
+    
+    </div>
   );
 }

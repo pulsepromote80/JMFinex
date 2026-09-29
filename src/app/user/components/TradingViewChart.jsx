@@ -3,7 +3,7 @@ import React, { useEffect, useRef, memo } from "react";
 
 function TradingViewChart({ 
   defaultSymbol = "FX:USDCAD", 
-  interval = "360" 
+  interval = "W" 
 }) {
   const container = useRef(null);
 
@@ -15,6 +15,7 @@ function TradingViewChart({
     widget.className = "tradingview-widget-container__widget";
     widget.style.height = "100%";
     widget.style.width = "100%";
+    widget.style.minHeight = "400px";
     container.current.appendChild(widget);
 
     const script = document.createElement("script");
@@ -25,7 +26,7 @@ function TradingViewChart({
       allow_symbol_change: false,
       calendar: false,
       details: false,
-      hide_side_toolbar: true,
+      hide_side_toolbar: false,
       hide_top_toolbar: false,
       hide_legend: false,
       hide_volume: false,
@@ -56,7 +57,7 @@ function TradingViewChart({
     <div
       ref={container}
       className="tradingview-widget-container"
-      style={{ width: "100%", height: "100%", position: "relative" }}
+      style={{ width: "100%", height: "100%", position: "relative", minHeight: "400px" }}
     />
   );
 }

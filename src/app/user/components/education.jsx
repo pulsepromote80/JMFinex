@@ -1,3 +1,5 @@
+
+
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -18,6 +20,13 @@ import {
     TrendingUp,
     Users,
     X,
+    Clock,
+    Target,
+    Layers,
+    Award,
+    Zap,
+    Globe,
+    Quote,
 } from "lucide-react";
 
 const tracks = [
@@ -92,6 +101,29 @@ const articleContent = {
     },
 };
 
+// ---- NEW content data ----
+const features = [
+    [Zap, "Bite-sized lessons", "Short, focused modules you can finish in a single sitting — no overload, just clarity."],
+    [Layers, "Structured paths", "Each track builds on the last, so your understanding compounds instead of fragmenting."],
+    [Target, "Practical focus", "Every concept is tied to real market behaviour, not abstract theory."],
+    [Globe, "Global perspective", "Coverage across forex, digital assets and macro themes shaping 2025-2026."],
+    [Award, "Institutional lens", "Learn the frameworks that professional desks actually use, explained simply."],
+    [Clock, "Always current", "Content is refreshed as market structure and technology evolve."],
+];
+
+const learningSteps = [
+    ["01", "Pick a track", "Choose the path that matches where you are — from market structure to AI systems."],
+    ["02", "Study the concepts", "Work through focused summaries, key ideas, and the reasoning behind each approach."],
+    ["03", "Apply with context", "See how each concept fits into live markets, with examples and risk awareness."],
+    ["04", "Build your edge", "Combine topics into a repeatable framework that supports confident decisions."],
+];
+
+const testimonials = [
+    ["The liquidity module completely changed how I read charts. I finally understand why price moves the way it does.", "Aarav M.", "Retail trader"],
+    ["Clear, structured, and refreshingly free of hype. It reads like a desk briefing rather than a course.", "Priya S.", "Swing trader"],
+    ["The risk management track alone was worth it. Adaptive sizing made my results far more consistent.", "Daniel K.", "Part-time trader"],
+];
+
 function getArticleParagraphs(article) {
     const content = articleContent[article.title];
     const points = content?.points || ["Core concepts", "Practical examples", "Market context", "Risk awareness"];
@@ -129,7 +161,6 @@ export default function AcademicsSection() {
         <div className="relative overflow-hidden bg-[#050812] text-[#EEF3F8]">
             <div className="pointer-events-none absolute inset-0 [background:radial-gradient(ellipse_at_top_right,rgba(59,158,255,0.13),transparent_50%),radial-gradient(ellipse_at_bottom_left,rgba(240,180,41,0.08),transparent_55%),linear-gradient(180deg,rgba(8,11,24,0.9),#050812)]" />
             <div className="pointer-events-none absolute inset-0 opacity-[0.04] [background-image:linear-gradient(rgba(59,158,255,0.35)_1px,transparent_1px),linear-gradient(90deg,rgba(59,158,255,0.35)_1px,transparent_1px)] [background-size:64px_64px] [mask-image:radial-gradient(ellipse_80%_60%_at_50%_0%,black,transparent_80%)]" />
-
 
             <main className="relative z-10 mx-auto max-w-[1240px] px-8 pb-20 pt-[150px] max-[720px]:px-5 max-[720px]:pt-[125px]">
                 <section className="grid items-end gap-10 border-b border-white/[0.1] pb-14 lg:grid-cols-[1fr_330px]">
@@ -190,7 +221,37 @@ export default function AcademicsSection() {
                     </div>
                 </section>
 
-                <section id="tracks" className="pt-14">
+                {/* ===== NEW: WHY LEARN WITH US ===== */}
+                <section className="pt-16">
+                    <div className="mb-8 max-w-[640px]">
+                        <span className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-[#3b9eff]">
+                            Why learn with JMFinex
+                        </span>
+                        <h2 className="mt-2 font-display text-[clamp(1.7rem,3vw,2.35rem)] font-semibold text-[#EEF3F8]">
+                            A learning experience built for real markets.
+                        </h2>
+                        <p className="mt-3 leading-[1.7] text-[#8B98B0]">
+                            No fluff, no signals to follow. Just the concepts, context, and
+                            discipline that support better decisions over time.
+                        </p>
+                    </div>
+                    <div className="grid grid-cols-3 gap-3 max-[900px]:grid-cols-2 max-[560px]:grid-cols-1">
+                        {features.map(([Icon, title, desc]) => (
+                            <div
+                                key={title}
+                                className="group rounded-2xl border border-white/[0.1] bg-white/[0.035] p-6 transition duration-300 hover:-translate-y-1 hover:border-[#3B9EFF]/[0.4] hover:bg-white/[0.06]"
+                            >
+                                <div className="mb-5 grid h-11 w-11 place-items-center rounded-xl bg-[#0A1428] text-[#3B9EFF] transition duration-300 group-hover:text-[#F0B429]">
+                                    <Icon size={20} />
+                                </div>
+                                <h3 className="font-display text-[1.05rem] font-semibold text-[#EEF2F8]">{title}</h3>
+                                <p className="mt-2 text-[0.9rem] leading-[1.6] text-[#8B98B0]">{desc}</p>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+
+                <section id="tracks" className="pt-20">
                     <div className="mb-7 flex items-end justify-between gap-5">
                         <div>
                             <span className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-[#3b9eff]">
@@ -243,6 +304,63 @@ export default function AcademicsSection() {
                         ))}
                     </div>
                 </section>
+
+                {/* ===== NEW: HOW IT WORKS / LEARNING PATH ===== */}
+                <section className="pt-20">
+                    <div className="mb-8 max-w-[640px]">
+                        <span className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-[#3b9eff]">
+                            How it works
+                        </span>
+                        <h2 className="mt-2 font-display text-[clamp(1.7rem,3vw,2.35rem)] font-semibold text-[#EEF3F8]">
+                            From first concept to a working edge.
+                        </h2>
+                    </div>
+                    <div className="grid gap-3 md:grid-cols-4">
+                        {learningSteps.map(([num, title, desc]) => (
+                            <div
+                                key={title}
+                                className="relative rounded-2xl border border-white/[0.1] bg-white/[0.035] p-6 transition duration-300 hover:-translate-y-1 hover:border-[#F0B429]/[0.4]"
+                            >
+                                <span className="font-display text-[2rem] font-semibold text-transparent [-webkit-text-stroke:1px_#3B9EFF]">{num}</span>
+                                <h3 className="mt-3 font-display text-[1.02rem] font-semibold text-[#EEF2F8]">{title}</h3>
+                                <p className="mt-2 text-[0.88rem] leading-[1.6] text-[#8B98B0]">{desc}</p>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+
+                {/* ===== NEW: TESTIMONIALS ===== */}
+                <section className="pt-20">
+                    <div className="mb-8 flex items-end justify-between gap-5">
+                        <div className="max-w-[640px]">
+                            <span className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-[#F0B429]">
+                                Learner voices
+                            </span>
+                            <h2 className="mt-2 font-display text-[clamp(1.7rem,3vw,2.35rem)] font-semibold text-[#EEF3F8]">
+                                What learners are saying.
+                            </h2>
+                        </div>
+                    </div>
+                    <div className="grid gap-3 md:grid-cols-3">
+                        {testimonials.map(([quote, name, role]) => (
+                            <figure
+                                key={name}
+                                className="rounded-2xl border border-white/[0.1] bg-white/[0.035] p-6 transition duration-300 hover:-translate-y-1 hover:border-[#3B9EFF]/[0.4]"
+                            >
+                                <Quote size={20} className="text-[#3B9EFF]" />
+                                <blockquote className="mt-4 text-[0.95rem] leading-[1.7] text-[#C9D0DC]">
+                                    &ldquo;{quote}&rdquo;
+                                </blockquote>
+                                <figcaption className="mt-5 border-t border-white/[0.1] pt-4">
+                                    <strong className="block text-[0.92rem] text-[#EEF2F8]">{name}</strong>
+                                    <span className="text-[0.78rem] text-[#5D6B85]">{role}</span>
+                                </figcaption>
+                            </figure>
+                        ))}
+                    </div>
+                </section>
+
+             
             </main>
 
             {selectedArticle && (
@@ -289,8 +407,6 @@ export default function AcademicsSection() {
                     </div>
                 </div>
             </section>
-
-
 
             <div className="fixed bottom-7 right-7 z-50 flex flex-col items-end gap-3 max-[720px]:bottom-5 max-[720px]:right-5">
                 {chatOpen && (
