@@ -32,9 +32,7 @@ const DownlineAffiliates = () => {
     }
     setErrors({});
     const payload = {
-      authLogin: authLogin,
-      lvl: "",
-      statusId: ""
+      authLogin: authLogin
     }
     dispatch(getPersonalTeamListAdmin(payload));
     setSearched(true);
@@ -42,7 +40,6 @@ const DownlineAffiliates = () => {
     setCurrentPage(1); 
   };
 
-  // 📊 Export Excel
   const handleExport = () => {
     const data = Array.isArray(getPersonalTeamListAdminData)
       ? getPersonalTeamListAdminData
