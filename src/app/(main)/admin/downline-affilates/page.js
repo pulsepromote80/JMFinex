@@ -40,7 +40,6 @@ const DownlineAffiliates = () => {
     setCurrentPage(1); 
   };
 
-  // 📊 Export Excel
   const handleExport = () => {
     const data = Array.isArray(getPersonalTeamListAdminData)
       ? getPersonalTeamListAdminData
