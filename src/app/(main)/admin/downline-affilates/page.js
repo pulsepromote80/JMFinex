@@ -32,9 +32,7 @@ const DownlineAffiliates = () => {
     }
     setErrors({});
     const payload = {
-      authLogin: authLogin,
-      lvl: "",
-      statusId: ""
+      authLogin: authLogin
     }
     dispatch(getPersonalTeamListAdmin(payload));
     setSearched(true);
