@@ -251,14 +251,46 @@ export default function AllSection() {
             <p className="hi mx-auto mt-6 max-w-[600px] text-lg leading-[1.6] text-[#8B98B0] opacity-0 animate-[fadeUp_0.9s_ease-out_0.4s_forwards]">
               JMFinex brings AI analytics, automated infrastructure and real-time global market data into one secure platform.
             </p>
-            <div className="hi mt-5 flex flex-wrap justify-center gap-2 opacity-0 animate-[fadeUp_0.9s_ease-out_0.55s_forwards]">
-              <a href="/user/register" className="animate-[glowPulse_2.6s_ease-in-out_infinite] rounded-xl bg-gradient-to-br from-[#F0B429] to-[#D4A017] px-8 py-3.5 font-semibold text-[#0A0E1A] transition hover:-translate-y-0.5 hover:shadow-[0_12px_32px_-8px_rgba(240,180,41,.55)]">
-                Explore Platform
-              </a>
-              <a href="/user/login" className="rounded-xl border border-white/[0.22] px-8 py-3.5 font-semibold transition hover:border-[#F0B429] hover:bg-[#F0B429]/[0.12]">
-                Sign in
-              </a>
-            </div>
+  <div className="hi mt-5 flex flex-wrap justify-center gap-3 opacity-0 animate-[fadeUp_0.9s_ease-out_0.55s_forwards]">
+
+  {/* Trade */}
+  <a
+    href="/user/login"
+    className="group relative inline-flex items-center gap-2 overflow-hidden rounded-xl border border-white/[0.22] bg-white/[0.03] px-8 py-3.5 font-semibold backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-[#F0B429]/60 hover:bg-[#F0B429]/[0.12] hover:shadow-[0_10px_30px_-10px_rgba(240,180,41,.4)]"
+  >
+    <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/[0.1] to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+    <svg className="h-4 w-4 text-[#F0B429]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="3 17 9 11 13 15 21 7" />
+      <polyline points="15 7 21 7 21 13" />
+    </svg>
+    Trade
+  </a>
+
+  {/* Learn */}
+  <a
+    href="/user/course"
+    className="group relative inline-flex items-center gap-2 overflow-hidden rounded-xl border border-white/[0.22] bg-white/[0.03] px-8 py-3.5 font-semibold backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-[#F0B429]/60 hover:bg-[#F0B429]/[0.12] hover:shadow-[0_10px_30px_-10px_rgba(240,180,41,.4)]"
+  >
+    <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/[0.1] to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+    <svg className="h-4 w-4 text-[#F0B429]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+      <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+    </svg>
+    Learn
+  </a>
+
+  {/* FMP */}
+  <a
+    href="/user/register"
+    className="group relative inline-flex items-center gap-2 overflow-hidden rounded-xl bg-gradient-to-br from-[#F0B429] to-[#D4A017] px-8 py-3.5 font-semibold text-[#0A0E1A] shadow-[0_8px_24px_-10px_rgba(240,180,41,.6)] transition-all duration-300 animate-[glowPulse_2.6s_ease-in-out_infinite] hover:-translate-y-0.5 hover:shadow-[0_12px_32px_-8px_rgba(240,180,41,.55)]"
+  >
+    <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+    <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z" />
+    </svg>
+    FMP
+  </a>
+</div>
           </div>
 
           <div className="mx-auto  grid max-w-[720px] grid-cols-3 divide-x divide-[rgba(120,160,220,0.16)] text-center">
