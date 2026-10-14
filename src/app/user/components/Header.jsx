@@ -29,58 +29,59 @@ export default function Header() {
             <img src="/logo.png" alt="JMFinex Logo" className="w-[240px] max-w-full block" />
           </a>
 
-          <nav className="hidden max-[900px]:!hidden [@media(min-width:901px)]:flex items-center gap-[38px]">
-            {navItems.map((id) => (
-              id === "Learn & Trade" ? (
-                <div
-                  key={id}
-                  className="relative"
-                  onMouseEnter={() => setEducationDropdown(true)}
-                  onMouseLeave={() => setEducationDropdown(false)}
-                >
-                  <div
-                    className="relative text-[0.88rem] font-medium text-[#8B98B0] transition-colors duration-250 hover:text-[#EEF2F8] capitalize flex items-center gap-1 cursor-pointer after:content-[''] after:absolute after:left-0 after:-bottom-1.5 after:w-0 after:h-px after:[background:linear-gradient(90deg,#3B9EFF,#F0B429)] after:transition-[width] after:duration-350 hover:after:w-full"
-                  >
-                    {id}
-                    <svg className="w-3 h-3 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </div>
-                  {educationDropdown && (
-                    <div className="absolute top-full left-0 mt-3 w-48 bg-[#050812] border border-[rgba(120,160,220,0.2)] rounded-xl shadow-[0_8px_32px_rgba(0,0,0,0.6)] z-50 overflow-hidden">
-                      
-                      <a
-                        href="/user/education"
-                        className="block px-5 py-3 text-[0.85rem] text-[#8B98B0] hover:text-[#EEF2F8] hover:bg-[rgba(59,158,255,0.12)] transition-colors border-b border-[rgba(120,160,220,0.1)]"
-                      >
-                        Education
-                      </a>
-                      <a
-                        href="/user/course"
-                        className="block px-5 py-3 text-[0.85rem] text-[#8B98B0] hover:text-[#EEF2F8] hover:bg-[rgba(59,158,255,0.12)] transition-colors border-b border-[rgba(120,160,220,0.1)]"
-                      >
-                        Academy
-                      </a>
-                      <a
-                        href="/user/selftrade"
-                        className="block px-5 py-3 text-[0.85rem] text-[#8B98B0] hover:text-[#EEF2F8] hover:bg-[rgba(59,158,255,0.12)] transition-colors"
-                      >
-                        Self Trade
-                      </a>
-                    </div>
-                  )}
-                </div>
-              ) : (
-                <a
-                  key={id}
-                  href={`/user#${id.toLowerCase()}`}
-                  className="relative text-[0.88rem] font-medium text-[#8B98B0] transition-colors duration-250 hover:text-[#EEF2F8] after:content-[''] after:absolute after:left-0 after:-bottom-1.5 after:w-0 after:h-px after:[background:linear-gradient(90deg,#3B9EFF,#F0B429)] after:transition-[width] after:duration-350 hover:after:w-full capitalize"
-                >
-                  {id === "faq" ? "FAQ" : id}
-                </a>
-              )
-            ))}
-          </nav>
+         <nav className="hidden max-[900px]:!hidden [@media(min-width:901px)]:flex items-center gap-[38px]">
+  {navItems.map((id) => (
+    id === "Learn & Trade" ? (
+      <div
+        key={id}
+        className="relative"
+        onMouseEnter={() => setEducationDropdown(true)}
+        onMouseLeave={() => setEducationDropdown(false)}
+      >
+        <div
+          className="relative text-[0.88rem] font-medium text-[#8B98B0] transition-colors duration-250 hover:text-[#EEF2F8] capitalize flex items-center gap-1 cursor-pointer after:content-[''] after:absolute after:left-0 after:-bottom-1.5 after:w-0 after:h-px after:[background:linear-gradient(90deg,#3B9EFF,#F0B429)] after:transition-[width] after:duration-350 hover:after:w-full"
+        >
+          {id}
+          <svg className="w-3 h-3 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </div>
+        {educationDropdown && (
+          <div className="absolute top-full left-0 pt-3 w-48 z-50">
+            <div className="bg-[#050812] border border-[rgba(120,160,220,0.2)] rounded-xl shadow-[0_8px_32px_rgba(0,0,0,0.6)] overflow-hidden">
+              <a
+                href="/user/education"
+                className="block px-5 py-3 text-[0.85rem] text-[#8B98B0] hover:text-[#EEF2F8] hover:bg-[rgba(59,158,255,0.12)] transition-colors border-b border-[rgba(120,160,220,0.1)]"
+              >
+                Education
+              </a>
+              <a
+                href="/user/course"
+                className="block px-5 py-3 text-[0.85rem] text-[#8B98B0] hover:text-[#EEF2F8] hover:bg-[rgba(59,158,255,0.12)] transition-colors border-b border-[rgba(120,160,220,0.1)]"
+              >
+                Academy
+              </a>
+              <a
+                href="/user/selftrade"
+                className="block px-5 py-3 text-[0.85rem] text-[#8B98B0] hover:text-[#EEF2F8] hover:bg-[rgba(59,158,255,0.12)] transition-colors"
+              >
+                Self Trade
+              </a>
+            </div>
+          </div>
+        )}
+      </div>
+    ) : (
+      <a
+        key={id}
+        href={`/user#${id.toLowerCase()}`}
+        className="relative text-[0.88rem] font-medium text-[#8B98B0] transition-colors duration-250 hover:text-[#EEF2F8] after:content-[''] after:absolute after:left-0 after:-bottom-1.5 after:w-0 after:h-px after:[background:linear-gradient(90deg,#3B9EFF,#F0B429)] after:transition-[width] after:duration-350 hover:after:w-full capitalize"
+      >
+        {id === "faq" ? "FAQ" : id}
+      </a>
+    )
+  ))}
+</nav>
 
           <div className="hidden min-[901px]:flex items-center gap-3.5">
             <a href="/user/register"

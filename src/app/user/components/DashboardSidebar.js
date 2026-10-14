@@ -56,7 +56,7 @@ export default function DashboardHeader({ sidebarOpen, setSidebarOpen }) {
     const breadcrumbMap = {
       'dashboard': { parent: 'Dashboard', child: 'Overview' },
       'analytics': { parent: 'Analytics', child: 'Overview' },
-      'AI-Trading-Bots': { parent: 'AI Trading Bots', child: 'Overview' },
+      'AI-Trading-Bots': { parent: 'AI Risk Intelligence', child: 'Overview' },
       'Team': { parent: 'Genealogy', child: 'All Teams' },
       'deposit-request': { parent: 'Finance', child: 'Deposit Request' },
       'deposit-history': { parent: 'Finance', child: 'Deposit History' },

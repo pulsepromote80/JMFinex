@@ -21,8 +21,6 @@ import {
   X,
 } from "lucide-react";
 
-
-
 const tracks = [
   [
     CandlestickChart,
@@ -93,49 +91,217 @@ const skills = [
   "Build algorithmic execution strategies aligned with institutional practices",
 ];
 
-
 /* ---------- Pattern data ---------- */
 const PATTERNS = [
-  { id: "hs", bias: "bear", tag: "REVERSAL · BEARISH", title: "Head & Shoulders",
+  {
+    id: "hs",
+    bias: "bear",
+    tag: "REVERSAL · BEARISH",
+    title: "Head & Shoulders",
     desc: "Three peaks — a higher middle peak flanked by two similar side peaks. A break below the neckline often signals the uptrend has lost momentum.",
-    points: [{x:0,y:30},{x:12,y:60},{x:22,y:38},{x:35,y:85},{x:48,y:38},{x:60,y:60},{x:72,y:38},{x:85,y:18},{x:100,y:8}],
-    guides: [{x1:18,y1:38,x2:100,y2:20}] },
-  { id: "ihs", bias: "bull", tag: "REVERSAL · BULLISH", title: "Inverse Head & Shoulders",
+    points: [
+      { x: 0, y: 30 },
+      { x: 12, y: 60 },
+      { x: 22, y: 38 },
+      { x: 35, y: 85 },
+      { x: 48, y: 38 },
+      { x: 60, y: 60 },
+      { x: 72, y: 38 },
+      { x: 85, y: 18 },
+      { x: 100, y: 8 },
+    ],
+    guides: [{ x1: 18, y1: 38, x2: 100, y2: 20 }],
+  },
+  {
+    id: "ihs",
+    bias: "bull",
+    tag: "REVERSAL · BULLISH",
+    title: "Inverse Head & Shoulders",
     desc: "The mirror of head and shoulders, forming after a downtrend. A break above the neckline suggests selling pressure is fading.",
-    points: [{x:0,y:70},{x:12,y:40},{x:22,y:62},{x:35,y:15},{x:48,y:62},{x:60,y:40},{x:72,y:62},{x:85,y:82},{x:100,y:92}],
-    guides: [{x1:18,y1:62,x2:100,y2:80}] },
-  { id: "dtop", bias: "bear", tag: "REVERSAL · BEARISH", title: "Double Top",
+    points: [
+      { x: 0, y: 70 },
+      { x: 12, y: 40 },
+      { x: 22, y: 62 },
+      { x: 35, y: 15 },
+      { x: 48, y: 62 },
+      { x: 60, y: 40 },
+      { x: 72, y: 62 },
+      { x: 85, y: 82 },
+      { x: 100, y: 92 },
+    ],
+    guides: [{ x1: 18, y1: 62, x2: 100, y2: 80 }],
+  },
+  {
+    id: "dtop",
+    bias: "bear",
+    tag: "REVERSAL · BEARISH",
+    title: "Double Top",
     desc: "Price tests the same resistance twice and fails to break higher. A close below the mid support often confirms the change in trend.",
-    points: [{x:0,y:30},{x:20,y:75},{x:35,y:45},{x:55,y:75},{x:72,y:45},{x:88,y:20},{x:100,y:12}],
-    guides: [{x1:28,y1:45,x2:100,y2:45}] },
-  { id: "dbot", bias: "bull", tag: "REVERSAL · BULLISH", title: "Double Bottom",
+    points: [
+      { x: 0, y: 30 },
+      { x: 20, y: 75 },
+      { x: 35, y: 45 },
+      { x: 55, y: 75 },
+      { x: 72, y: 45 },
+      { x: 88, y: 20 },
+      { x: 100, y: 12 },
+    ],
+    guides: [{ x1: 28, y1: 45, x2: 100, y2: 45 }],
+  },
+  {
+    id: "dbot",
+    bias: "bull",
+    tag: "REVERSAL · BULLISH",
+    title: "Double Bottom",
     desc: "Price tests the same support twice and holds. A close above the mid resistance often confirms buyers have taken control.",
-    points: [{x:0,y:70},{x:20,y:25},{x:35,y:55},{x:55,y:25},{x:72,y:55},{x:88,y:80},{x:100,y:88}],
-    guides: [{x1:28,y1:55,x2:100,y2:55}] },
-  { id: "asctri", bias: "bull", tag: "CONTINUATION · BULLISH", title: "Ascending Triangle",
+    points: [
+      { x: 0, y: 70 },
+      { x: 20, y: 25 },
+      { x: 35, y: 55 },
+      { x: 55, y: 25 },
+      { x: 72, y: 55 },
+      { x: 88, y: 80 },
+      { x: 100, y: 88 },
+    ],
+    guides: [{ x1: 28, y1: 55, x2: 100, y2: 55 }],
+  },
+  {
+    id: "asctri",
+    bias: "bull",
+    tag: "CONTINUATION · BULLISH",
+    title: "Ascending Triangle",
     desc: "A flat resistance line capped above a series of rising higher lows. A breakout above resistance usually continues the prior trend.",
-    points: [{x:0,y:28},{x:12,y:58},{x:24,y:38},{x:36,y:58},{x:48,y:44},{x:60,y:58},{x:72,y:50},{x:85,y:58},{x:92,y:75},{x:100,y:88}],
-    guides: [{x1:8,y1:58,x2:88,y2:58},{x1:24,y1:38,x2:72,y2:50}] },
-  { id: "desctri", bias: "bear", tag: "CONTINUATION · BEARISH", title: "Descending Triangle",
+    points: [
+      { x: 0, y: 28 },
+      { x: 12, y: 58 },
+      { x: 24, y: 38 },
+      { x: 36, y: 58 },
+      { x: 48, y: 44 },
+      { x: 60, y: 58 },
+      { x: 72, y: 50 },
+      { x: 85, y: 58 },
+      { x: 92, y: 75 },
+      { x: 100, y: 88 },
+    ],
+    guides: [
+      { x1: 8, y1: 58, x2: 88, y2: 58 },
+      { x1: 24, y1: 38, x2: 72, y2: 50 },
+    ],
+  },
+  {
+    id: "desctri",
+    bias: "bear",
+    tag: "CONTINUATION · BEARISH",
+    title: "Descending Triangle",
     desc: "A flat support line beneath a series of falling lower highs. A breakdown below support usually continues the prior trend.",
-    points: [{x:0,y:72},{x:12,y:42},{x:24,y:62},{x:36,y:42},{x:48,y:56},{x:60,y:42},{x:72,y:50},{x:85,y:42},{x:92,y:25},{x:100,y:12}],
-    guides: [{x1:8,y1:42,x2:88,y2:42},{x1:24,y1:62,x2:72,y2:50}] },
-  { id: "symtri", bias: "neutral", tag: "BILATERAL", title: "Symmetrical Triangle",
+    points: [
+      { x: 0, y: 72 },
+      { x: 12, y: 42 },
+      { x: 24, y: 62 },
+      { x: 36, y: 42 },
+      { x: 48, y: 56 },
+      { x: 60, y: 42 },
+      { x: 72, y: 50 },
+      { x: 85, y: 42 },
+      { x: 92, y: 25 },
+      { x: 100, y: 12 },
+    ],
+    guides: [
+      { x1: 8, y1: 42, x2: 88, y2: 42 },
+      { x1: 24, y1: 62, x2: 72, y2: 50 },
+    ],
+  },
+  {
+    id: "symtri",
+    bias: "neutral",
+    tag: "BILATERAL",
+    title: "Symmetrical Triangle",
     desc: "Converging trendlines compress price into a tightening range. Direction isn't decided until the breakout — trade the confirmation, not the shape.",
-    points: [{x:0,y:30},{x:14,y:70},{x:28,y:40},{x:42,y:62},{x:56,y:46},{x:68,y:56},{x:78,y:50},{x:88,y:66},{x:100,y:80}],
-    guides: [{x1:0,y1:70,x2:78,y2:50},{x1:0,y1:30,x2:78,y2:50}] },
-  { id: "bullflag", bias: "bull", tag: "CONTINUATION · BULLISH", title: "Bull Flag",
+    points: [
+      { x: 0, y: 30 },
+      { x: 14, y: 70 },
+      { x: 28, y: 40 },
+      { x: 42, y: 62 },
+      { x: 56, y: 46 },
+      { x: 68, y: 56 },
+      { x: 78, y: 50 },
+      { x: 88, y: 66 },
+      { x: 100, y: 80 },
+    ],
+    guides: [
+      { x1: 0, y1: 70, x2: 78, y2: 50 },
+      { x1: 0, y1: 30, x2: 78, y2: 50 },
+    ],
+  },
+  {
+    id: "bullflag",
+    bias: "bull",
+    tag: "CONTINUATION · BULLISH",
+    title: "Bull Flag",
     desc: "A sharp rally (the pole) followed by a brief, orderly pullback (the flag). A breakout above the flag often resumes the original move.",
-    points: [{x:0,y:10},{x:10,y:76},{x:24,y:68},{x:34,y:73},{x:44,y:63},{x:54,y:68},{x:64,y:58},{x:76,y:82},{x:88,y:92},{x:100,y:97}],
-    guides: [{x1:20,y1:73,x2:68,y2:56},{x1:20,y1:68,x2:68,y2:51}] },
-  { id: "bearflag", bias: "bear", tag: "CONTINUATION · BEARISH", title: "Bear Flag",
+    points: [
+      { x: 0, y: 10 },
+      { x: 10, y: 76 },
+      { x: 24, y: 68 },
+      { x: 34, y: 73 },
+      { x: 44, y: 63 },
+      { x: 54, y: 68 },
+      { x: 64, y: 58 },
+      { x: 76, y: 82 },
+      { x: 88, y: 92 },
+      { x: 100, y: 97 },
+    ],
+    guides: [
+      { x1: 20, y1: 73, x2: 68, y2: 56 },
+      { x1: 20, y1: 68, x2: 68, y2: 51 },
+    ],
+  },
+  {
+    id: "bearflag",
+    bias: "bear",
+    tag: "CONTINUATION · BEARISH",
+    title: "Bear Flag",
     desc: "A sharp decline (the pole) followed by a brief, orderly bounce (the flag). A breakdown below the flag often resumes the original move.",
-    points: [{x:0,y:90},{x:10,y:24},{x:24,y:32},{x:34,y:27},{x:44,y:37},{x:54,y:32},{x:64,y:42},{x:76,y:18},{x:88,y:8},{x:100,y:3}],
-    guides: [{x1:20,y1:27,x2:68,y2:44},{x1:20,y1:32,x2:68,y2:49}] },
-  { id: "cup", bias: "bull", tag: "CONTINUATION · BULLISH", title: "Cup & Handle",
+    points: [
+      { x: 0, y: 90 },
+      { x: 10, y: 24 },
+      { x: 24, y: 32 },
+      { x: 34, y: 27 },
+      { x: 44, y: 37 },
+      { x: 54, y: 32 },
+      { x: 64, y: 42 },
+      { x: 76, y: 18 },
+      { x: 88, y: 8 },
+      { x: 100, y: 3 },
+    ],
+    guides: [
+      { x1: 20, y1: 27, x2: 68, y2: 44 },
+      { x1: 20, y1: 32, x2: 68, y2: 49 },
+    ],
+  },
+  {
+    id: "cup",
+    bias: "bull",
+    tag: "CONTINUATION · BULLISH",
+    title: "Cup & Handle",
     desc: "A rounded recovery (the cup) followed by a small pullback near the prior high (the handle). A breakout above the handle often continues the uptrend.",
-    points: [{x:0,y:70},{x:10,y:50},{x:20,y:30},{x:30,y:18},{x:40,y:15},{x:50,y:18},{x:60,y:30},{x:70,y:50},{x:78,y:68},{x:84,y:58},{x:90,y:62},{x:96,y:80},{x:100,y:90}],
-    guides: [{x1:0,y1:70,x2:78,y2:70}] },
+    points: [
+      { x: 0, y: 70 },
+      { x: 10, y: 50 },
+      { x: 20, y: 30 },
+      { x: 30, y: 18 },
+      { x: 40, y: 15 },
+      { x: 50, y: 18 },
+      { x: 60, y: 30 },
+      { x: 70, y: 50 },
+      { x: 78, y: 68 },
+      { x: 84, y: 58 },
+      { x: 90, y: 62 },
+      { x: 96, y: 80 },
+      { x: 100, y: 90 },
+    ],
+    guides: [{ x1: 0, y1: 70, x2: 78, y2: 70 }],
+  },
 ];
 
 const articleContent = {
@@ -243,14 +409,14 @@ function getArticleParagraphs(article) {
 
 /* Level tags shown in the reference image — index-mapped */
 const LEVEL_META = [
-  { tag: "BEGINNER", cls: "bg-[rgba(62,123,250,0.14)] text-[#6FA0FF]" },              // 01
-  { tag: "INTERMEDIATE", cls: "bg-[rgba(201,162,39,0.16)] text-[#EAC766]" },          // 02
-  { tag: "BEGINNER → INTERMEDIATE", cls: "bg-white/[0.06] text-[#9BA3B0]" },          // 03
-  { tag: "INTERMEDIATE", cls: "bg-[rgba(201,162,39,0.16)] text-[#EAC766]" },          // 04
-  { tag: "INTERMEDIATE", cls: "bg-[rgba(201,162,39,0.16)] text-[#EAC766]" },          // 05
-  { tag: "ALL LEVELS", cls: "bg-[rgba(51,194,133,0.12)] text-[#33C285]" },            // 06
-  { tag: "ALL LEVELS", cls: "bg-[rgba(51,194,133,0.12)] text-[#33C285]" },            // 07
-  { tag: "BEGINNER", cls: "bg-[rgba(62,123,250,0.14)] text-[#6FA0FF]" },              // 08
+  { tag: "BEGINNER", cls: "bg-[rgba(62,123,250,0.14)] text-[#6FA0FF]" }, // 01
+  { tag: "INTERMEDIATE", cls: "bg-[rgba(201,162,39,0.16)] text-[#EAC766]" }, // 02
+  { tag: "BEGINNER → INTERMEDIATE", cls: "bg-white/[0.06] text-[#9BA3B0]" }, // 03
+  { tag: "INTERMEDIATE", cls: "bg-[rgba(201,162,39,0.16)] text-[#EAC766]" }, // 04
+  { tag: "INTERMEDIATE", cls: "bg-[rgba(201,162,39,0.16)] text-[#EAC766]" }, // 05
+  { tag: "ALL LEVELS", cls: "bg-[rgba(51,194,133,0.12)] text-[#33C285]" }, // 06
+  { tag: "ALL LEVELS", cls: "bg-[rgba(51,194,133,0.12)] text-[#33C285]" }, // 07
+  { tag: "BEGINNER", cls: "bg-[rgba(62,123,250,0.14)] text-[#6FA0FF]" }, // 08
 ];
 
 /* Candlestick data for the hero chart — matches the reference image */
@@ -307,30 +473,54 @@ const heroCandles = [
 
 /* ---------- Practice chart candle data (48 candles) ---------- */
 const practiceCandles = [
-  { o: 210, c: 208, h: 212, l: 205 }, { o: 208, c: 210, h: 213, l: 205 },
-  { o: 210, c: 206, h: 211, l: 203 }, { o: 206, c: 203, h: 208, l: 200 },
-  { o: 203, c: 206, h: 209, l: 200 }, { o: 206, c: 202, h: 208, l: 199 },
-  { o: 202, c: 198, h: 204, l: 195 }, { o: 198, c: 201, h: 203, l: 195 },
-  { o: 201, c: 197, h: 203, l: 194 }, { o: 197, c: 200, h: 202, l: 194 },
-  { o: 200, c: 195, h: 201, l: 192 }, { o: 195, c: 191, h: 197, l: 188 },
-  { o: 191, c: 188, h: 193, l: 185 }, { o: 188, c: 185, h: 190, l: 182 },
-  { o: 185, c: 182, h: 187, l: 179 }, { o: 182, c: 185, h: 187, l: 179 },
-  { o: 185, c: 180, h: 186, l: 177 }, { o: 180, c: 176, h: 182, l: 173 },
-  { o: 176, c: 173, h: 178, l: 170 }, { o: 173, c: 170, h: 175, l: 167 },
-  { o: 170, c: 167, h: 172, l: 164 }, { o: 167, c: 170, h: 172, l: 164 },
-  { o: 170, c: 165, h: 171, l: 162 }, { o: 165, c: 160, h: 167, l: 157 },
-  { o: 160, c: 156, h: 162, l: 153 }, { o: 156, c: 158, h: 161, l: 153 },
-  { o: 158, c: 153, h: 159, l: 150 }, { o: 153, c: 149, h: 155, l: 146 },
-  { o: 149, c: 145, h: 151, l: 142 }, { o: 145, c: 141, h: 147, l: 138 },
-  { o: 141, c: 143, h: 146, l: 138 }, { o: 143, c: 138, h: 144, l: 135 },
-  { o: 138, c: 133, h: 140, l: 130 }, { o: 133, c: 129, h: 135, l: 126 },
-  { o: 129, c: 125, h: 131, l: 122 }, { o: 125, c: 121, h: 127, l: 118 },
-  { o: 121, c: 118, h: 123, l: 115 }, { o: 118, c: 121, h: 123, l: 115 },
-  { o: 121, c: 116, h: 122, l: 113 }, { o: 116, c: 111, h: 118, l: 108 },
-  { o: 111, c: 107, h: 113, l: 104 }, { o: 107, c: 103, h: 109, l: 100 },
-  { o: 103, c: 100, h: 105, l: 97 },  { o: 100, c: 97,  h: 102, l: 94 },
-  { o: 97,  c: 94,  h: 99,  l: 91 },  { o: 94,  c: 96,  h: 99,  l: 91 },
-  { o: 96,  c: 92,  h: 97,  l: 89 },  { o: 92,  c: 88,  h: 94,  l: 85 },
+  { o: 210, c: 208, h: 212, l: 205 },
+  { o: 208, c: 210, h: 213, l: 205 },
+  { o: 210, c: 206, h: 211, l: 203 },
+  { o: 206, c: 203, h: 208, l: 200 },
+  { o: 203, c: 206, h: 209, l: 200 },
+  { o: 206, c: 202, h: 208, l: 199 },
+  { o: 202, c: 198, h: 204, l: 195 },
+  { o: 198, c: 201, h: 203, l: 195 },
+  { o: 201, c: 197, h: 203, l: 194 },
+  { o: 197, c: 200, h: 202, l: 194 },
+  { o: 200, c: 195, h: 201, l: 192 },
+  { o: 195, c: 191, h: 197, l: 188 },
+  { o: 191, c: 188, h: 193, l: 185 },
+  { o: 188, c: 185, h: 190, l: 182 },
+  { o: 185, c: 182, h: 187, l: 179 },
+  { o: 182, c: 185, h: 187, l: 179 },
+  { o: 185, c: 180, h: 186, l: 177 },
+  { o: 180, c: 176, h: 182, l: 173 },
+  { o: 176, c: 173, h: 178, l: 170 },
+  { o: 173, c: 170, h: 175, l: 167 },
+  { o: 170, c: 167, h: 172, l: 164 },
+  { o: 167, c: 170, h: 172, l: 164 },
+  { o: 170, c: 165, h: 171, l: 162 },
+  { o: 165, c: 160, h: 167, l: 157 },
+  { o: 160, c: 156, h: 162, l: 153 },
+  { o: 156, c: 158, h: 161, l: 153 },
+  { o: 158, c: 153, h: 159, l: 150 },
+  { o: 153, c: 149, h: 155, l: 146 },
+  { o: 149, c: 145, h: 151, l: 142 },
+  { o: 145, c: 141, h: 147, l: 138 },
+  { o: 141, c: 143, h: 146, l: 138 },
+  { o: 143, c: 138, h: 144, l: 135 },
+  { o: 138, c: 133, h: 140, l: 130 },
+  { o: 133, c: 129, h: 135, l: 126 },
+  { o: 129, c: 125, h: 131, l: 122 },
+  { o: 125, c: 121, h: 127, l: 118 },
+  { o: 121, c: 118, h: 123, l: 115 },
+  { o: 118, c: 121, h: 123, l: 115 },
+  { o: 121, c: 116, h: 122, l: 113 },
+  { o: 116, c: 111, h: 118, l: 108 },
+  { o: 111, c: 107, h: 113, l: 104 },
+  { o: 107, c: 103, h: 109, l: 100 },
+  { o: 103, c: 100, h: 105, l: 97 },
+  { o: 100, c: 97, h: 102, l: 94 },
+  { o: 97, c: 94, h: 99, l: 91 },
+  { o: 94, c: 96, h: 99, l: 91 },
+  { o: 96, c: 92, h: 97, l: 89 },
+  { o: 92, c: 88, h: 94, l: 85 },
 ];
 
 function HeroChart() {
@@ -445,7 +635,13 @@ function HeroChart() {
           fill="rgba(12,14,19,0.9)"
           stroke="rgba(255,255,255,0.12)"
         />
-        <text x="482" y="197" fontFamily="monospace" fontSize="11" fill="#9BA3B0">
+        <text
+          x="482"
+          y="197"
+          fontFamily="monospace"
+          fontSize="11"
+          fill="#9BA3B0"
+        >
           Breakout
         </text>
       </g>
@@ -461,7 +657,13 @@ function HeroChart() {
           fill="rgba(12,14,19,0.9)"
           stroke="rgba(255,255,255,0.12)"
         />
-        <text x="52" y="232" fontFamily="monospace" fontSize="11" fill="#6FA0FF">
+        <text
+          x="52"
+          y="232"
+          fontFamily="monospace"
+          fontSize="11"
+          fill="#6FA0FF"
+        >
           Support
         </text>
       </g>
@@ -473,8 +675,8 @@ function PatternDiagram({ pattern }) {
     pattern.bias === "bull"
       ? "#EAC766"
       : pattern.bias === "bear"
-      ? "#6FA0FF"
-      : "#9BA3B0";
+        ? "#6FA0FF"
+        : "#9BA3B0";
 
   // Build a smooth curved path through the points
   const pts = pattern.points;
@@ -653,36 +855,149 @@ function PracticeChart() {
       })}
 
       {/* Entry marker */}
-      <circle cx={startX + 14 * spacing} cy={y(143)} r="3.5" fill="#33C285" stroke="#050812" strokeWidth="1.5" />
-      <circle cx={startX + 14 * spacing} cy={y(180)} r="3.5" fill="#E8566A" stroke="#050812" strokeWidth="1.5" />
-      <circle cx={startX + 40 * spacing} cy={y(103)} r="3.5" fill="#33C285" stroke="#050812" strokeWidth="1.5" />
+      <circle
+        cx={startX + 14 * spacing}
+        cy={y(143)}
+        r="3.5"
+        fill="#33C285"
+        stroke="#050812"
+        strokeWidth="1.5"
+      />
+      <circle
+        cx={startX + 14 * spacing}
+        cy={y(180)}
+        r="3.5"
+        fill="#E8566A"
+        stroke="#050812"
+        strokeWidth="1.5"
+      />
+      <circle
+        cx={startX + 40 * spacing}
+        cy={y(103)}
+        r="3.5"
+        fill="#33C285"
+        stroke="#050812"
+        strokeWidth="1.5"
+      />
 
       {/* Annotations */}
       <g>
-        <rect x="40" y="46" width="100" height="26" rx="6" fill="rgba(12,14,19,0.9)" stroke="rgba(255,255,255,0.12)" />
-        <text x="52" y="63" fontFamily="monospace" fontSize="11" fill="#EAC766">Resistance</text>
+        <rect
+          x="40"
+          y="46"
+          width="100"
+          height="26"
+          rx="6"
+          fill="rgba(12,14,19,0.9)"
+          stroke="rgba(255,255,255,0.12)"
+        />
+        <text x="52" y="63" fontFamily="monospace" fontSize="11" fill="#EAC766">
+          Resistance
+        </text>
       </g>
       <g>
-        <rect x="40" y="250" width="80" height="26" rx="6" fill="rgba(12,14,19,0.9)" stroke="rgba(255,255,255,0.12)" />
-        <text x="52" y="267" fontFamily="monospace" fontSize="11" fill="#6FA0FF">Support</text>
+        <rect
+          x="40"
+          y="250"
+          width="80"
+          height="26"
+          rx="6"
+          fill="rgba(12,14,19,0.9)"
+          stroke="rgba(255,255,255,0.12)"
+        />
+        <text
+          x="52"
+          y="267"
+          fontFamily="monospace"
+          fontSize="11"
+          fill="#6FA0FF"
+        >
+          Support
+        </text>
       </g>
       <g>
-        <rect x="380" y="120" width="70" height="26" rx="6" fill="rgba(12,14,19,0.9)" stroke="rgba(255,255,255,0.12)" />
-        <text x="392" y="137" fontFamily="monospace" fontSize="11" fill="#33C285">Entry</text>
+        <rect
+          x="380"
+          y="120"
+          width="70"
+          height="26"
+          rx="6"
+          fill="rgba(12,14,19,0.9)"
+          stroke="rgba(255,255,255,0.12)"
+        />
+        <text
+          x="392"
+          y="137"
+          fontFamily="monospace"
+          fontSize="11"
+          fill="#33C285"
+        >
+          Entry
+        </text>
       </g>
       <g>
-        <rect x="540" y="205" width="70" height="26" rx="6" fill="rgba(12,14,19,0.9)" stroke="rgba(255,255,255,0.12)" />
-        <text x="552" y="222" fontFamily="monospace" fontSize="11" fill="#9BA3B0">Trend</text>
+        <rect
+          x="540"
+          y="205"
+          width="70"
+          height="26"
+          rx="6"
+          fill="rgba(12,14,19,0.9)"
+          stroke="rgba(255,255,255,0.12)"
+        />
+        <text
+          x="552"
+          y="222"
+          fontFamily="monospace"
+          fontSize="11"
+          fill="#9BA3B0"
+        >
+          Trend
+        </text>
       </g>
     </svg>
   );
 }
+function AssociateCard({ region, children }) {
+  return (
+    <div className="group relative flex flex-col overflow-hidden rounded-[18px] border border-white/[0.07] bg-[#12141A] transition-all duration-300 hover:-translate-y-1 hover:border-[#C9A227]/[0.45] hover:shadow-[0_20px_40px_-22px_rgba(201,162,39,0.35)]">
+      <div className="border-b border-white/[0.07] bg-gradient-to-r from-[#0E1730] to-[#142042] px-4 py-2 text-center">
+        <span className="font-mono text-[10.5px] uppercase tracking-[0.14em] text-[#EAC766]">
+          {region}
+        </span>
+      </div>
+      <div className="relative flex h-[140px] items-center justify-center p-4">
+        <div className="absolute inset-3 rounded-xl bg-white/[0.97] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.06)]" />
+        <div className="relative flex h-full w-full items-center justify-center transition-transform duration-300 group-hover:scale-[1.04]">
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+}
 
+function AssocName({ children, style }) {
+  return (
+    <span
+      className="mt-1 text-center text-[12.5px] leading-tight"
+      style={style}
+    >
+      {children}
+    </span>
+  );
+}
 export default function AcademicsSection() {
   const pathname = usePathname();
 
   const [chatOpen, setChatOpen] = useState(false);
   const [selectedArticle, setSelectedArticle] = useState(null);
+  const [enquiryOpen, setEnquiryOpen] = useState(null);
+  const [formData, setFormData] = useState({
+    country: "",
+    email: "",
+    contact: "",
+    remark: "",
+  });
 
   return (
     <div className="relative overflow-hidden bg-[#050812] text-[#EEF3F8]">
@@ -690,10 +1005,9 @@ export default function AcademicsSection() {
 
       <div className="pointer-events-none absolute inset-0 opacity-[0.04] [background-image:linear-gradient(rgba(59,158,255,0.35)_1px,transparent_1px),linear-gradient(90deg,rgba(59,158,255,0.35)_1px,transparent_1px)] [background-size:64px_64px] [mask-image:radial-gradient(ellipse_80%_60%_at_50%_0%,black,transparent_80%)]" />
 
-    
-
-<main className="relative z-10 mx-auto max-w-[1240px] px-8 pb-20 pt-[150px] max-[720px]:px-5 max-[720px]:pt-[180px]"><section className="grid items-center gap-14 pb-32 lg:grid-cols-[1.05fr_1fr]">
-            {/* LEFT */}
+      <main className="relative z-10 mx-auto max-w-[1240px] px-8 pb-20 pt-[150px] max-[720px]:px-5 max-[720px]:pt-[180px]">
+        <section className="grid items-center gap-14 pb-32 lg:grid-cols-[1.05fr_1fr]">
+          {/* LEFT */}
           <div>
             {/* Eyebrow pill */}
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/[0.12] bg-[rgba(201,162,39,0.16)] px-3 py-1.5">
@@ -785,8 +1099,8 @@ export default function AcademicsSection() {
           </div>
         </section>
 
-<section id="tracks" className="pt-20 sm:pt-28 lg:pt-32">
-            <div className="mb-7 flex items-end justify-between gap-5">
+        <section id="tracks" className="pt-20 sm:pt-28 lg:pt-32">
+          <div className="mb-7 flex items-end justify-between gap-5">
             <div>
               <span className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-[#3b9eff]">
                 ACADEMY OVERVIEW
@@ -843,9 +1157,9 @@ export default function AcademicsSection() {
             ))}
           </div>
 
-         <div className="pt-52">
-  <span className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-[#3b9eff]">
-    COURSE CATEGORIES
+          <div className="pt-52">
+            <span className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-[#3b9eff]">
+              COURSE CATEGORIES
             </span>
 
             <h2 className="mt-3 font-display text-[clamp(1.75rem,3.2vw,2.6rem)] font-bold leading-[1.15] tracking-[-0.015em] text-[#EEF3F8]">
@@ -859,8 +1173,8 @@ export default function AcademicsSection() {
           </div>
 
           {/* ================== COURSE CARDS GRID ================== */}
-<div className="pt-20 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-              {tracks.map(([Icon, title, description, lessons, color], index) => {
+          <div className="pt-20 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {tracks.map(([Icon, title, description, lessons, color], index) => {
               const level = LEVEL_META[index] || {
                 tag: "ALL LEVELS",
                 cls: "bg-[rgba(51,194,133,0.12)] text-[#33C285]",
@@ -930,8 +1244,6 @@ export default function AcademicsSection() {
             })}
           </div>
           {/* ================== END COURSE CARDS GRID ================== */}
-
-
         </section>
       </main>
 
@@ -1036,491 +1348,1066 @@ export default function AcademicsSection() {
           </section>
         </div>
       )}
-
-      {/* Outcomes */}
-<section id="skills" className="relative pt-40 pb-[120px] max-[900px]:pt-32 max-[900px]:pb-[84px]">
-    <div className="mx-auto max-w-[1240px] px-8 max-[720px]:px-5">
-    {/* Section header */}
-    <div className="mb-12">
-      <span className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-[#3b9eff]">
-        OUTCOMES
-      </span>
-      <h2 className="mt-3 font-display text-[clamp(1.75rem,3.2vw,2.6rem)] font-bold leading-[1.15] tracking-[-0.015em] text-[#EEF3F8]">
-        What you will learn
-      </h2>
-      <p className="mt-4 max-w-2xl text-[0.95rem] leading-relaxed text-[#8FA3B8]">
-        By the end of the academy path, you&apos;ll be able to approach the
-        market with a repeatable, disciplined process.
-      </p>
-    </div>
-
-    {/* Skills grid */}
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {skills.map((skill) => (
+      {/* ENQUIRY FORM MODAL */}
+      {enquiryOpen && (
         <div
-          key={skill}
-          className="flex items-start gap-3 rounded-[14px] border border-white/[0.06] bg-[#0F1119] p-5 transition-colors duration-200 hover:border-white/[0.12]"
+          className="fixed inset-0 z-[80] flex items-center justify-center bg-[#050812]/90 p-4 backdrop-blur-xl"
+          role="presentation"
+          onClick={() => setEnquiryOpen(null)}
         >
-          <span className="grid h-7 w-7 flex-shrink-0 place-items-center rounded-md border border-[#C9A227]/[0.4] bg-[rgba(201,162,39,0.16)] text-[13px] leading-none text-[#EAC766]">
-            ✓
-          </span>
-          <span className="pt-0.5 text-[13.5px] leading-[1.45] text-[#F2F3F6]">
-            {skill}
-          </span>
-        </div>
-      ))}
-    </div>
-  </div>
+          <section
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="enquiry-modal-title"
+            onClick={(event) => event.stopPropagation()}
+            className="jmf-enquiry relative w-full max-w-[440px] overflow-hidden rounded-[24px] border border-white/[0.08] bg-[#0B1020] p-6 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.9)]"
+          >
+            {/* Ambient glows */}
+            <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-[#F0B429]/[0.1] blur-[80px]" />
 
-           {/* ==================== FOREX MARKET STRUCTURE ==================== */}
-<section
-  id="market-structure"
-  className="relative pt-40 pb-[120px] max-[900px]:pt-32 max-[900px]:pb-[84px]"
->
-  <div className="mx-auto max-w-[1240px] px-8 max-[720px]:px-5">
+            <div className="pointer-events-none absolute -left-20 -bottom-20 h-48 w-48 rounded-full bg-[#3B9EFF]/[0.08] blur-[80px]" />
 
-    {/* Section header */}
-    <div className="mb-12 max-w-[820px]">
-      <span className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-[#3b9eff]">
-        FOUNDATIONS
-      </span>
-      <h2 className="mt-3 font-display text-[clamp(1.75rem,3.2vw,2.6rem)] font-bold leading-[1.15] tracking-[-0.015em] text-[#EEF3F8]">
-        How is the forex market structured?
-      </h2>
-      <p className="mt-4 text-[0.95rem] leading-relaxed text-[#8FA3B8]">
-        You can think of the forex market as a network of connected
-        participants, not one single marketplace. At the institutional level,
-        large banks and financial institutions trade currencies with one
-        another — these institutions provide liquidity and facilitate
-        transactions for other participants.
-      </p>
-    </div>
+            {/* Close button */}
+            <button
+              type="button"
+              aria-label="Close enquiry modal"
+              onClick={() => setEnquiryOpen(null)}
+              className="absolute right-4 top-4 z-10 grid h-8 w-8 place-items-center rounded-full text-[#8B98B0] transition hover:bg-white/[0.06] hover:text-white"
+            >
+              <X size={16} />
+            </button>
 
-    <div className="grid gap-x-16 gap-y-14 lg:grid-cols-2">
+            <div className="relative z-[1]">
+              {/* Header */}
+              <div className="text-center">
+                {" "}
+                <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[#EAC766]">
+                  {" "}
+                  ENQUIRY FORM{" "}
+                </span>{" "}
+                <h2
+                  id="enquiry-modal-title"
+                  className="mt-1.5 font-display text-xl font-bold leading-tight text-[#EEF3F8]"
+                >
+                  {" "}
+                  {enquiryOpen.tier}{" "}
+                </h2>{" "}
+                <p className="mt-1.5 text-xs text-[#8B98B0]">
+                  {" "}
+                  Fill in your details and we’ll&nbsp;get back to you.{" "}
+                </p>{" "}
+              </div>
 
-      {/* ---------- Column 1 ---------- */}
-      <div className="flex flex-col gap-14">
+              {/* Price */}
+             
+{/* Price */}
+<div className="mt-4 flex items-center justify-center gap-3 rounded-lg border border-[#C9A227]/20 bg-[#F0B429]/[0.05] px-3 py-2.5">
+  <span className="text-xs text-[#7B8497] line-through">
+    ${enquiryOpen.original}
+  </span>
 
-        {/* Market structure */}
-        <div>
-          <h3 className="mb-4 font-display text-[1.05rem] font-semibold text-[#EEF3F8]">
-            Modern market structure
-          </h3>
-          <p className="mb-4 text-[0.95rem] leading-[1.8] text-[#8FA3B8]">
-            In 2025, the Forex market structure has evolved with the rise of algorithmic trading, AI-powered analysis, and fragmented central bank policies. Below the institutional layer sit brokers and other financial intermediaries that provide retail traders with access to the forex market.
-          </p>
-          <p className="mb-4 font-mono text-[13px] leading-[1.9] text-[#EAC766]">
-            Central Banks &amp; Governments → Large Banks &amp; Institutions →
-            Liquidity Providers / HFT Firms → AI-Powered Brokers → Retail Traders
-          </p>
-          <p className="text-[0.95rem] leading-[1.8] text-[#8FA3B8]">
-            This modern structure includes high-frequency trading firms and AI-powered execution systems that have changed how liquidity is provided and consumed. Understanding this evolved structure matters because algorithmic participants now account for over 50% of daily volume in major currency pairs.
-          </p>
-        </div>
+  <span className="text-xl font-bold text-[#EAC766]">
+    ${enquiryOpen.price}
+  </span>
 
-        {/* Mechanics */}
-        <div>
-          <h3 className="mb-4 font-display text-[1.05rem] font-semibold text-[#EEF3F8]">
-            What are forex market mechanics?
-          </h3>
-          <p className="mb-4 text-[0.95rem] leading-[1.8] text-[#8FA3B8]">
-            Market mechanics describe how buying and selling actually takes
-            place, and how orders contribute to price movements. Whenever
-            someone wants to buy a currency pair, there must be a seller
-            willing to take the other side of the transaction. The interaction
-            between buyers and sellers helps determine the available market
-            price.
-          </p>
-          <p className="text-[0.95rem] leading-[1.8] text-[#8FA3B8]">
-            For example, consider EUR/USD. If you believe the euro will
-            strengthen against the US dollar, you may buy EUR/USD. If another
-            trader expects the euro to weaken, they may sell EUR/USD. When
-            buying and selling changes, the market price can change.
-          </p>
-        </div>
+  <span className="text-[10px] text-[#8B98B0]">
+    One-time
+  </span>
 
-        {/* Liquidity */}
-        <div>
-          <h3 className="mb-4 font-display text-[1.05rem] font-semibold text-[#EEF3F8]">
-            What is liquidity in forex?
-          </h3>
-          <p className="mb-4 text-[0.95rem] leading-[1.8] text-[#8FA3B8]">
-            Liquidity refers to how easily an asset can be bought or sold
-            without causing a significant change in its price. The forex
-            market is generally considered one of the world&apos;s most liquid
-            financial markets, as major currency pairs such as EUR/USD,
-            GBP/USD, and USD/JPY usually have significant trading activity.
-          </p>
-          <p className="mb-4 text-[0.95rem] leading-[1.8] text-[#8FA3B8]">
-            Imagine a market where thousands of buyers and sellers are seeking
-            to trade an asset. If you want to buy, there may be plenty of
-            sellers available. If you want to sell, there may be plenty of
-            buyers available. This is a liquid market.
-          </p>
-          <p className="text-[0.95rem] leading-[1.8] text-[#8FA3B8]">
-            Now imagine a market with very few buyers and sellers. Executing a
-            large order may cause the price to move substantially. That market
-            would have lower liquidity.
-          </p>
-        </div>
-      </div>
+  {enquiryOpen.highlight && (
+    <span className="rounded-full bg-[#F0B429]/15 px-2 py-1 text-[9px] font-semibold text-[#EAC766]">
+      POPULAR
+    </span>
+  )}
+</div>
 
-      {/* ---------- Column 2 ---------- */}
-      <div className="flex flex-col gap-14">
+              {/* Form */}
+              <form
+                autoComplete="off"
+                onSubmit={(e) => {
+                  e.preventDefault();
 
-        {/* Order types */}
-        <div>
-          <h3 className="mb-4 font-display text-[1.05rem] font-semibold text-[#EEF3F8]">
-            How do orders affect the market?
-          </h3>
-          <p className="mb-6 text-[0.95rem] leading-[1.8] text-[#8FA3B8]">
-            There are many types of orders a forex trader can use. Three of
-            the most common are market, limit, and stop orders.
-          </p>
+                  console.log("Enquiry submitted:", {
+                    plan: enquiryOpen.tier,
+                    ...formData,
+                  });
 
-          <div className="flex flex-col gap-6">
-            <div>
-              <h4 className="mb-1.5 font-display text-[14.5px] font-semibold text-[#EEF3F8]">
-                Market Orders
-              </h4>
-              <p className="text-[14px] leading-[1.75] text-[#8FA3B8]">
-                Attempts to buy or sell at the best price available right now.
-                If EUR/USD is trading around 1.1000 and you place a market buy
-                order, your trade may execute around the available price at
-                that moment.
-              </p>
+                  alert(
+                    `Thank you! We received your enquiry for ${enquiryOpen.tier}.`,
+                  );
+
+                  setEnquiryOpen(null);
+                }}
+                className="mt-5 flex flex-col gap-3"
+              >
+                {/* Country + Contact */}
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  <div>
+                    <label
+                      htmlFor="jmf-country"
+                      className="mb-1.5 block font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-[#A4AEC2]"
+                    >
+                      Country
+                    </label>
+
+                    <input
+                      id="jmf-country"
+                      type="text"
+                      name="jmf-country"
+                      required
+                      autoComplete="off"
+                      value={formData.country}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          country: e.target.value,
+                        })
+                      }
+                      placeholder="Enter country"
+                      style={{
+                        backgroundColor: "#0A0E1A",
+                        color: "#EEF3F8",
+                        WebkitTextFillColor: "#EEF3F8",
+                        caretColor: "#EEF3F8",
+                        colorScheme: "dark",
+                        border: "1px solid rgba(59,158,255,0.35)",
+                        borderRadius: "9px",
+                        outline: "none",
+                        boxShadow: "inset 0 0 0 1000px #0A0E1A",
+                      }}
+                      className="w-full px-3 py-2.5 text-[13px] placeholder:text-[#66758F] focus:border-[#F0B429]/70 focus:ring-2 focus:ring-[#F0B429]/10"
+                    />
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="jmf-contact"
+                      className="mb-1.5 block font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-[#A4AEC2]"
+                    >
+                      Contact No.
+                    </label>
+
+                    <input
+                      id="jmf-contact"
+                      type="tel"
+                      name="jmf-contact"
+                      required
+                      autoComplete="off"
+                      value={formData.contact}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          contact: e.target.value,
+                        })
+                      }
+                      placeholder="+91 98765..."
+                      style={{
+                        backgroundColor: "#0A0E1A",
+                        color: "#EEF3F8",
+                        WebkitTextFillColor: "#EEF3F8",
+                        caretColor: "#EEF3F8",
+                        colorScheme: "dark",
+                        border: "1px solid rgba(59,158,255,0.35)",
+                        borderRadius: "9px",
+                        outline: "none",
+                        boxShadow: "inset 0 0 0 1000px #0A0E1A",
+                      }}
+                      className="w-full px-3 py-2.5 text-[13px] placeholder:text-[#66758F] focus:border-[#F0B429]/70 focus:ring-2 focus:ring-[#F0B429]/10"
+                    />
+                  </div>
+                </div>
+
+                {/* Email */}
+                <div>
+                  <label
+                    htmlFor="jmf-email"
+                    className="mb-1.5 block font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-[#A4AEC2]"
+                  >
+                    Email
+                  </label>
+
+                  <input
+                    id="jmf-email"
+                    type="email"
+                    name="jmf-email"
+                    required
+                    autoComplete="off"
+                    value={formData.email}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        email: e.target.value,
+                      })
+                    }
+                    placeholder="you@example.com"
+                    style={{
+                      backgroundColor: "#0A0E1A",
+                      color: "#EEF3F8",
+                      WebkitTextFillColor: "#EEF3F8",
+                      caretColor: "#EEF3F8",
+                      colorScheme: "dark",
+                      border: "1px solid rgba(59,158,255,0.35)",
+                      borderRadius: "9px",
+                      outline: "none",
+                      boxShadow: "inset 0 0 0 1000px #0A0E1A",
+                    }}
+                    className="w-full px-3 py-2.5 text-[13px] placeholder:text-[#66758F] focus:border-[#F0B429]/70 focus:ring-2 focus:ring-[#F0B429]/10"
+                  />
+                </div>
+
+                {/* Remark */}
+                <div>
+                  <label
+                    htmlFor="jmf-remark"
+                    className="mb-1.5 block font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-[#A4AEC2]"
+                  >
+                    Remark{" "}
+                    <span className="normal-case tracking-normal text-[#667188]">
+                      (optional)
+                    </span>
+                  </label>
+
+                  <textarea
+                    id="jmf-remark"
+                    name="jmf-remark"
+                    rows={2}
+                    autoComplete="off"
+                    value={formData.remark}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        remark: e.target.value,
+                      })
+                    }
+                    placeholder="Tell us how we can help..."
+                    style={{
+                      backgroundColor: "#0A0E1A",
+                      color: "#EEF3F8",
+                      WebkitTextFillColor: "#EEF3F8",
+                      caretColor: "#EEF3F8",
+                      colorScheme: "dark",
+                      border: "1px solid rgba(59,158,255,0.35)",
+                      borderRadius: "9px",
+                      outline: "none",
+                      boxShadow: "inset 0 0 0 1000px #0A0E1A",
+                    }}
+                    className="w-full min-h-[76px] resize-none px-3 py-2.5 text-[13px] placeholder:text-[#66758F] focus:border-[#F0B429]/70 focus:ring-2 focus:ring-[#F0B429]/10"
+                  />
+                </div>
+
+                {/* Submit */}
+                <button
+                  type="submit"
+                  className="group relative mt-1 inline-flex items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br from-[#F0B429] to-[#D4A017] px-5 py-3 text-[13px] font-bold uppercase tracking-[0.06em] text-[#0A0E1A] shadow-[0_10px_28px_-10px_rgba(240,180,41,0.6)] transition-all duration-300 hover:-translate-y-0.5"
+                >
+                  <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+
+                  <span className="relative">Submit Enquiry</span>
+                </button>
+
+                <p className="text-center text-[10px] text-[#667188]">
+                  Response within 24 hours
+                </p>
+              </form>
             </div>
+          </section>
+        </div>
+      )}
 
-            <div>
-              <h4 className="mb-1.5 font-display text-[14.5px] font-semibold text-[#EEF3F8]">
-                Limit Orders
-              </h4>
-              <p className="text-[14px] leading-[1.75] text-[#8FA3B8]">
-                Placed at a specific price or better. If EUR/USD is currently
-                trading at 1.1000 but you want to buy at 1.0950, you could
-                place a buy limit order around that level.
-              </p>
-            </div>
+      {/* course pricing */}
+      <section
+        id="pricing"
+        className="relative pt-40 pb-[120px] max-[900px]:pt-32 max-[900px]:pb-[84px]"
+      >
+        <div className="mx-auto max-w-[1080px] px-8 max-[720px]:px-5">
+          <div className="mb-12 max-w-[640px]">
+            <span className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-[#3b9eff]">
+              COURSE PACKAGES
+            </span>
+            <h2 className="mt-3 font-display text-[clamp(1.75rem,3.2vw,2.6rem)] font-bold leading-[1.15] tracking-[-0.015em] text-[#EEF3F8]">
+              Choose your learning path
+            </h2>
+            <p className="mt-4 text-[0.95rem] leading-relaxed text-[#8FA3B8]">
+              Four tiers built for every stage — from your first chart to
+              institutional-grade execution.
+            </p>
+          </div>
 
-            <div>
-              <h4 className="mb-1.5 font-display text-[14.5px] font-semibold text-[#EEF3F8]">
-                Stop Orders
-              </h4>
-              <p className="text-[14px] leading-[1.75] text-[#8FA3B8]">
-                Becomes active when the market reaches a specified price.
-                Traders commonly use stop orders for entries or to manage
-                risk. The interaction of these orders contributes to the
-                continuous process of price discovery.
-              </p>
-            </div>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            {[
+              {
+                original: 175,
+                price: 150,
+                tier: "Starter",
+                level: "BEGINNER",
+                desc: "Perfect for your first steps into Forex.",
+                features: [
+                  "Foundation of Forex 2025",
+                  "Market structure basics",
+                  "Candlestick & chart reading",
+                  "Risk awareness essentials",
+                  "Lifetime access to starter modules",
+                ],
+                highlight: false,
+              },
+              {
+                original: 350,
+                price: 250,
+                tier: "Beginner Plus",
+                level: "INTERMEDIATE",
+                desc: "Build a repeatable, structured approach.",
+                features: [
+                  "Everything in Starter",
+                  "Smart Money Concepts (SMC)",
+                  "ICT Trading Framework",
+                  "Liquidity & Order Flow",
+                  "Trade journaling templates",
+                ],
+                highlight: false,
+              },
+              {
+                original: 670,
+                price: 500,
+                tier: "Advanced",
+                level: "ADVANCED",
+                desc: "AI, automation and advanced risk systems.",
+                features: [
+                  "Everything in Beginner Plus",
+                  "AI-Powered Trading Analysis",
+                  "Central Bank Policy Trading",
+                  "Advanced Risk Management",
+                  "Algorithmic Execution Mastery",
+                ],
+                highlight: true,
+              },
+              {
+                original: 1000,
+                price: 750,
+                tier: "Elite Mentorship",
+                level: "ALL LEVELS",
+                desc: "Everything, plus 1-on-1 with a mentor.",
+                features: [
+                  "Everything in Advanced",
+                  "8 × 1-on-1 live sessions",
+                  "Personal trade reviews",
+                  "Custom strategy development",
+                  "Priority support & community",
+                ],
+                highlight: false,
+              },
+            ].map((p) => (
+              <div
+                key={p.tier}
+                className={`relative flex flex-col overflow-hidden rounded-[18px] border p-7 transition-all duration-300 hover:-translate-y-1 ${
+                  p.highlight
+                    ? "border-[#C9A227]/[0.5] bg-gradient-to-b from-[#1A1406] to-[#12141A] shadow-[0_30px_60px_-30px_rgba(201,162,39,0.4)]"
+                    : "border-white/[0.07] bg-[#12141A] hover:border-white/[0.14] hover:shadow-[0_20px_40px_-22px_rgba(0,0,0,0.65)]"
+                }`}
+              >
+                {p.highlight && (
+                  <span className="absolute right-4 top-4 rounded-full bg-gradient-to-br from-[#F0B429] to-[#D4A017] px-2.5 py-1 font-mono text-[9.5px] font-bold tracking-wider text-[#0A0E1A]">
+                    POPULAR
+                  </span>
+                )}
+
+                <span
+                  className={`self-start rounded-full px-2.5 py-1 font-mono text-[10px] tracking-wider ${
+                    p.level === "BEGINNER"
+                      ? "bg-[rgba(62,123,250,0.14)] text-[#6FA0FF]"
+                      : p.level === "INTERMEDIATE"
+                        ? "bg-[rgba(201,162,39,0.16)] text-[#EAC766]"
+                        : p.level === "ADVANCED"
+                          ? "bg-[rgba(232,86,106,0.14)] text-[#E8566A]"
+                          : "bg-[rgba(51,194,133,0.12)] text-[#33C285]"
+                  }`}
+                >
+                  {p.level}
+                </span>
+
+                <h3 className="mt-4 font-display text-[22px] font-bold tracking-[-0.005em] text-[#F2F3F6]">
+                  {p.tier}
+                </h3>
+
+                {/* Price row with strikethrough */}
+                <div className="mt-3 flex items-baseline gap-3">
+                  <span className="font-display text-[20px] font-semibold text-[#5D6472] line-through">
+                    ${p.original}
+                  </span>
+                  <span
+                    className={`font-display text-[42px] font-bold leading-none ${
+                      p.highlight ? "text-[#EAC766]" : "text-[#F2F3F6]"
+                    }`}
+                  >
+                    ${p.price}
+                  </span>
+                  <span className="text-[12px] text-[#5D6472]">one-time</span>
+                </div>
+
+                <p className="mt-3 text-[13.5px] leading-relaxed text-[#9BA3B0]">
+                  {p.desc}
+                </p>
+
+                {/* Locking amount highlight */}
+                <div
+                  className={`mt-4 rounded-lg border px-3.5 py-2.5 text-[12px] leading-[1.6] ${
+                    p.highlight
+                      ? "border-[#C9A227]/[0.35] bg-[#C9A227]/[0.08] text-[#EAC766]"
+                      : "border-[#3B9EFF]/[0.25] bg-[#3B9EFF]/[0.06] text-[#8FBEFF]"
+                  }`}
+                >
+                  <b className="font-semibold">60% amount for self trade</b>
+                  <span className="block text-[11px] opacity-80">
+                    Locking amount — withdrawal benefits
+                  </span>
+                </div>
+
+                <div className="my-5 h-px bg-white/[0.07]" />
+
+                <ul className="flex flex-1 flex-col gap-2.5">
+                  {p.features.map((f) => (
+                    <li
+                      key={f}
+                      className="flex items-start gap-2 text-[13.5px] leading-[1.5] text-[#C9D0DC]"
+                    >
+                      <span
+                        className={`mt-[3px] grid h-[15px] w-[15px] flex-shrink-0 place-items-center rounded-full text-[9px] ${
+                          p.highlight
+                            ? "bg-[rgba(201,162,39,0.2)] text-[#EAC766]"
+                            : "bg-[rgba(51,194,133,0.14)] text-[#33C285]"
+                        }`}
+                      >
+                        ✓
+                      </span>
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEnquiryOpen(p);
+                    setFormData({
+                      country: "",
+                      email: "",
+                      contact: "",
+                      remark: "",
+                    });
+                  }}
+                  className={`mt-6 inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-[13.5px] font-semibold transition ${
+                    p.highlight
+                      ? "bg-gradient-to-br from-[#F0B429] to-[#D4A017] text-[#0A0E1A] shadow-[0_10px_24px_-10px_rgba(201,162,39,0.6)] hover:-translate-y-0.5 hover:shadow-[0_16px_32px_-12px_rgba(201,162,39,0.8)]"
+                      : "bg-transparent border border-white/[0.18] text-[#EEF2F8] hover:border-[#C9A227] hover:bg-white/[0.03]"
+                  }`}
+                >
+                  Buy Now
+                  <span>→</span>
+                </button>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 rounded-[14px] border border-white/[0.07] bg-[#0C0E13] p-5 text-[12.5px] leading-relaxed text-[#9BA3B0]">
+            <b className="text-[#F2F3F6]">
+              All packages include lifetime updates.
+            </b>{" "}
+            No recurring fees — pay once, keep access forever. Trading involves
+            risk; courses are educational only.
           </div>
         </div>
+      </section>
 
-        {/* Takeaways */}
-        <div>
-          <h3 className="mb-4 font-display text-[1.05rem] font-semibold text-[#EEF3F8]">
-            Key takeaways for beginners
-          </h3>
-          <p className="mb-6 text-[0.95rem] leading-[1.8] text-[#8FA3B8]">
-            If you are seeking to start your career in forex trading, here are
-            a few essential things to remember.
-          </p>
+      {/* Outcomes */}
+      <section
+        id="skills"
+        className="relative pt-40 pb-[120px] max-[900px]:pt-32 max-[900px]:pb-[84px]"
+      >
+        <div className="mx-auto max-w-[1240px] px-8 max-[720px]:px-5">
+          {/* Section header */}
+          <div className="mb-12">
+            <span className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-[#3b9eff]">
+              OUTCOMES
+            </span>
+            <h2 className="mt-3 font-display text-[clamp(1.75rem,3.2vw,2.6rem)] font-bold leading-[1.15] tracking-[-0.015em] text-[#EEF3F8]">
+              What you will learn
+            </h2>
+            <p className="mt-4 max-w-2xl text-[0.95rem] leading-relaxed text-[#8FA3B8]">
+              By the end of the academy path, you&apos;ll be able to approach
+              the market with a repeatable, disciplined process.
+            </p>
+          </div>
 
-          <div className="flex flex-col gap-5">
-            {[
-              ["Market Structure", "Forex is a decentralized global market made up of different participants and liquidity venues."],
-              ["Market Mechanics", "Prices change through the interaction of orders, liquidity, supply, demand, and market expectations."],
-              ["Major Participants", "Central banks, commercial banks, investment firms, corporations, governments, brokers, and retail traders all participate in the forex ecosystem."],
-              ["Liquidity", "How easily transactions can take place without significantly affecting price. It can influence spreads, execution, and volatility."],
-              ["Market Makers", "Provide buy and sell quotes and help facilitate trading by supplying liquidity, while managing their own market and inventory risks."],
-            ].map(([t, d]) => (
-              <div key={t}>
-                <span className="font-display text-[14px] font-semibold text-[#EAC766]">
-                  {t}
+          {/* Skills grid */}
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {skills.map((skill) => (
+              <div
+                key={skill}
+                className="flex items-start gap-3 rounded-[14px] border border-white/[0.06] bg-[#0F1119] p-5 transition-colors duration-200 hover:border-white/[0.12]"
+              >
+                <span className="grid h-7 w-7 flex-shrink-0 place-items-center rounded-md border border-[#C9A227]/[0.4] bg-[rgba(201,162,39,0.16)] text-[13px] leading-none text-[#EAC766]">
+                  ✓
                 </span>
-                <p className="mt-1 text-[14px] leading-[1.75] text-[#8FA3B8]">
-                  {d}
-                </p>
+                <span className="pt-0.5 text-[13.5px] leading-[1.45] text-[#F2F3F6]">
+                  {skill}
+                </span>
               </div>
             ))}
           </div>
         </div>
-      </div>
 
-      {/* ---------- Final Thoughts (full width, single flow) ---------- */}
-      <div className="lg:col-span-2 lg:border-t lg:border-white/[0.06] lg:pt-14">
-        <h3 className="mb-4 font-display text-[1.05rem] font-semibold text-[#EEF3F8]">
-          Final thoughts
-        </h3>
-
-        <p className="mb-4 max-w-[900px] text-[0.95rem] leading-[1.8] text-[#8FA3B8]">
-          Understanding forex market structure, market mechanics, major
-          participants, liquidity, and market makers gives beginners a clearer
-          picture of what happens behind the charts. Forex trading is not
-          simply about identifying a buy or sell signal. Behind every price
-          movement is a complex interaction between participants, orders,
-          liquidity, economic information, expectations, and risk.
-        </p>
-
-        <p className="max-w-[900px] text-[0.95rem] leading-[1.8] text-[#8FA3B8]">
-          Once you understand these fundamentals, concepts such as price
-          action, market structure, liquidity zones, spreads, order execution,
-          and institutional trading become much easier to follow. However,
-          knowledge of market structure alone does not guarantee profitable
-          trading. Forex trading involves significant risk, and beginners
-          should focus on education, proper risk management, and disciplined
-          decision-making before taking a real trade.
-        </p>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-
-</section>
-
-{/* PATTERN RECOGNITION */}
-<section
-  id="patterns"
-  className="relative pt-40 pb-[120px] max-[900px]:pt-32 max-[900px]:pb-[84px]"
->
-  <div className="mx-auto max-w-[1240px] px-8 max-[720px]:px-5">
-    {/* Section header */}
-    <div className="mb-12 max-w-[640px]">
-      <span className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-[#3b9eff]">
-        PATTERN RECOGNITION
-      </span>
-      <h2 className="mt-3 font-display text-[clamp(1.75rem,3.2vw,2.6rem)] font-bold leading-[1.15] tracking-[-0.015em] text-[#EEF3F8]">
-        Chart pattern library
-      </h2>
-      <p className="mt-4 text-[0.95rem] leading-relaxed text-[#8FA3B8]">
-        Recurring price formations that traders watch for signs of reversal,
-        continuation or an undecided market. Each shape is a summary of the
-        ongoing balance between buyers and sellers.
-      </p>
-    </div>
-
-    {/* Pattern grid — all rendered at once */}
-    <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-      {PATTERNS.map((p) => (
-        <div
-          key={p.id}
-          className="flex flex-col overflow-hidden rounded-[18px] border border-white/[0.07] bg-[#12141A] transition-all duration-300 hover:-translate-y-1 hover:border-white/[0.12] hover:shadow-[0_20px_40px_-22px_rgba(0,0,0,0.65)]"
+        {/* ==================== FOREX MARKET STRUCTURE ==================== */}
+        <section
+          id="market-structure"
+          className="relative pt-40 pb-[120px] max-[900px]:pt-32 max-[900px]:pb-[84px]"
         >
-          {/* Visual */}
-          <div className="relative h-[150px] border-b border-white/[0.07] bg-black/[0.24]">
-            <PatternDiagram pattern={p} />
-          </div>
-
-          {/* Body */}
-          <div className="flex flex-1 flex-col gap-3 p-[22px]">
-            <div className="flex items-center justify-between gap-2.5">
-              <h3 className="font-display text-[16px] font-bold tracking-[-0.005em] text-[#F2F3F6]">
-                {p.title}
-              </h3>
-              <span
-                className={`rounded-full px-2.5 py-1 font-mono text-[9.5px] tracking-wider whitespace-nowrap ${
-                  p.bias === "bull"
-                    ? "bg-[rgba(201,162,39,0.16)] text-[#EAC766]"
-                    : p.bias === "bear"
-                    ? "bg-[rgba(62,123,250,0.14)] text-[#6FA0FF]"
-                    : "bg-white/[0.06] text-[#9BA3B0]"
-                }`}
-              >
-                {p.tag}
+          <div className="mx-auto max-w-[1240px] px-8 max-[720px]:px-5">
+            {/* Section header */}
+            <div className="mb-12 max-w-[820px]">
+              <span className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-[#3b9eff]">
+                FOUNDATIONS
               </span>
+              <h2 className="mt-3 font-display text-[clamp(1.75rem,3.2vw,2.6rem)] font-bold leading-[1.15] tracking-[-0.015em] text-[#EEF3F8]">
+                How is the forex market structured?
+              </h2>
+              <p className="mt-4 text-[0.95rem] leading-relaxed text-[#8FA3B8]">
+                You can think of the forex market as a network of connected
+                participants, not one single marketplace. At the institutional
+                level, large banks and financial institutions trade currencies
+                with one another — these institutions provide liquidity and
+                facilitate transactions for other participants.
+              </p>
             </div>
-            <p className="text-[13px] leading-relaxed text-[#9BA3B0]">
-              {p.desc}
+
+            <div className="grid gap-x-16 gap-y-14 lg:grid-cols-2">
+              {/* ---------- Column 1 ---------- */}
+              <div className="flex flex-col gap-14">
+                {/* Market structure */}
+                <div>
+                  <h3 className="mb-4 font-display text-[1.05rem] font-semibold text-[#EEF3F8]">
+                    Modern market structure
+                  </h3>
+                  <p className="mb-4 text-[0.95rem] leading-[1.8] text-[#8FA3B8]">
+                    In 2025, the Forex market structure has evolved with the
+                    rise of algorithmic trading, AI-powered analysis, and
+                    fragmented central bank policies. Below the institutional
+                    layer sit brokers and other financial intermediaries that
+                    provide retail traders with access to the forex market.
+                  </p>
+                  <p className="mb-4 font-mono text-[13px] leading-[1.9] text-[#EAC766]">
+                    Central Banks &amp; Governments → Large Banks &amp;
+                    Institutions → Liquidity Providers / HFT Firms → AI-Powered
+                    Brokers → Retail Traders
+                  </p>
+                  <p className="text-[0.95rem] leading-[1.8] text-[#8FA3B8]">
+                    This modern structure includes high-frequency trading firms
+                    and AI-powered execution systems that have changed how
+                    liquidity is provided and consumed. Understanding this
+                    evolved structure matters because algorithmic participants
+                    now account for over 50% of daily volume in major currency
+                    pairs.
+                  </p>
+                </div>
+
+                {/* Mechanics */}
+                <div>
+                  <h3 className="mb-4 font-display text-[1.05rem] font-semibold text-[#EEF3F8]">
+                    What are forex market mechanics?
+                  </h3>
+                  <p className="mb-4 text-[0.95rem] leading-[1.8] text-[#8FA3B8]">
+                    Market mechanics describe how buying and selling actually
+                    takes place, and how orders contribute to price movements.
+                    Whenever someone wants to buy a currency pair, there must be
+                    a seller willing to take the other side of the transaction.
+                    The interaction between buyers and sellers helps determine
+                    the available market price.
+                  </p>
+                  <p className="text-[0.95rem] leading-[1.8] text-[#8FA3B8]">
+                    For example, consider EUR/USD. If you believe the euro will
+                    strengthen against the US dollar, you may buy EUR/USD. If
+                    another trader expects the euro to weaken, they may sell
+                    EUR/USD. When buying and selling changes, the market price
+                    can change.
+                  </p>
+                </div>
+
+                {/* Liquidity */}
+                <div>
+                  <h3 className="mb-4 font-display text-[1.05rem] font-semibold text-[#EEF3F8]">
+                    What is liquidity in forex?
+                  </h3>
+                  <p className="mb-4 text-[0.95rem] leading-[1.8] text-[#8FA3B8]">
+                    Liquidity refers to how easily an asset can be bought or
+                    sold without causing a significant change in its price. The
+                    forex market is generally considered one of the world&apos;s
+                    most liquid financial markets, as major currency pairs such
+                    as EUR/USD, GBP/USD, and USD/JPY usually have significant
+                    trading activity.
+                  </p>
+                  <p className="mb-4 text-[0.95rem] leading-[1.8] text-[#8FA3B8]">
+                    Imagine a market where thousands of buyers and sellers are
+                    seeking to trade an asset. If you want to buy, there may be
+                    plenty of sellers available. If you want to sell, there may
+                    be plenty of buyers available. This is a liquid market.
+                  </p>
+                  <p className="text-[0.95rem] leading-[1.8] text-[#8FA3B8]">
+                    Now imagine a market with very few buyers and sellers.
+                    Executing a large order may cause the price to move
+                    substantially. That market would have lower liquidity.
+                  </p>
+                </div>
+              </div>
+
+              {/* ---------- Column 2 ---------- */}
+              <div className="flex flex-col gap-14">
+                {/* Order types */}
+                <div>
+                  <h3 className="mb-4 font-display text-[1.05rem] font-semibold text-[#EEF3F8]">
+                    How do orders affect the market?
+                  </h3>
+                  <p className="mb-6 text-[0.95rem] leading-[1.8] text-[#8FA3B8]">
+                    There are many types of orders a forex trader can use. Three
+                    of the most common are market, limit, and stop orders.
+                  </p>
+
+                  <div className="flex flex-col gap-6">
+                    <div>
+                      <h4 className="mb-1.5 font-display text-[14.5px] font-semibold text-[#EEF3F8]">
+                        Market Orders
+                      </h4>
+                      <p className="text-[14px] leading-[1.75] text-[#8FA3B8]">
+                        Attempts to buy or sell at the best price available
+                        right now. If EUR/USD is trading around 1.1000 and you
+                        place a market buy order, your trade may execute around
+                        the available price at that moment.
+                      </p>
+                    </div>
+
+                    <div>
+                      <h4 className="mb-1.5 font-display text-[14.5px] font-semibold text-[#EEF3F8]">
+                        Limit Orders
+                      </h4>
+                      <p className="text-[14px] leading-[1.75] text-[#8FA3B8]">
+                        Placed at a specific price or better. If EUR/USD is
+                        currently trading at 1.1000 but you want to buy at
+                        1.0950, you could place a buy limit order around that
+                        level.
+                      </p>
+                    </div>
+
+                    <div>
+                      <h4 className="mb-1.5 font-display text-[14.5px] font-semibold text-[#EEF3F8]">
+                        Stop Orders
+                      </h4>
+                      <p className="text-[14px] leading-[1.75] text-[#8FA3B8]">
+                        Becomes active when the market reaches a specified
+                        price. Traders commonly use stop orders for entries or
+                        to manage risk. The interaction of these orders
+                        contributes to the continuous process of price
+                        discovery.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Takeaways */}
+                <div>
+                  <h3 className="mb-4 font-display text-[1.05rem] font-semibold text-[#EEF3F8]">
+                    Key takeaways for beginners
+                  </h3>
+                  <p className="mb-6 text-[0.95rem] leading-[1.8] text-[#8FA3B8]">
+                    If you are seeking to start your career in forex trading,
+                    here are a few essential things to remember.
+                  </p>
+
+                  <div className="flex flex-col gap-5">
+                    {[
+                      [
+                        "Market Structure",
+                        "Forex is a decentralized global market made up of different participants and liquidity venues.",
+                      ],
+                      [
+                        "Market Mechanics",
+                        "Prices change through the interaction of orders, liquidity, supply, demand, and market expectations.",
+                      ],
+                      [
+                        "Major Participants",
+                        "Central banks, commercial banks, investment firms, corporations, governments, brokers, and retail traders all participate in the forex ecosystem.",
+                      ],
+                      [
+                        "Liquidity",
+                        "How easily transactions can take place without significantly affecting price. It can influence spreads, execution, and volatility.",
+                      ],
+                      [
+                        "Market Makers",
+                        "Provide buy and sell quotes and help facilitate trading by supplying liquidity, while managing their own market and inventory risks.",
+                      ],
+                    ].map(([t, d]) => (
+                      <div key={t}>
+                        <span className="font-display text-[14px] font-semibold text-[#EAC766]">
+                          {t}
+                        </span>
+                        <p className="mt-1 text-[14px] leading-[1.75] text-[#8FA3B8]">
+                          {d}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* ---------- Final Thoughts (full width, single flow) ---------- */}
+              <div className="lg:col-span-2 lg:border-t lg:border-white/[0.06] lg:pt-14">
+                <h3 className="mb-4 font-display text-[1.05rem] font-semibold text-[#EEF3F8]">
+                  Final thoughts
+                </h3>
+
+                <p className="mb-4 max-w-[900px] text-[0.95rem] leading-[1.8] text-[#8FA3B8]">
+                  Understanding forex market structure, market mechanics, major
+                  participants, liquidity, and market makers gives beginners a
+                  clearer picture of what happens behind the charts. Forex
+                  trading is not simply about identifying a buy or sell signal.
+                  Behind every price movement is a complex interaction between
+                  participants, orders, liquidity, economic information,
+                  expectations, and risk.
+                </p>
+
+                <p className="max-w-[900px] text-[0.95rem] leading-[1.8] text-[#8FA3B8]">
+                  Once you understand these fundamentals, concepts such as price
+                  action, market structure, liquidity zones, spreads, order
+                  execution, and institutional trading become much easier to
+                  follow. However, knowledge of market structure alone does not
+                  guarantee profitable trading. Forex trading involves
+                  significant risk, and beginners should focus on education,
+                  proper risk management, and disciplined decision-making before
+                  taking a real trade.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      {/* PATTERN RECOGNITION */}
+      <section
+        id="patterns"
+        className="relative pt-40 pb-[120px] max-[900px]:pt-32 max-[900px]:pb-[84px]"
+      >
+        <div className="mx-auto max-w-[1240px] px-8 max-[720px]:px-5">
+          {/* Section header */}
+          <div className="mb-12 max-w-[640px]">
+            <span className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-[#3b9eff]">
+              PATTERN RECOGNITION
+            </span>
+            <h2 className="mt-3 font-display text-[clamp(1.75rem,3.2vw,2.6rem)] font-bold leading-[1.15] tracking-[-0.015em] text-[#EEF3F8]">
+              Chart pattern library
+            </h2>
+            <p className="mt-4 text-[0.95rem] leading-relaxed text-[#8FA3B8]">
+              Recurring price formations that traders watch for signs of
+              reversal, continuation or an undecided market. Each shape is a
+              summary of the ongoing balance between buyers and sellers.
             </p>
           </div>
-        </div>
-      ))}
-    </div>
 
-    {/* Note */}
-    <div className="mt-8 rounded-[14px] border border-white/[0.07] bg-[#0C0E13] p-5 text-[12.5px] leading-relaxed text-[#9BA3B0]">
-      <b className="text-[#F2F3F6]">
-        Patterns describe historical tendencies, not guarantees.
-      </b>{" "}
-      Treat a pattern as a reason to watch a level closely, not as a signal to
-      enter without a plan — always confirm the breakout and define your risk
-      first.
-    </div>
-  </div>
-</section>
-
-
-
-{/* APPLIED LEARNING */}
-<section
-  id="practice"
-  className="relative pt-40 pb-[120px] max-[900px]:pt-32 max-[900px]:pb-[84px]"
->
-  <div className="mx-auto max-w-[1240px] px-8 max-[720px]:px-5">
-    {/* Section header */}
-    <div className="mb-12 max-w-[640px]">
-      <span className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-[#3b9eff]">
-        APPLIED LEARNING
-      </span>
-      <h2 className="mt-3 font-display text-[clamp(1.75rem,3.2vw,2.6rem)] font-bold leading-[1.15] tracking-[-0.015em] text-[#EEF3F8]">
-        Learn through practice
-      </h2>
-      <p className="mt-4 text-[0.95rem] leading-relaxed text-[#8FA3B8]">
-        Every concept is paired with a live example, so theory turns into a
-        repeatable trade setup you can recognize on a real chart.
-      </p>
-    </div>
-
-    {/* Practice layout */}
-    <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1.6fr_1fr]">
-      {/* Chart panel */}
-      <div className="relative overflow-hidden rounded-[18px] border border-white/[0.07] bg-[#12141A] p-[22px]">
-        <div className="relative z-10 mb-3.5 flex items-center justify-between">
-          <span className="font-mono text-[12.5px] tracking-[0.04em] text-[#9BA3B0]">
-            EUR/USD · 1H
-          </span>
-          <span className="rounded-full border border-white/[0.12] px-2.5 py-1 font-mono text-[10px] tracking-[0.08em] text-[#9BA3B0]">
-            ANALYSIS MODE
-          </span>
-        </div>
-        <div className="relative z-10 h-[320px] overflow-hidden rounded-[14px] bg-black/25">
-          <PracticeChart />
-        </div>
-      </div>
-
-      {/* Setup panel */}
-      <div className="relative overflow-hidden rounded-[18px] border border-white/[0.07] bg-[#12141A] p-6">
-        <div className="mb-4 font-mono text-[11.5px] tracking-[0.12em] text-[#5D6472]">
-          TRADE SETUP
-        </div>
-
-        {[
-          { k: "Market", v: "EUR/USD" },
-          { k: "Direction", v: "BUY", badge: true },
-          { k: "Entry", v: "1.0842" },
-          { k: "Stop Loss", v: "1.0812", color: "#E8566A" },
-          { k: "Take Profit", v: "1.0902", color: "#33C285" },
-          { k: "Risk / Reward", v: "1 : 2", color: "#EAC766" },
-        ].map((row) => (
-          <div
-            key={row.k}
-            className="flex items-center justify-between border-b border-white/[0.07] py-3 last:border-b-0"
-          >
-            <span className="text-[13px] text-[#9BA3B0]">{row.k}</span>
-            {row.badge ? (
-              <span className="rounded-md bg-[rgba(51,194,133,0.14)] px-2.5 py-1 font-mono text-[11px] tracking-[0.06em] text-[#33C285]">
-                {row.v}
-              </span>
-            ) : (
-              <span
-                className="font-mono text-[13.5px] font-semibold"
-                style={{ color: row.color || "#F2F3F6" }}
+          {/* Pattern grid — all rendered at once */}
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {PATTERNS.map((p) => (
+              <div
+                key={p.id}
+                className="flex flex-col overflow-hidden rounded-[18px] border border-white/[0.07] bg-[#12141A] transition-all duration-300 hover:-translate-y-1 hover:border-white/[0.12] hover:shadow-[0_20px_40px_-22px_rgba(0,0,0,0.65)]"
               >
-                {row.v}
-              </span>
-            )}
+                {/* Visual */}
+                <div className="relative h-[150px] border-b border-white/[0.07] bg-black/[0.24]">
+                  <PatternDiagram pattern={p} />
+                </div>
+
+                {/* Body */}
+                <div className="flex flex-1 flex-col gap-3 p-[22px]">
+                  <div className="flex items-center justify-between gap-2.5">
+                    <h3 className="font-display text-[16px] font-bold tracking-[-0.005em] text-[#F2F3F6]">
+                      {p.title}
+                    </h3>
+                    <span
+                      className={`rounded-full px-2.5 py-1 font-mono text-[9.5px] tracking-wider whitespace-nowrap ${
+                        p.bias === "bull"
+                          ? "bg-[rgba(201,162,39,0.16)] text-[#EAC766]"
+                          : p.bias === "bear"
+                            ? "bg-[rgba(62,123,250,0.14)] text-[#6FA0FF]"
+                            : "bg-white/[0.06] text-[#9BA3B0]"
+                      }`}
+                    >
+                      {p.tag}
+                    </span>
+                  </div>
+                  <p className="text-[13px] leading-relaxed text-[#9BA3B0]">
+                    {p.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-    </div>
-  </div>
-</section>
 
-
-{/* PROGRESS */}
-<section
-  id="progress"
-  className="relative pt-40 pb-[120px] max-[900px]:pt-32 max-[900px]:pb-[84px]"
->
-  <div className="mx-auto max-w-[1240px] px-8 max-[720px]:px-5">
-    {/* Section header */}
-    <div className="mb-12 max-w-[640px]">
-      <span className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-[#3b9eff]">
-        YOUR PROGRESS
-      </span>
-      <h2 className="mt-3 font-display text-[clamp(1.75rem,3.2vw,2.6rem)] font-bold leading-[1.15] tracking-[-0.015em] text-[#EEF3F8]">
-        Track your progress
-      </h2>
-      <p className="mt-4 text-[0.95rem] leading-relaxed text-[#8FA3B8]">
-        Pick up where you left off — every completed lesson moves you closer to
-        trading with a defined process.
-      </p>
-    </div>
-
-    {/* Progress panel */}
-    <div className="grid grid-cols-1 gap-9 rounded-[18px] border border-white/[0.07] bg-gradient-to-b from-[#12141A] to-[#0C0E13] p-10 max-[560px]:p-7 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_1.3fr]">
-      {/* Metric 1 */}
-      <div>
-        <span className="block text-[12px] text-[#5D6472]">
-          Courses Completed
-        </span>
-        <b className="mt-1 block font-display text-[26px] font-bold text-[#F2F3F6]">
-          5 / 8
-        </b>
-      </div>
-
-      {/* Metric 2 */}
-      <div>
-        <span className="block text-[12px] text-[#5D6472]">
-          Lessons Completed
-        </span>
-        <b className="mt-1 block font-display text-[26px] font-bold text-[#F2F3F6]">
-          48 / 72
-        </b>
-      </div>
-
-      {/* Metric 3 */}
-      <div>
-        <span className="block text-[12px] text-[#5D6472]">
-          Practice Exercises
-        </span>
-        <b className="mt-1 block font-display text-[26px] font-bold text-[#F2F3F6]">
-          24
-        </b>
-      </div>
-
-      {/* Metric 4 + bar */}
-      <div>
-        <span className="text-[12px] text-[#5D6472]">Academy Progress</span>
-        <b className="mt-1 block font-display text-[22px] font-bold text-[#F2F3F6]">
-          72%
-        </b>
-        <div className="mt-2.5 h-2 overflow-hidden rounded-full bg-white/[0.06]">
-          <div
-            className="h-full rounded-full bg-gradient-to-r from-[#C9A227] to-[#EAC766]"
-            style={{ width: "72%" }}
-          />
+          {/* Note */}
+          <div className="mt-8 rounded-[14px] border border-white/[0.07] bg-[#0C0E13] p-5 text-[12.5px] leading-relaxed text-[#9BA3B0]">
+            <b className="text-[#F2F3F6]">
+              Patterns describe historical tendencies, not guarantees.
+            </b>{" "}
+            Treat a pattern as a reason to watch a level closely, not as a
+            signal to enter without a plan — always confirm the breakout and
+            define your risk first.
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+      </section>
 
-{/* final cta */}
-<section className="relative pt-40 pb-[110px] max-[900px]:pt-32 max-[900px]:pb-[84px]">
-  <div className="mx-auto max-w-[620px] px-8 text-center max-[720px]:px-5">
-    <h2 className="font-display text-[clamp(28px,4vw,42px)] font-bold leading-[1.15] tracking-[-0.02em] text-[#EEF3F8]">
-      Build knowledge before you build positions
-    </h2>
+      {/* APPLIED LEARNING */}
+      <section
+        id="practice"
+        className="relative pt-40 pb-[120px] max-[900px]:pt-32 max-[900px]:pb-[84px]"
+      >
+        <div className="mx-auto max-w-[1240px] px-8 max-[720px]:px-5">
+          {/* Section header */}
+          <div className="mb-12 max-w-[640px]">
+            <span className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-[#3b9eff]">
+              APPLIED LEARNING
+            </span>
+            <h2 className="mt-3 font-display text-[clamp(1.75rem,3.2vw,2.6rem)] font-bold leading-[1.15] tracking-[-0.015em] text-[#EEF3F8]">
+              Learn through practice
+            </h2>
+            <p className="mt-4 text-[0.95rem] leading-relaxed text-[#8FA3B8]">
+              Every concept is paired with a live example, so theory turns into
+              a repeatable trade setup you can recognize on a real chart.
+            </p>
+          </div>
 
-    <p className="mx-auto mb-9 mt-5 max-w-[520px] text-[15.5px] leading-[1.7] text-[#8B98B0]">
-      Develop the skills, discipline and market understanding required to
-      approach trading with a structured process.
-    </p>
+          {/* Practice layout */}
+          <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1.6fr_1fr]">
+            {/* Chart panel */}
+            <div className="relative overflow-hidden rounded-[18px] border border-white/[0.07] bg-[#12141A] p-[22px]">
+              <div className="relative z-10 mb-3.5 flex items-center justify-between">
+                <span className="font-mono text-[12.5px] tracking-[0.04em] text-[#9BA3B0]">
+                  EUR/USD · 1H
+                </span>
+                <span className="rounded-full border border-white/[0.12] px-2.5 py-1 font-mono text-[10px] tracking-[0.08em] text-[#9BA3B0]">
+                  ANALYSIS MODE
+                </span>
+              </div>
+              <div className="relative z-10 h-[320px] overflow-hidden rounded-[14px] bg-black/25">
+                <PracticeChart />
+              </div>
+            </div>
 
-    <a
-      href="#courses"
-      className="inline-flex items-center justify-center rounded-full bg-gradient-to-br from-[#F0B429] to-[#D4A017] px-7 py-3.5 text-[0.9rem] font-semibold text-[#0A0E1A] shadow-[0_14px_32px_-14px_rgba(201,162,39,0.65)] transition hover:-translate-y-0.5 hover:shadow-[0_20px_40px_-16px_rgba(201,162,39,0.8)]"
-    >
-      Explore Academy
-    </a>
-  </div>
-</section>
+            {/* Setup panel */}
+            <div className="relative overflow-hidden rounded-[18px] border border-white/[0.07] bg-[#12141A] p-6">
+              <div className="mb-4 font-mono text-[11.5px] tracking-[0.12em] text-[#5D6472]">
+                TRADE SETUP
+              </div>
 
+              {[
+                { k: "Market", v: "EUR/USD" },
+                { k: "Direction", v: "BUY", badge: true },
+                { k: "Entry", v: "1.0842" },
+                { k: "Stop Loss", v: "1.0812", color: "#E8566A" },
+                { k: "Take Profit", v: "1.0902", color: "#33C285" },
+                { k: "Risk / Reward", v: "1 : 2", color: "#EAC766" },
+              ].map((row) => (
+                <div
+                  key={row.k}
+                  className="flex items-center justify-between border-b border-white/[0.07] py-3 last:border-b-0"
+                >
+                  <span className="text-[13px] text-[#9BA3B0]">{row.k}</span>
+                  {row.badge ? (
+                    <span className="rounded-md bg-[rgba(51,194,133,0.14)] px-2.5 py-1 font-mono text-[11px] tracking-[0.06em] text-[#33C285]">
+                      {row.v}
+                    </span>
+                  ) : (
+                    <span
+                      className="font-mono text-[13.5px] font-semibold"
+                      style={{ color: row.color || "#F2F3F6" }}
+                    >
+                      {row.v}
+                    </span>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
 
-     
+      {/* PROGRESS */}
+      <section
+        id="progress"
+        className="relative pt-40 pb-[120px] max-[900px]:pt-32 max-[900px]:pb-[84px]"
+      >
+        <div className="mx-auto max-w-[1240px] px-8 max-[720px]:px-5">
+          {/* Section header */}
+          <div className="mb-12 max-w-[640px]">
+            <span className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-[#3b9eff]">
+              YOUR PROGRESS
+            </span>
+            <h2 className="mt-3 font-display text-[clamp(1.75rem,3.2vw,2.6rem)] font-bold leading-[1.15] tracking-[-0.015em] text-[#EEF3F8]">
+              Track your progress
+            </h2>
+            <p className="mt-4 text-[0.95rem] leading-relaxed text-[#8FA3B8]">
+              Pick up where you left off — every completed lesson moves you
+              closer to trading with a defined process.
+            </p>
+          </div>
+
+          {/* Progress panel */}
+          <div className="grid grid-cols-1 gap-9 rounded-[18px] border border-white/[0.07] bg-gradient-to-b from-[#12141A] to-[#0C0E13] p-10 max-[560px]:p-7 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_1.3fr]">
+            {/* Metric 1 */}
+            <div>
+              <span className="block text-[12px] text-[#5D6472]">
+                Courses Completed
+              </span>
+              <b className="mt-1 block font-display text-[26px] font-bold text-[#F2F3F6]">
+                5 / 8
+              </b>
+            </div>
+
+            {/* Metric 2 */}
+            <div>
+              <span className="block text-[12px] text-[#5D6472]">
+                Lessons Completed
+              </span>
+              <b className="mt-1 block font-display text-[26px] font-bold text-[#F2F3F6]">
+                48 / 72
+              </b>
+            </div>
+
+            {/* Metric 3 */}
+            <div>
+              <span className="block text-[12px] text-[#5D6472]">
+                Practice Exercises
+              </span>
+              <b className="mt-1 block font-display text-[26px] font-bold text-[#F2F3F6]">
+                24
+              </b>
+            </div>
+
+            {/* Metric 4 + bar */}
+            <div>
+              <span className="text-[12px] text-[#5D6472]">
+                Academy Progress
+              </span>
+              <b className="mt-1 block font-display text-[22px] font-bold text-[#F2F3F6]">
+                72%
+              </b>
+              <div className="mt-2.5 h-2 overflow-hidden rounded-full bg-white/[0.06]">
+                <div
+                  className="h-full rounded-full bg-gradient-to-r from-[#C9A227] to-[#EAC766]"
+                  style={{ width: "72%" }}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ACADEMIC ASSOCIATES */}
+      <section
+        id="associates"
+        className="relative pt-40 pb-[120px] max-[900px]:pt-32 max-[900px]:pb-[84px]"
+      >
+        <div className="mx-auto max-w-[1240px] px-8 max-[720px]:px-5">
+          {/* Section header */}
+          <div className="mb-12 max-w-[640px]">
+            <span className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-[#3b9eff]">
+              ACADEMIC ASSOCIATES
+            </span>
+            <h2 className="mt-3 font-display text-[clamp(1.75rem,3.2vw,2.6rem)] font-bold leading-[1.15] tracking-[-0.015em] text-[#EEF3F8]">
+              Our academic associates
+            </h2>
+            <p className="mt-4 text-[0.95rem] leading-relaxed text-[#8FA3B8]">
+              Trusted education partners across the globe — helping traders
+              build skills with structured, region-specific market knowledge.
+            </p>
+          </div>
+
+          {/* Associates grid */}
+          <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
+            {[
+              {
+                region: "South Africa",
+                name: "TradeForexSA",
+                logo: "/TradeForex.png",
+              },
+              {
+                region: "Germany",
+                name: "Tradeciety",
+                logo: "/TradeCiety.png",
+              },
+              {
+                region: "Singapore",
+                name: "LearnToTradeAsia",
+                logo: "/LearnToTrade.png",
+              },
+              {
+                region: "Other Asia",
+                name: "TradingWithRayner",
+                logo: "/TradingWith.png",
+              },
+              {
+                region: "India",
+                name: "The Bull Infotech",
+                logo: "/Bull Infotech.png",
+              },
+              {
+                region: "America",
+                name: "The Trading Channel",
+                logo: "/TradingChannel.png",
+              },
+              { region: "UAE", name: "ATFX Education", logo: "/ATFX.png" },
+            ].map((a) => (
+              <AssociateCard key={a.name} region={a.region}>
+                <div className="relative h-full w-full">
+                  <Image
+                    src={a.logo}
+                    alt={`${a.name} logo`}
+                    fill
+                    sizes="(max-width: 640px) 50vw, 300px"
+                    className="object-contain p-1"
+                  />
+                </div>
+              </AssociateCard>
+            ))}
+          </div>
+
+          {/* Note */}
+          <div className="mt-8 rounded-[14px] border border-white/[0.07] bg-[#0C0E13] p-5 text-[12.5px] leading-relaxed text-[#9BA3B0]">
+            <b className="text-[#F2F3F6]">
+              Interested in becoming an associate?
+            </b>{" "}
+            We partner with vetted education providers worldwide.{" "}
+            <a
+              href="/user/contact"
+              className="text-[#EAC766] underline-offset-2 hover:underline"
+            >
+              Get in touch →
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* final cta */}
+      <section className="relative pt-40 pb-[110px] max-[900px]:pt-32 max-[900px]:pb-[84px]">
+        <div className="mx-auto max-w-[620px] px-8 text-center max-[720px]:px-5">
+          <h2 className="font-display text-[clamp(28px,4vw,42px)] font-bold leading-[1.15] tracking-[-0.02em] text-[#EEF3F8]">
+            Build knowledge before you build positions
+          </h2>
+
+          <p className="mx-auto mb-9 mt-5 max-w-[520px] text-[15.5px] leading-[1.7] text-[#8B98B0]">
+            Develop the skills, discipline and market understanding required to
+            approach trading with a structured process.
+          </p>
+
+          <a
+            href="#courses"
+            className="inline-flex items-center justify-center rounded-full bg-gradient-to-br from-[#F0B429] to-[#D4A017] px-7 py-3.5 text-[0.9rem] font-semibold text-[#0A0E1A] shadow-[0_14px_32px_-14px_rgba(201,162,39,0.65)] transition hover:-translate-y-0.5 hover:shadow-[0_20px_40px_-16px_rgba(201,162,39,0.8)]"
+          >
+            Explore Academy
+          </a>
+        </div>
+      </section>
 
       {/* FLOATING CHAT */}
       <div className="fixed bottom-7 right-7 z-50 flex flex-col items-end gap-3 max-[720px]:bottom-5 max-[720px]:right-5">
