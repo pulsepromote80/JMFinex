@@ -860,7 +860,7 @@ const visualPercent = Number(usedPercentage.toFixed(1));
                     className="flex items-center justify-center font-bold w-1/2 text-[11.5px] text-white"
                     style={{ background: `linear-gradient(90deg, ${C.blue500}, ${C.blue400})` }}
                   >
-                    Max 34% consider from any single wing.
+                    Max 40% consider from any single wing.
                   </div>
                   <div
                     className="flex items-center justify-center font-bold w-1/2 text-[11.5px] text-[#241a04]"
@@ -904,13 +904,13 @@ const visualPercent = Number(usedPercentage.toFixed(1));
                 </div>
                 <div className="flex gap-[18px]">
                   <div className="flex items-center gap-1.5 text-[11px] text-[#4c5b7c]">
-                    <span className="rounded-full w-2 h-2 bg-[#74c0fc]" />Strong Leg 34%
+                    <span className="rounded-full w-2 h-2 bg-[#74c0fc]" />Strong Leg 40%
                   </div>
                   <div className="flex items-center gap-1.5 text-[11px] text-[#4c5b7c]">
-                    <span className="rounded-full w-2 h-2 bg-[#5a9fd4]" />Second leg 34%
+                    <span className="rounded-full w-2 h-2 bg-[#5a9fd4]" />Second leg 40%
                   </div>
                   <div className="flex items-center gap-1.5 text-[11px] text-[#4c5b7c]">
-                    <span className="rounded-full w-2 h-2 bg-[#e0ac2e]" />Other Leg 32%
+                    <span className="rounded-full w-2 h-2 bg-[#e0ac2e]" />Other Leg 20%
                   </div>
                 </div>
               </div>
