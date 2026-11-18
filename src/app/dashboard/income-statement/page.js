@@ -9,7 +9,6 @@ import { getUserId } from '@/app/api/auth';
 const TABS = [
   'Referral Bonus',
   'Trading Profit',
-  'Growth Booster',
   'Level Bonus',
   'Reward Bonus',
   'Club Bonus'
@@ -18,7 +17,6 @@ const TABS = [
 const KEY_TO_LABEL = {
   ReferralIncome: 'Referral Bonus',
   TradingProfit: 'Trading Profit',
-  GrowthBooster: 'Growth Booster',
   LevelIncome: 'Level Bonus',
   RewardBonus: 'Reward Bonus',
   ClubBonus: 'Club Bonus'
