@@ -678,44 +678,7 @@ const visualPercent = Number(usedPercentage.toFixed(1));
         
 
           {/* ================= BOOSTER ================= */}
-          <Section title="Growth Booster" sub="Add up to 14% by hitting weekly direct targets in sequence." tagText={<><Clock size={16} className="inline mr-1" /><span className="text-sm">{`${data?.boosterleftDays} days left`}</span></>}>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-              {dynamicBoosters.map((b) => {
-                const circ = 2 * Math.PI * 33
-                const offset = circ - (circ * b.progress) / 100
-                const isDone = b.progress === 100
-                const isInProgress = String(b.status).toLowerCase() === "in progress"
-                return (
-                  <div key={b.n} className={`${CARD_CLS} text-center px-5 pt-[26px] pb-[22px]`}>
-                    <div className="relative mx-auto w-[78px] h-[78px] mb-3">
-                      <svg width="78" height="78" viewBox="0 0 78 78" className="-rotate-90">
-                        <circle cx="39" cy="39" r="33" strokeWidth="7" fill="none" stroke="rgba(15,45,100,.1)" />
-                        <circle
-                          cx="39" cy="39" r="33" strokeWidth="7" fill="none"
-                          stroke={BOOSTER_COLOR[b.state]}
-                          strokeDasharray={circ}
-                          strokeDashoffset={barsOn ? offset : circ}
-                          className="transition-[stroke-dashoffset] duration-[1.2s] ease-[cubic-bezier(.2,.8,.2,1)]"
-                        />
-                      </svg>
-                      <div className="absolute inset-0 flex items-center justify-center font-bold text-sm" style={{ fontFamily: DISPLAY_FONT }}>{b.progress}%</div>
-                    </div>
-                    <div className="font-semibold text-[13.5px]" style={{ fontFamily: DISPLAY_FONT }}>{b.n}</div>
-                    <div className="text-[10.5px] text-[#4c5b7c] mt-0.5">{b.tag}</div>
-                        <div className="font-semibold text-[11.5px] text-[#e0ac2e] mt-2">{b.reward} Monthly Profit</div>
-                    <div
-                      className={`inline-flex items-center font-bold rounded-full text-[10px] tracking-[.04em] px-[11px] py-1 mt-2.5 ${
-                            isDone ? "bg-[rgba(47,191,122,.12)] text-[#2fbf7a]"
-                            : isInProgress ? "bg-[rgba(47,107,255,.15)] text-[#2f6bff]"
-                        : "bg-[rgba(15,45,100,.08)] text-[#5c6c8c]"
-                      }`}
-                    >
-                          {b.status || "Locked"}
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
+          <Section>
 
             <h3 className="text-[30px] font-semibold mt-6" style={{ fontFamily: DISPLAY_FONT }}>My Directs</h3>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-5 mt-5">
@@ -879,41 +842,13 @@ const visualPercent = Number(usedPercentage.toFixed(1));
 
           {/* ================= TEAM ================= */}
           <Section title="My Team Network" sub="Direct line performance and level access.">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-              <div className={`${CARD_CLS} p-6`}>
-                <span className={`${TAG_CLS} inline-block mb-3.5`}>TEAM REPORT</span>
-                <div className="grid grid-cols-2 gap-3.5">
-                  <TrItem label="TOTAL TEAM" value={totalTeam} />
-                  <TrItem label="ACTIVE TEAM" value={activeTeam} />
-                  <TrItem label="TEAM BUSINESS" value={`$${Number(teamBusiness).toLocaleString()}`} />
-                  <TrItem label="STRONG LEG" value={`$${Number(otherLegBusiness).toLocaleString()}`} />
-                  <TrItem label="SECOND LEG" value= {`$${Number(strongTeamBusiness).toLocaleString()}`} />
-               
-                  <TrItem label="OTHER LEG" value={`$${Number(weakTeamBussiness).toLocaleString()}`} />
-                </div>
-              </div>
-              <div className={`${CARD_CLS} flex flex-col items-center justify-center p-6 gap-3.5`}>
-                <span className={`self-start ${TAG_CLS}`}>POWER vs WEAKER</span>
-                <div className="relative w-[140px] h-[140px]">
-                  <svg width="140" height="140" viewBox="0 0 140 140" className="-rotate-90">
-                    <circle cx="70" cy="70" r="58" stroke="rgba(15,45,100,.1)" strokeWidth="16" fill="none" />
-                    <circle cx="70" cy="70" r="58" stroke="#74c0fc" strokeWidth="16" fill="none" strokeDasharray="123.9 240.5" strokeDashoffset="0" strokeLinecap="round" />
-                    <circle cx="70" cy="70" r="58" stroke="#5a9fd4" strokeWidth="16" fill="none" strokeDasharray="123.9 240.5" strokeDashoffset="-123.9" strokeLinecap="round" />
-                    <circle cx="70" cy="70" r="58" stroke="#e0ac2e" strokeWidth="16" fill="none" strokeDasharray="116.6 247.8" strokeDashoffset="-247.8" strokeLinecap="round" />
-                  </svg>
-                </div>
-                <div className="flex gap-[18px]">
-                  <div className="flex items-center gap-1.5 text-[11px] text-[#4c5b7c]">
-                    <span className="rounded-full w-2 h-2 bg-[#74c0fc]" />Strong Leg 40%
-                  </div>
-                  <div className="flex items-center gap-1.5 text-[11px] text-[#4c5b7c]">
-                    <span className="rounded-full w-2 h-2 bg-[#5a9fd4]" />Second leg 40%
-                  </div>
-                  <div className="flex items-center gap-1.5 text-[11px] text-[#4c5b7c]">
-                    <span className="rounded-full w-2 h-2 bg-[#e0ac2e]" />Other Leg 20%
-                  </div>
-                </div>
-              </div>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+              <TrItem label="TOTAL TEAM" value={totalTeam} />
+              <TrItem label="ACTIVE TEAM" value={activeTeam} />
+              <TrItem label="TEAM BUSINESS" value={`$${Number(teamBusiness).toLocaleString()}`} />
+              <TrItem label="STRONG LEG" value={`$${Number(otherLegBusiness).toLocaleString()}`} />
+              <TrItem label="SECOND LEG" value= {`$${Number(strongTeamBusiness).toLocaleString()}`} />
+              <TrItem label="OTHER LEG" value={`$${Number(weakTeamBussiness).toLocaleString()}`} />
             </div>
           </Section>
 
